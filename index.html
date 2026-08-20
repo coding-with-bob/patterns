@@ -1142,8 +1142,11 @@ html[data-altitude="0"] #shapes-pairs .ss-why, html[data-altitude="1"] #shapes-p
 /* ---- filter state ---- */
 #shapes-pairs .mrow.is-hidden, #shapes-pairs .ss-row.is-hidden { display: none; }
 #shapes-pairs .mrow:target { display: block; }
-#shapes-pairs .mrow:target > .mrow-d > .mrow-s {
-  box-shadow: inset 0 0 0 2px var(--c-principle);
+/* Highlight the WHOLE card, not just the collapsed summary — when the row is
+   expanded, the open body must sit inside the ring or the reader can't tell
+   the expansion belongs to the highlighted block. */
+#shapes-pairs .mrow:target {
+  outline: 2px solid var(--c-principle); outline-offset: 4px;
   border-radius: 8px;
 }
 
