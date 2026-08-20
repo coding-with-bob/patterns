@@ -1,0 +1,1752 @@
+{
+  "_generated": "GENERATED FILE — project-s.json is a public redacted copy produced by scripts/apply-redactions.mjs from its private source via site/redactions.json. Do not edit: edit the private source and the redaction map, then regenerate.",
+  "project": "project-s",
+  "kind": "ledger",
+  "format": "ledger-v1",
+  "sourcePath": "ledgers/project-s.md",
+  "reportFile": "project-s.md",
+  "reportDate": "2026-07-28",
+  "generatedAt": "2026-07-28",
+  "repoHead": "62ad651",
+  "inputs": [
+    "extraction run `project-s-present-2026-07-27.md` (prompt 1 v3.2, 2026-07-27)",
+    "arm round `project-s-present-2026-07-27-arm-findings.md` (a pinned external reviewer model) — 12/12 confirmed",
+    "fold pass 2026-07-28 — all 12 confirmed findings folded in"
+  ],
+  "scopeNote": null,
+  "summary": "project-s (real name withheld — unlaunched product) is not a code repository — it is the design corpus for an AI\narchitecture, and its \"development process\" is the writing and review process\nfor that corpus. Ephemeral AI sessions do the work, a single human owner is\nthe only one who can accept anything, and the repository itself carries all\nmemory across session boundaries. The report inventories 63 elements: 15\nprinciples, 15 recurring mechanisms, 16 document forms, 14 checks and gates,\nand 3 things that fit none of those types. It describes a state that is\ndeliberately mid-stride: setup is closed, exactly one architecture level has\nbeen accepted, all ten tour chapters are done, and the round where colleagues\nother than the owner finally read the corpus has not started.",
+  "items": [
+    {
+      "id": "P1",
+      "type": "principle",
+      "title": "Sessions are ephemeral; the repo is the institution",
+      "ezx": "No work session remembers anything from the one before it, so everything a session needs is written down in the repository. Roles and checkpoints are described without naming any person, so any fresh session can pick one up after a mandatory starter read.",
+      "original": "Tracks, roles, and gates are defined identity-free so any session can assume\nthem by a mandatory bootstrap read; the repo — not any person's memory or\nmessage-passing — is the transport between sessions. Lives in\n`model/STRUCTURE.md` §Operational layer (\"Tracks and gates are identity-free;\nsessions are ephemeral, the repo is the institution\") and `model/PROCESS2.md`\ndecision #2f.",
+      "sources": [
+        "model/STRUCTURE.md §Operational layer",
+        "model/PROCESS2.md decision #2f"
+      ]
+    },
+    {
+      "id": "P2",
+      "type": "principle",
+      "title": "One authority per fact, and authority is directed",
+      "ezx": "Each fact is written in exactly one file, and that file owns it. References point only one way — from the detailed documents up to the foundational ones — so two files can never quietly redefine the same thing.",
+      "original": "Every fact has exactly one owning artifact; registries are generated, never\nhand-maintained; citation flows one way (foundation → design sources, levels →\nfoundation — a DAG), so no two artifacts can silently redefine each other.\nLives in `model/PROCESS2.md` core principle #6; its spatial corollary\n(\"placement mirrors the citation DAG\") is `model/STRUCTURE.md` §Placement\nrule.",
+      "sources": [
+        "model/PROCESS2.md core principle #6",
+        "model/STRUCTURE.md §Placement rule"
+      ]
+    },
+    {
+      "id": "P3",
+      "type": "principle",
+      "title": "Genre separation: one altitude per artifact",
+      "ezx": "A file either explains an idea, or lists exact rules, or spells out a step-by-step procedure — never several at once. Bookkeeping about the writing process goes into a separate side file so readers never trip over it.",
+      "original": "Concept, contract, protocol, and process metadata never braid in one file;\nprocess metadata lives in a sidecar, never in the reading path. Lives in\n`model/PROCESS2.md` core principle #1; the cycle-1 exhibit (\"each level file\nbraids four documents… fails all of them except the LLM reviewer\") is\n`model-c1/retro/2026-07-13-reset-decision.md`.",
+      "sources": [
+        "model/PROCESS2.md core principle #1",
+        "model-c1/retro/2026-07-13-reset-decision.md"
+      ]
+    },
+    {
+      "id": "P4",
+      "type": "principle",
+      "title": "Depth follows epistemic status",
+      "ezx": "Every rule in a table states how well it is actually known — confirmed in the field, taken from literature, derived from notes, or simply invented. The shakier the knowledge, the less detail may be written about it, and reviewers are not allowed to demand completeness of invented material.",
+      "original": "Every contract row carries a label (`field-validated | literature |\nnotes-derived | invented`) plus a revisit trigger where not field-validated;\nprotocol depth is allowed only for day-one AND ≥ notes-derived slices;\nmechanism-completeness findings against `invented` material are declined by\nrule. Lives in `model/PROCESS2.md` core principle #2 (with concept-first\nphasing as principle #3 applying it in time).",
+      "sources": [
+        "model/PROCESS2.md core principle #2",
+        "model/PROCESS2.md core principle #3"
+      ]
+    },
+    {
+      "id": "P5",
+      "type": "principle",
+      "title": "Teachability is a gate co-equal with correctness",
+      "ezx": "A document that is technically right but impossible to learn from fails its review, exactly as a wrong one would. A reader who has never seen the material must understand it before anything is accepted — this is never postponed as debt.",
+      "original": "An artifact that is right but unlearnable fails its gate; a fresh-reader check\nis part of every level's acceptance — and, on the tour track, of every\nchapter's — not deferred debt (\"Something in the loop must subtract and\nsomething must teach; cycle 1 had only the owner for both\"). Lives in\n`model/PROCESS2.md` core principle #5 and the fresh-reader bullet of the\nreview regime.",
+      "sources": [
+        "model/PROCESS2.md core principle #5",
+        "model/PROCESS2.md §Review regime (fresh-reader bullet)"
+      ]
+    },
+    {
+      "id": "P6",
+      "type": "principle",
+      "title": "A verdict that does not cite the basis is no verdict",
+      "ezx": "When an outside reviewer passes judgment, it must name exactly which bytes it looked at: a fixed model, a clean checkout, and file fingerprints taken before and after. A verdict without those references does not count as one.",
+      "original": "External review binds to exact bytes: pinned model, clean tree, byte-guard\nbefore/after, hash-citing verdicts. Lives in `model/PROCESS2.md` §Review\nregime (kept unchanged from cycle 1, `model-c1/PROCESS.md`).",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model-c1/PROCESS.md"
+      ]
+    },
+    {
+      "id": "P7",
+      "type": "principle",
+      "title": "The reviewer is not a co-author",
+      "ezx": "Every point a reviewer raises gets an explicit written answer. If the team agrees with absolutely everything the reviewer said, that is treated as a warning sign about the triage, not as proof of quality.",
+      "original": "Every finding gets an explicit disposition, and total agreement is itself a\ndefect signal: \"a round with a 100% fold rate is itself a signal to inspect\nthe triage, not a sign of quality\" (`model/PROCESS2.md` §Review regime).\nEvidence base: \"an adversarial reviewer with a 100% acceptance rate is a\nratchet, not a filter\" (`model-c1/retro/2026-07-13-reset-decision.md`).",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model-c1/retro/2026-07-13-reset-decision.md"
+      ]
+    },
+    {
+      "id": "P8",
+      "type": "principle",
+      "title": "Judgment-laden checks give feedback, never rails; owner judgment prevails",
+      "ezx": "Where an automated check touches a matter of judgment — reading pace, file size, how many concepts fit in a level — it may only warn and open a discussion; it never decides. Breaking such a quality bar on purpose is legitimate as long as it is recorded as one line of acknowledged debt. Checks about mechanical integrity remain hard blocks.",
+      "original": "Where a check touches a judgment call (reading cadence, sizing, concept\nbudgets), automation warns and opens a discussion, never decides; a deliberate\nquality-bar break is legitimate if recorded as one-line acknowledged debt in\nthe gate record. The principle is scoped to these guards —\nmechanical-integrity checks (G1–G7) are hard rails by design. Lives in\n`model/PROCESS2.md` settled decision #4 (cadence guard: \"a feedback mechanism,\nnever a rail\") and the size-trigger bullet of the review regime (\"mandatory\ncheck, advisory outcome\"), whose operating mode decision #6 fixes.",
+      "sources": [
+        "model/PROCESS2.md settled decision #4",
+        "model/PROCESS2.md §Review regime (size-trigger bullet)",
+        "model/PROCESS2.md decision #6"
+      ]
+    },
+    {
+      "id": "P9",
+      "type": "principle",
+      "title": "Owner ratification is the single identity-bound act — never delegated",
+      "ezx": "Anyone, and any session, may do the work. Only the owner can declare something accepted, and that one act is tied to a specific person and never handed off.",
+      "original": "Everything else is executable by any session; acceptance is not. Lives in\n`model/STRUCTURE.md` §Operational layer; carried from the pairflow rule per\n`model/PROCESS2.md` decision #2f.",
+      "sources": [
+        "model/STRUCTURE.md §Operational layer",
+        "model/PROCESS2.md decision #2f"
+      ]
+    },
+    {
+      "id": "P10",
+      "type": "principle",
+      "title": "The current version speaks in the present",
+      "ezx": "Documents say what is true right now, written for someone who never saw an earlier draft. The history of edits belongs in git, in the commit message, or in the amendment registry — with two allowed exceptions: recorded decisions whose alternatives are still relevant, and dates during a live switchover.",
+      "original": "Text states what is true now, for a reader who never saw an earlier version;\nedit scars belong in git, the commit message, or the amendment registry — with\ntwo sanctioned exceptions (DECISION blocks with still-relevant alternatives;\ninline dates at a live cutover). Lives in `model/PROCESS2.md` core principle\n#8.",
+      "sources": [
+        "model/PROCESS2.md core principle #8"
+      ]
+    },
+    {
+      "id": "P11",
+      "type": "principle",
+      "title": "Invariants-vs-tooling: build only what the next phase consumes; deliberate absences carry revisit triggers",
+      "ezx": "Nothing gets built until the very next phase actually needs it. Choosing not to build something is itself a recorded decision, and it must name the condition that would make the team reconsider.",
+      "original": "Not-doing is a first-class recorded decision with a firing condition. Lives in\n`model/PROCESS2.md` core principle #7; process-side instance: \"Deliberately\nnot built: a repo inbox for the design dialogue… Revisit trigger: manual\ntransport proves a burden\" (`model/STRUCTURE.md` §Operational layer);\nmodel-side form: the absence ledger in `model/invariants.md`.",
+      "sources": [
+        "model/PROCESS2.md core principle #7",
+        "model/STRUCTURE.md §Operational layer",
+        "model/invariants.md"
+      ]
+    },
+    {
+      "id": "P12",
+      "type": "principle",
+      "title": "Nothing is silently dropped; inclusion is a decision, not a default",
+      "ezx": "Every obligation either gets a destination or is explicitly parked on the record — none may just vanish. When the corpus was restarted, everything was moved out and pulled back one piece at a time under review, so a forgotten item shows up as a loud missing file instead of quietly riding along.",
+      "original": "Every obligation is mapped or explicitly parked (\"Completeness rule: every\nitem has at least one destination; nothing is silently dropped\",\n`model/traceability.md`), and a corpus reset moves everything out and pulls\nliving assets back one by one under review (\"the failure mode inverts from\nsilent carry-over to loud missing-file\", `model/PROCESS2.md` decision #2c).",
+      "sources": [
+        "model/traceability.md",
+        "model/PROCESS2.md decision #2c"
+      ]
+    },
+    {
+      "id": "P13",
+      "type": "principle",
+      "title": "The model is the truth; narrative is derivative",
+      "ezx": "The guided tour explains the architecture in simpler words but never becomes a second source of truth. A tour sentence that contradicts the model is a tour bug — unless the owner rules that the model is the thing that is wrong, which sends the work back into the model.",
+      "original": "The tour simplifies but never becomes a second authority; a tour statement\ncontradicting the model is a tour bug unless the owner rules it a model\nfinding, which then routes as a backtrack. Lives in\n`model/onboarding/onboarding-process.md` (Position paragraph and method step\n4), carried from `model-c1/PROCESS.md` core idea 6.",
+      "sources": [
+        "model/onboarding/onboarding-process.md (Position paragraph, method step 4)",
+        "model-c1/PROCESS.md core idea 6"
+      ]
+    },
+    {
+      "id": "P14",
+      "type": "principle",
+      "title": "Comprehension is measured, never recall; the instrument is blind",
+      "ezx": "Tests check whether a reader actually understood, not whether they can repeat wording. The test reader is deliberately kept away from the notes and from the expected answers, and questions are written so that copying phrases out of the document does not produce a correct answer.",
+      "original": "Validation instruments are deliberately deprived of the inputs that would let\nthem pattern-match: the fresh-reader arm is notes-blind with pass markers\nwithheld; questions \"must NOT be answerable by pattern-matching [the\nartifact's] wording\". Lives in `model/spine/question-bank/README.md` (writing\nprinciple) and `model/PROCESS2.md` (fresh-reader and domain-arm bullets).\nDerives from P5: it is what makes teachability gate-able.",
+      "sources": [
+        "model/spine/question-bank/README.md",
+        "model/PROCESS2.md (fresh-reader and domain-arm bullets)"
+      ]
+    },
+    {
+      "id": "P15",
+      "type": "principle",
+      "title": "The model is a conversation basis and sizing instrument first, an implementation spec only where validated",
+      "ezx": "The corpus exists first to make good conversations possible and to give an honest estimate of size and effort. It counts as a build specification only in the places that have actually been validated.",
+      "original": "\"The MVP-cut is a column in the contract tables (`day-one | contract-later |\ndeferred-capability | awaiting-validation`), not a retro\"; R1's declared end\ndeliverable is \"the conversation basis + the first honest sizing\". Lives in\n`model/PROCESS2.md` core principle #4 and §Phases R1; carried into every `mvp`\ncolumn (A1), the debt map's seed store (A12), the ledger's MVP-cut view (A14),\nand the tour's rule that it \"simplifies only along the MVP-cut axis\"\n(`model/onboarding/onboarding-process.md`). *(Rank note: added in the\nverification round; by load it belongs beside P4, not at the tail.)*",
+      "sources": [
+        "model/PROCESS2.md core principle #4",
+        "model/PROCESS2.md §Phases R1",
+        "model/onboarding/onboarding-process.md"
+      ]
+    },
+    {
+      "id": "M1",
+      "type": "mechanism",
+      "title": "The external review-arm regime",
+      "ezx": "Cycle-2 documents are hardened by fresh outside AI sessions run against a committed snapshot: one plays the hostile fault-finder, one plays a first-time reader answering quiz questions, and a third — a production-engineer persona, not yet run — checks real-world plausibility. Not literally every c2 file went through it: the debt map was owner-accepted without a review round of its own. The flow is fixed: commit, fingerprint the bytes, run the reviewer, get a verdict citing those fingerprints, decide each point, commit the fixes as one round.",
+      "original": "C2 artifacts are hardened by fresh external LLM sessions run against a\ncommitted tree: a falsifier (a pinned external reviewer model, offline,\nadversarial), a fresh-reader lens (notes-blind, answers question-bank\nquestions), and an experimental domain-plausibility arm (production-engineer\npersona, web-grounded, output routed as questions to the domain-expert agenda, never\nfolded directly; not yet run). Not universal in practice: the c2 debt map\n(`model/c2/debt-map.md`, `track: c2`) was owner-accepted with no arm round of\nits own — the five recorded rounds cover `concept.md` and `S13.md` (2026-07-27\narm finding #1). Work flows: clean-tree commit → byte-guard → arm run →\nhash-citing verdict → triage → folds committed as one round. Defined in\n`model/PROCESS2.md` §Review regime and decision #5; practiced in the five\nround records of `model/c2/L0/_meta.md`.",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model/PROCESS2.md decision #5",
+        "model/c2/L0/_meta.md"
+      ]
+    },
+    {
+      "id": "M2",
+      "type": "mechanism",
+      "title": "Finding-disposition triage",
+      "ezx": "Each point a reviewer raises gets exactly one verdict — folded in, narrowed, declined, or deferred — with one line of reasoning. What even counts as a valid point depends on the document's genre: an explanatory piece may only be challenged on concepts, a rules table on precision.",
+      "original": "Every finding gets exactly one verdict (`folded | narrowed | declined |\ndeferred-to-ADR | deferred-to-validation`) with one line of why; what counts\nas a finding is scoped per genre (concept → conceptual only; contracts →\nprecision; protocols → mechanism); implementation-plane findings are\ndeferred-to-ADR from round 1. Defined in `model/PROCESS2.md` §Review regime;\npracticed in the disposition tables of `model/c2/L0/_meta.md`.",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model/c2/L0/_meta.md"
+      ]
+    },
+    {
+      "id": "M3",
+      "type": "mechanism",
+      "title": "Phased corpus passes R0 → R1 → R2 → R3 → C2",
+      "ezx": "The whole corpus climbs in stages together: everything reaches the explanatory level before any part gets exact rules, and step-by-step detail is written only for pieces needed on day one that are also reasonably grounded. Each explanatory unit follows a fixed recipe — open with a real story, one summary table, a shared worked example, and labelled draft rules.",
+      "original": "The whole corpus reaches concept level (R1) before any slice reaches contract\n(R2) or protocol depth (R3, only day-one ∧ ≥ notes-derived, quarrying cycle-1\nby traceability slice); C2 assembles. Per level the R1 unit is the concept\nartifact: trace-first opening from a scenario-ledger story, one-table summary,\ntranscluded worked example, contract sketches with labels and `mvp` values\nconsuming debt-map seeds. Defined in `model/PROCESS2.md` §Phases; first full\ninstance `model/c2/L0/`.",
+      "sources": [
+        "model/PROCESS2.md §Phases",
+        "model/c2/L0/"
+      ]
+    },
+    {
+      "id": "M4",
+      "type": "mechanism",
+      "title": "The identity-free operational layer",
+      "ezx": "There are two work tracks, each with its own process file, its own directories, and its own checkpoints. A session takes on a track by reading a fixed set of starter documents and then labels its commits with that track's prefix. Writing into the other track's area means running that track's checkpoint and logging it there, all inside one commit.",
+      "original": "Two tracks (c2, tour), each = process file + owned directories + gate\nprocedures; a session assumes a role via the mandatory bootstrap read (own\nprocess file + changelog tail + charter) and declares it in the commit prefix\n(`c2:` / `tour:`); a gate = trigger + procedure + required evidence in the\nfolding commit; cross-track writes run the target track's gate, log in the\ntarget track's changelog, and are commit-atomic. Defined in\n`model/STRUCTURE.md` §Operational layer; practiced in the four \"cross-track\nnote from the c2 track\" entries of `model/onboarding/onboarding-process.md`.",
+      "sources": [
+        "model/STRUCTURE.md §Operational layer",
+        "model/onboarding/onboarding-process.md"
+      ]
+    },
+    {
+      "id": "M5",
+      "type": "mechanism",
+      "title": "The validation plane: labels → one assumption register → the domain-expert agenda",
+      "ezx": "Everything the team is unsure about flows into a single generated list of assumptions, fed from three places, each entry carrying the condition that would trigger a revisit. A curated top ten becomes the agenda for the domain expert — one question list, never three parallel ones.",
+      "original": "Epistemic labels and the DA register share one namespace (live span DA-1..41 —\nDA-40/41 were minted at the Ch6 owner read, `model/spine/concept-inventory.md`\n§5 and changelog; `model/PROCESS2.md` and `model/ledger.md` still say\n\"DA-1..39\", stale repo text); the generated assumption register has three\nfeeders (DA assertions, non-validated contract rows, open domain-arm\nquestions), each entry with a revisit trigger; a curated top-10 becomes the\ndomain expert's agenda, served through the scenario ledger and the\ntour's validation blocks (\"one agenda, never three parallel question lists\").\nA data track (a vendor telemetry sheet + synthetic fixture) is defined but has\nno artifact on disk yet. Defined in `model/PROCESS2.md` §Validation plane; DA\nregister at `model/spine/concept-inventory.md` §5.",
+      "sources": [
+        "model/PROCESS2.md §Validation plane",
+        "model/spine/concept-inventory.md §5"
+      ]
+    },
+    {
+      "id": "M6",
+      "type": "mechanism",
+      "title": "The build pipeline: one source → one page, write-once → render-twice",
+      "ezx": "A small dependency-free build turns every markdown page into a committed HTML sibling with a navigation strip and hover cards, pulls shared pieces into more than one page from a single source file, and regenerates the corpus ledger.",
+      "original": "`npm run build` (`scripts/build.mjs`, zero-dependency, hand-rolled md renderer\n`scripts/md-render.mjs`) renders every page source on the live surface (c2 +\ntour) to a committed `.html` sibling with a nav strip and hover-card block\n(INV/ABS/S/DA ids via `scripts/id-registry.mjs`; glossary lines via\n`scripts/vocab-lib.mjs`), resolves `<!-- transclude: … -->` markers (the\nshared example and the loop map inlined into both a level page and a tour\nchapter), and regenerates `model/ledger.md` (`scripts/ledger.mjs`). Settled in\n`model/PROCESS2.md` decisions #1, #2g, #7.",
+      "sources": [
+        "model/PROCESS2.md decisions #1, #2g, #7",
+        "scripts/build.mjs",
+        "scripts/md-render.mjs",
+        "scripts/id-registry.mjs",
+        "scripts/vocab-lib.mjs",
+        "scripts/ledger.mjs"
+      ]
+    },
+    {
+      "id": "M7",
+      "type": "mechanism",
+      "title": "Debt-coverage mapping",
+      "ezx": "Every live obligation left over from the frozen first cycle is mapped to exactly one fate — feed the MVP cut, decline, hand to the tour, or park. A parked item whose trigger fires is re-decided on the spot, so the map always describes the present and never keeps instructing an action already done.",
+      "original": "Every live obligation of the frozen cycle-1 quarry (6 PC0 items, 63 frozen-§9\nitems, 4 topic memos) is mapped to exactly one cycle-2 fate from a typed\ndisposition set (`mvp-cut-seed / declined(…) / tour / parked`); a fired\n`parked` trigger re-dispositions its row in the folding commit — \"the map\nspeaks in the present and never keeps instructing an action already done\".\nLives in `model/c2/debt-map.md`; mandated by `model/PROCESS2.md` (R0 step 5).",
+      "sources": [
+        "model/c2/debt-map.md",
+        "model/PROCESS2.md (R0 step 5)"
+      ]
+    },
+    {
+      "id": "M8",
+      "type": "mechanism",
+      "title": "The tour per-chapter loop",
+      "ezx": "Each tour chapter runs the same loop: seed the quiz questions, draft the chapter in three depth tiers with a validation block at the end, test it on a reader kept away from the notes, have the owner review it, accept, commit. Standing guards send model contradictions back as tour bugs or model backtracks.",
+      "original": "Question bank seeded for the chapter's concepts → draft from the inventory\n(core / in-passing / under-the-hood tiers + persona-tagged validation block\nordered non-field-validated-first) → notes-blind fresh-reader test on the\nshared bank → Felho review checkpoint → accept → commit; standing guards route\nmodel contradictions back as tour bugs or backtracks. Defined in\n`model/onboarding/onboarding-process.md` §Method; practiced across all ten\nchapters (each Progress row records its fresh-reader score, 3/3 … 18/18). The\nstrict *seed-before-draft* ordering is visible in eight of ten chapters'\nchangelog entries (\"Question bank seeded first per the minting rule\", Ch2–Ch9;\nCh0/Ch1 were seeded in one earlier R0-step-5 commit) and holds in commit order\nfor all ten, but is not stated as a rule in the method steps or the bank\nREADME — **practiced, not recorded**.",
+      "sources": [
+        "model/onboarding/onboarding-process.md §Method",
+        "model/onboarding/tour/ch0…ch9"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    },
+    {
+      "id": "M9",
+      "type": "mechanism",
+      "title": "Changelog-and-commit telemetry as institutional memory",
+      "ezx": "Every process file keeps a dated changelog recording what changed, why, on whose prompt, and what was deliberately left alone; each review round is one commit whose subject carries the round's tally. The recurring shape of those commit bodies is real practice — though not universal — and is nowhere written down as a requirement.",
+      "original": "Every process file carries a dated, reasoning-dense changelog (what changed,\nwhy, on whose trigger, what was deliberately not changed); each arm round is\none commit whose subject carries the round tally; in the c2 arm-round era the\ncommit bodies follow a recurring shape — `Trigger:` opener, disposition\nbullets, a `Checks:` footer (e.g. \"Checks: 0 errors, 4 pre-existing warnings.\"\nin `5a87516`; wording varies across the 12 commits that carry one, only 24 of\nthe 62 track-prefixed commits open with `Trigger:`, and the INV-R7 cross-track\nfold commit `3e77f39` carries no `Checks:` footer at all — 2026-07-27 arm\nfinding #4). The content requirement (\"trigger citation, checklist, affected\nIDs\") is written in `model/STRUCTURE.md` §Operational layer and\n\"commit-per-round telemetry in the changelog\" in `model/PROCESS2.md` §Review\nregime; the commit-body shape, the subject-line telemetry grammar, and the\nrule that changelog entries carry rationale and no-change rulings are\n**practiced, not recorded** (visible in `git log`, e.g. commits `f8b9edf`,\n`5a87516`).",
+      "sources": [
+        "model/STRUCTURE.md §Operational layer",
+        "model/PROCESS2.md §Review regime",
+        "git log (f8b9edf, 5a87516)"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    },
+    {
+      "id": "M10",
+      "type": "mechanism",
+      "title": "Deliberate-pull migration",
+      "ezx": "To restart the corpus, the whole tree was renamed to a sibling folder, an empty tree was created from the charter, and each still-living asset was pulled back one at a time under review — trimmed during the pull — with an inventory recorded in the move commit.",
+      "original": "The reset procedure: rename the whole tree to a sibling (`git mv model/ →\nmodel-c1/`), create an empty tree per the charter, pull each living asset back\none by one under review (vocabulary slimmed *during* its pull), record a pull\ninventory in the move commit and work a path-consumer checklist. Defined in\n`model/PROCESS2.md` decision #2c/#2d; executed per the 2026-07-13 changelog\nentries (steps 2–3).",
+      "sources": [
+        "model/PROCESS2.md decision #2c/#2d",
+        "model/PROCESS2.md changelog 2026-07-13 (steps 2–3)"
+      ]
+    },
+    {
+      "id": "M11",
+      "type": "mechanism",
+      "title": "The reference-consistency worklist",
+      "ezx": "One command prints every place an identifier appears across the whole live document tree. That listing is the mechanical to-do list whenever something is renamed or a level is split.",
+      "original": "Heading anchors `{#id}` join the checked id namespace; `npm run where -- <id>`\n(`scripts/where.mjs`, generalized from `scripts/vocab-where.mjs`) prints every\noccurrence across the whole live `model/` markdown tree (foundation, c2,\nspine, tour; generated ledger excluded) as the mechanical rewrite worklist for\nrenames and future level splits. Settled in `model/PROCESS2.md` decision #3.",
+      "sources": [
+        "model/PROCESS2.md decision #3",
+        "scripts/where.mjs"
+      ]
+    },
+    {
+      "id": "M13",
+      "type": "mechanism",
+      "title": "Basis-register pin-and-re-verify",
+      "ezx": "Documents list the exact sources they were built on. The strict form — pinned to a specific commit or marked frozen or read-for-non-contradiction, re-checked at acceptance — lives in the cycle-2 track's basis register; tour chapters name their sources without pins. This is what makes parallel work by throwaway sessions safe.",
+      "original": "Consuming artifacts pin their sources at a commit (`@ 4fa44f0`), or as `frozen\n(quarry)` / `read for non-contradiction`, and re-verify the pins at acceptance\n— the mechanism that makes parallel-track work safe across ephemeral sessions\n(cycle 1's retro called it \"the standout process innovation\",\n`model-c1/retro/2026-07-13-report-1-process.md`). Kept in `model/PROCESS2.md`\n§Corpus structure (\"basis registers (§1.1 @commit + ⚠ re-verify) for parallel\ntracks\"); the full pinned form is live in `model/c2/L0/_meta.md` §Basis\nregister only — tour chapters' front-matter `basis:` strings cite paths,\nsections, and IDs but carry no commit pins or frozen/read-for markers\n(2026-07-27 arm finding #2).",
+      "sources": [
+        "model/PROCESS2.md §Corpus structure",
+        "model/c2/L0/_meta.md §Basis register",
+        "model/onboarding/tour/ch*.md front-matter `basis:`"
+      ]
+    },
+    {
+      "id": "M14",
+      "type": "mechanism",
+      "title": "One-carrier routing of open questions",
+      "ezx": "A live open question is carried by one document; wherever else it surfaces it is declined as a duplicate that cites the carrier. One deliberate two-carrier exception is on record, and as a general rule the routing is written down only for the debt map.",
+      "original": "A live open question gets one carrier artifact; duplicates are declined citing\nit (the DA-6 reading question: carried by the L1 forward flag in\n`model/c2/L0/_meta.md`, declined as duplicate in arm rounds 3 and 5, surfaced\non the bootstrap read path via the PROCESS2 Progress row). One deliberate\nexception is recorded: the consent question is \"one question, two flags\",\ncarried by DEBT-L5-8 *and* DEBT-L6-2 (`model/c2/debt-map.md`, 2026-07-27 arm\nfinding #3). Partly recorded as debt-map disposition tokens (\"one carrier,\nnever two\", `model/c2/debt-map.md` §Dispositions); as a general routing rule\nit is **practiced, not recorded**.",
+      "sources": [
+        "model/c2/L0/_meta.md",
+        "model/c2/debt-map.md §Dispositions"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    },
+    {
+      "id": "M15",
+      "type": "mechanism",
+      "title": "The team validation round (domain / commercial / product lenses)",
+      "ezx": "Once enough tour chapters exist, three colleagues each read a different slice — the domain expert the assumption register, the commercial lead the trust and network story, the product lead the MVP path — and their answers fold back as tour edits, model corrections, or scope items. This is the only surface that puts the corpus in front of humans other than the owner, and it has not started.",
+      "original": "The tour track's declared purpose: after Ch0–Ch5 exist (threshold reached),\nthe domain expert reads the DA register through the chapter-end blocks, the\ncommercial lens the trust/network narrative (Ch1/Ch7/Ch9), the product lens\nthe MVP-path visibility (Ch5/Ch8);\nanswers fold back three ways — tour edits (presentation), model backtracks\n(substance), PC0 ledger items (scope). Defined in\n`model/onboarding/onboarding-process.md` §Validation round; the process's only\nsurface that puts the corpus before humans other than the owner — currently\n`todo`.",
+      "sources": [
+        "model/onboarding/onboarding-process.md §Validation round"
+      ],
+      "flags": [
+        "currently todo"
+      ]
+    },
+    {
+      "id": "A1",
+      "type": "artifact",
+      "title": "Level genre files: `concept.md` / `contracts.md` / `protocols/<name>.md`",
+      "ezx": "Each architecture level is written across three file kinds: one that explains the idea, one that lists exact rules in tables, and one per step-by-step procedure. Only the explanatory file exists so far; the other two slots are specified and reserved.",
+      "original": "One altitude per file: concept = trace-first opening + one-table summary +\nworked example + labeled contract sketches; contracts = normative tables with\n`label` and `mvp` columns + DECISION blocks; protocols = one protocol per\nfile, pseudocode, only where earned. Instantiated: `model/c2/L0/concept.md`\n(front matter `level/genre/status/basis`); contracts and protocols are\nspecified-but-uninstantiated (form in `model/PROCESS2.md` principle #1 and\ndecision #1; the rendered nav already reserves the slot — `<span\nclass=\"disabled\">contracts</span>` in `model/c2/L0/concept.html`).",
+      "sources": [
+        "model/c2/L0/concept.md",
+        "model/PROCESS2.md principle #1",
+        "model/PROCESS2.md decision #1",
+        "model/c2/L0/concept.html"
+      ],
+      "flags": [
+        "contracts & protocols: specified-but-uninstantiated"
+      ]
+    },
+    {
+      "id": "A2",
+      "type": "artifact",
+      "title": "The level process sidecar `_meta.md`",
+      "ezx": "A side file per level holds all the bookkeeping: which sources it was built on and at which commit, which debt items it consumed, what each review round found and how each finding was decided, the stopping-rule record, and the acceptance record. It is deliberately kept off the reading path.",
+      "original": "Basis register (`Source | Pin | Role`, pins `@ <commit>` / `frozen (quarry)` /\n`read for non-contradiction`), debt seeds consumed, per-round arm records\n(pin, byte-guard hashes, findings table with dispositions), stopping-rule\nrecord, gate record, scenario-expressibility table, owner decisions — \"not\npart of the reading path\". Instance: `model/c2/L0/_meta.md`; rendered set\napart (`_meta.html`, `body.meta-page` with a \"Process record — nav-only\"\nbanner).",
+      "sources": [
+        "model/c2/L0/_meta.md",
+        "model/c2/L0/_meta.html"
+      ]
+    },
+    {
+      "id": "A3",
+      "type": "artifact",
+      "title": "The track process file",
+      "ezx": "Each track has one file that is both its constitution and its running record: a status header, numbered principles or method steps, settled decisions, a progress table with a declared status lifecycle, and a dated changelog.",
+      "original": "A track's constitution and running record in one: a status header (`Status /\nDate` plus, per instance, `Supersedes / Basis` on PROCESS2 or `Purpose /\nPosition` on the tour file), numbered principles or method steps, settled\ndecisions, a Progress table (the status lifecycle `todo → in progress → in\nreview → accepted (+ reopened)` is declared in PROCESS2 and reused by the\ntour), and a dated changelog. Instances: `model/PROCESS2.md`,\n`model/onboarding/onboarding-process.md`, and the frozen `model-c1/PROCESS.md`\n(which the PROCESS2 instance explicitly supersedes).",
+      "sources": [
+        "model/PROCESS2.md",
+        "model/onboarding/onboarding-process.md",
+        "model-c1/PROCESS.md"
+      ]
+    },
+    {
+      "id": "A4",
+      "type": "artifact",
+      "title": "The structure charter",
+      "ezx": "One file is the single authority for where things live, who may write them, and how they may change: a placement rule, a layout table, an ownership table, the operational layer, and its own changelog.",
+      "original": "The single authority for layout, ownership, and change rules: placement rule,\nlayout table, ownership table (`Path | Writes | Reads | Change rule`),\noperational layer, own changelog. Instance: `model/STRUCTURE.md` (\"Process\nfiles describe only their own consumption of shared assets — never their\nlocation, ownership, or content rules\").",
+      "sources": [
+        "model/STRUCTURE.md"
+      ]
+    },
+    {
+      "id": "A5",
+      "type": "artifact",
+      "title": "Invariant catalog & absence ledger",
+      "ezx": "One file lists the architecture's fixed truths, each with an ID, title, body, and a citation to its design source. Beside them sit the deliberate absences, each carrying a reason and a mandatory condition for revisiting it.",
+      "original": "One bolded ID + title + body + design-source citation per invariant\n(`INV-D/K/R/T` families); absences (`ABS-*`) each carry *Why* and a mandatory\n*Revisit* trigger; a Gate-usage footer defines how levels cite them. Instance:\n`model/invariants.md` (25 INV + 7 ABS).",
+      "sources": [
+        "model/invariants.md"
+      ]
+    },
+    {
+      "id": "A6",
+      "type": "artifact",
+      "title": "Scenario ledger",
+      "ezx": "A file of canonical stories, each with an ID, a tier, an origin saying whether it came from the field or was constructed, the story itself, and the concepts it exercises — plus a matrix showing which levels cover which story.",
+      "original": "Canonical stories with ID, tier (T1/T2), origin (`field` =\ndesign-partner-validated / `constructed`), prose, an *Exercises:* line (a\n`persona:` tag appears on S1 only), and a per-level coverage matrix filled as\nlevels are accepted. Instance: `model/scenario-ledger.md` (31 scenarios).",
+      "sources": [
+        "model/scenario-ledger.md"
+      ]
+    },
+    {
+      "id": "A7",
+      "type": "artifact",
+      "title": "Vocabulary glossary",
+      "ezx": "One binding sentence per term, grouped by the level that owns it. That sentence is the canon shown in hover cards everywhere; any finer precision lives in the owning level's rules tables.",
+      "original": "One binding line per term, grouped by owning level with checked group anchors\n(`{#vocab-l0}`); \"the glossary line is canon: hover cards carry it everywhere,\nprecision beyond it lives in the owning level's contracts\". Instance:\n`model/vocabulary.md` (132 terms).",
+      "sources": [
+        "model/vocabulary.md"
+      ]
+    },
+    {
+      "id": "A8",
+      "type": "artifact",
+      "title": "Traceability matrix",
+      "ezx": "A table mapping every item from the original design notes to where it ended up, under the rule that everything must have at least one destination — plus the status of the topic memos and the known open items.",
+      "original": "Every design-note item → destination(s) (levels, `method`, `build`,\n`assembly`, `done`) under the completeness rule, plus topic-memo status and\nknown-open-items tables. Instance: `model/traceability.md`.",
+      "sources": [
+        "model/traceability.md"
+      ]
+    },
+    {
+      "id": "A9",
+      "type": "artifact",
+      "title": "Concept inventory",
+      "ezx": "The largest shared file: who the audience is, the reading spine, every core concept with its plain-language gloss and its slug (the key question-bank files and worked-example references join on), a dependency graph, the register of domain assumptions, the known simplification traps, and the per-level split of concepts.",
+      "original": "The largest shared asset: audience table, 9-chapter reading spine, the\ncore-concept inventory with tour glosses and the slug rule (the join key for\nquestion-bank filenames and worked-example references — worked examples\nthemselves are keyed `examples/S<id>.md`, `model/STRUCTURE.md`; 2026-07-27 arm\nfinding #5), dependency graph, §5 DA register (`ID | Claim | Source | Label`),\n§6 simplification traps, §9 per-level projection (owners `L0–L6 | spine | =\nalias`), change log. Instance: `model/spine/concept-inventory.md`;\nshared-write under trigger-holder-folds (`model/STRUCTURE.md` ownership\ntable).",
+      "sources": [
+        "model/spine/concept-inventory.md",
+        "model/STRUCTURE.md ownership table"
+      ]
+    },
+    {
+      "id": "A10",
+      "type": "artifact",
+      "title": "Question-bank concept file",
+      "ezx": "One file per core concept holds the comprehension questions: the prompt, what a passing answer must contain, the misunderstanding it is built to catch, and the chapter from which it becomes answerable. Question IDs never change once minted; retired ones are marked, not deleted.",
+      "original": "One file per core concept keyed by inventory slug; per question: prompt, pass\nmarkers, detects (the trap it catches), and an `Answerable-from: ch<N>` tag;\nids `<slug>-Q<n>` stable once minted, retire by marking. Instances:\n`model/spine/question-bank/*.md` (59 files); content rules in\n`model/spine/question-bank/README.md`.",
+      "sources": [
+        "model/spine/question-bank/*.md (59 files)",
+        "model/spine/question-bank/README.md"
+      ]
+    },
+    {
+      "id": "A11",
+      "type": "artifact",
+      "title": "Write-once worked example `examples/S<id>.md`",
+      "ezx": "A worked example lives in exactly one file, keyed by the story it illustrates, and the build pulls it into both a level page and a tour chapter — it is never copied. Its own header states the rules for writing it.",
+      "original": "Keyed by scenario id, transcluded by the build into both a level concept page\nand a tour chapter, never copied; content rules embedded as a header comment\n(\"the body must read inside a host page: headings start at H2, no process\nmetadata\"). Instance: `model/spine/examples/S13.md`.",
+      "sources": [
+        "model/spine/examples/S13.md"
+      ]
+    },
+    {
+      "id": "A12",
+      "type": "artifact",
+      "title": "The debt map",
+      "ezx": "A ledger of leftover obligations: a legend of the allowed verdicts and their required detail tokens, a pinned inventory of its sources including row counts and a fingerprint, and rows whose item text must appear word-for-word in the frozen original.",
+      "original": "Front-mattered obligation ledger: a Dispositions legend with required\ndetail-prefix tokens, a pinned source inventory (row counts + a sha256 of the\nPC0 paragraph), and mapping rows whose `item` cell must be a verbatim\nsubstring of the frozen source. Instance: `model/c2/debt-map.md` (71 rows + 4\ntopic-memo fates).",
+      "sources": [
+        "model/c2/debt-map.md"
+      ]
+    },
+    {
+      "id": "A13",
+      "type": "artifact",
+      "title": "Tour chapter",
+      "ezx": "A tour chapter opens with front matter naming its sources, tells the story of its concepts, offers three depth tiers, and closes with a validation block listing the claims still awaiting a human to confirm them, least-confirmed first.",
+      "original": "Front matter with an inline basis-register string; story-spine body over the\nchapter's core concepts; three depth tiers (core / in-passing prose /\n`<details>` under-the-hood); a chapter-end validation block (`Claim |\nValidation status | For | The question on the table`) ordered\nnon-field-validated-first. Instances: `model/onboarding/tour/ch0…ch9-*.md`\nwith committed `.html` siblings.",
+      "sources": [
+        "model/onboarding/tour/ch0…ch9-*.md"
+      ]
+    },
+    {
+      "id": "A14",
+      "type": "artifact",
+      "title": "Generated views: the corpus ledger and the HTML renders",
+      "ezx": "Machine-generated files carry a do-not-edit banner and are still committed; a check guarantees they match a fresh build byte for byte. Sections with no data source yet are explicit skeletons naming what will feed them, rather than faking emptiness or completeness.",
+      "original": "Both carry a \"GENERATED … do not edit by hand\" banner and are committed;\nfreshness is guarded by the reproducibility check; ledger sections without\nfeeders are explicit skeletons naming their feeder — the artifact-side twin of\nthe check suite's \"never fake-green, never fake-red\" discipline (that phrase\nis `scripts/check.mjs`'s header). Instances: `model/ledger.md`,\n`model/c2/L0/*.html`, `model/onboarding/tour/ch*.html`.",
+      "sources": [
+        "model/ledger.md",
+        "model/c2/L0/*.html",
+        "model/onboarding/tour/ch*.html",
+        "scripts/check.mjs"
+      ]
+    },
+    {
+      "id": "A15",
+      "type": "artifact",
+      "title": "Retro report and owner decision record",
+      "ezx": "A retrospective report states its own lens up front and backs every finding with an exhibit. The decision record that follows states the decision in the present tense, says why this and not that, and cites the report behind each condensed finding.",
+      "original": "Retro form: a self-describing lens header (blinded on reports 1–3) +\nexhibit-backed findings per consumer; decision form: Status/Scope/Evidence\nheader, the decision in the present, why-this-not-that, condensed findings\neach citing its report. Instances:\n`model-c1/retro/2026-07-13-report-1..6-*.md`,\n`model-c1/retro/2026-07-13-reset-decision.md`.",
+      "sources": [
+        "model-c1/retro/2026-07-13-report-1..6-*.md",
+        "model-c1/retro/2026-07-13-reset-decision.md"
+      ]
+    },
+    {
+      "id": "A16",
+      "type": "artifact",
+      "title": "The loop map",
+      "ezx": "A single diagram of the system's spine, written once and rendered into more than one page. Its header declares status, role, medium, and source, and the choice of medium carries a built-in condition for switching to a hand-drawn version.",
+      "original": "The second write-once/rendered-twice spine asset beside the worked examples: a\nmermaid system-spine diagram with a header declaring `Status / Role / Medium /\nSource` — the medium owner-settled with an embedded revisit trigger (\"escalate\nto hand-authored SVG only if the first render misses the visual-spine bar\") —\nplus a framing-claim block citing INV-R1/R3/R9; transcluded into tour Ch0 and\nnamed by decision #7 as \"the concept layer's spine diagram, the first shared\nR0/R1 artifact\". Instance: `model/spine/loop-map.md`.",
+      "sources": [
+        "model/spine/loop-map.md",
+        "model/PROCESS2.md decision #7"
+      ]
+    },
+    {
+      "id": "A17",
+      "type": "artifact",
+      "title": "The session scratchpad",
+      "ezx": "The process requires that each outside-review round's prompt and output be kept in the session scratchpad, and the records assert that they were. But no location, naming, or retention convention exists anywhere, and nothing of it is in the repository — mandated evidence with no visible surface.",
+      "original": "Arm prompt + output are required \"in the session scratchpad\"\n(`model/PROCESS2.md` §Review regime; the cycle-1 ancestor spells out \"(outside\nthe repo)\", `model-c1/PROCESS.md` §External review arm). The L0 round-1 record\nasserts it explicitly and rounds 2–5 inherit it via \"same pin and regime\"\n(`model/c2/L0/_meta.md`) — but no location, naming, or retention convention\nexists anywhere, and no artifact is in the repo. Reclassified from\nUnclassified (U3) per the 2026-07-27 arm round (finding #11): repository\nresidence is not a taxonomy criterion — this is the artifact-form the arm\nregime produces and consumes, its location/retention convention **practiced,\nnot recorded**.",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model-c1/PROCESS.md §External review arm",
+        "model/c2/L0/_meta.md"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    },
+    {
+      "id": "G1",
+      "type": "gate",
+      "title": "Referential-integrity check",
+      "ezx": "Every reference to an invariant, absence, scenario, or assumption ID must actually resolve in the file that owns it. A dangling reference is a hard error; a definition nobody references only warns.",
+      "original": "Every `INV-*`/`ABS-*`/`S<n>`/`DA-<n>` reference on the live surface must\nresolve in its authority file; dangling ids are errors, orphan definitions\nwarn. `scripts/check.mjs` (`referentialIntegrity()`, lines 78–123).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (referentialIntegrity(), lines 78–123)"
+      ]
+    },
+    {
+      "id": "G2",
+      "type": "gate",
+      "title": "Anchor-integrity check",
+      "ezx": "Section anchors must be unique across the whole corpus, and every link-style citation must point at one that exists. When a level is later split, this check turns each stale citation into an error with a list of the places to fix.",
+      "original": "Heading anchors `{#id}` are globally unique; every link-form citation must\nresolve — a future level split \"turns every stale citation into this check's\nerror with a site list\". `scripts/check.mjs` (`anchorIntegrity()`, lines\n136–161).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (anchorIntegrity(), lines 136–161)"
+      ]
+    },
+    {
+      "id": "G3",
+      "type": "gate",
+      "title": "Authority-direction check",
+      "ezx": "The four foundation files may not cite a level's section — references only flow one way. On its very first run it caught a real violation carried over from the first cycle.",
+      "original": "The four foundation files may contain no `L<n> §<m>` level-section citation;\nit caught the live cycle-1 exhibit (INV-K6 → \"L3 §2.2\") on its first run.\n`scripts/check.mjs` (`authorityDirection()`, lines 165–178); rule in\n`model/PROCESS2.md` principle #6.",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (authorityDirection(), lines 165–178)",
+        "model/PROCESS2.md principle #6"
+      ]
+    },
+    {
+      "id": "G4",
+      "type": "gate",
+      "title": "Slug-bijection check",
+      "ezx": "Every question-bank file's slug must match a real concept in the inventory, be unique, and agree with the slug written inside the file itself.",
+      "original": "Every question-bank file's slug must resolve to an inventory-§3 concept, be\nunique, and match its own `Slug:` header. `scripts/check.mjs`\n(`slugBijection()`, lines 202–221).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (slugBijection(), lines 202–221)"
+      ]
+    },
+    {
+      "id": "G5",
+      "type": "gate",
+      "title": "Per-level concept-budget check",
+      "ezx": "The mapping between the inventory's per-level split and the levels themselves must be exact — mismatches are hard errors. Going over the concept budget is only a warning that opens a split-or-demote-or-accept discussion; one level is currently over it.",
+      "original": "§9-projection bijection failures are errors; budget breaches (outside 5–9, L6\nfloor-exempt) are warnings that open a split/demote/accept-with-note\ndiscussion — \"mandatory check, advisory outcome\" (the review regime's\nsize-trigger bullet; operating mode fixed by decision #6). `scripts/check.mjs`\n(`conceptBudget()`, lines 273–317); currently warning on L4 (17 > 9).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (conceptBudget(), lines 273–317)",
+        "model/PROCESS2.md §Review regime (size-trigger bullet)",
+        "model/PROCESS2.md decision #6"
+      ],
+      "flags": [
+        "machine-enforced for integrity, advisory for the budget"
+      ]
+    },
+    {
+      "id": "G6",
+      "type": "gate",
+      "title": "Reproducibility check",
+      "ezx": "Every committed HTML page must be byte-for-byte identical to what a fresh build produces in memory; a rendered page whose source is gone is an error.",
+      "original": "Every committed render must byte-equal a fresh in-memory build (the build\nexports `generateArtifacts()` without writing precisely to enable this);\norphan renders are errors. `scripts/check.mjs` (`reproducibility()`, lines\n321–343).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (reproducibility(), lines 321–343)"
+      ]
+    },
+    {
+      "id": "G7",
+      "type": "gate",
+      "title": "Debt-coverage check",
+      "ezx": "The debt map is checked both ways against the frozen originals: the sources are re-parsed at every run, the pinned paragraph is verified by fingerprint and row count, each item's text must appear word-for-word in the original, and every verdict token and memo fate must line up.",
+      "original": "Bidirectional coverage of the debt map against re-derived frozen sources: §9\nitems re-parsed from the frozen HTML at every run, the PC0 paragraph pinned by\nsha256 and row count, item cells verified as verbatim substrings, disposition\ntokens validated, topic-memo fate bijection. `scripts/check.mjs`\n(`debtCoverage()`, lines 378–479).",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (debtCoverage(), lines 378–479)"
+      ]
+    },
+    {
+      "id": "G8",
+      "type": "gate",
+      "title": "Structural-conformance + size triggers",
+      "ezx": "Front-matter versus directory agreement, the list of allowed inline HTML tags, and the file-size triggers all produce warnings only and can never fail the run; resolving them is an owner discussion. The charter claims this check enforces placement, but no placement check exists in the code — placement is kept by procedure today.",
+      "original": "Front-matter level ↔ directory conformance, the inline-HTML allowlist\n(DECISION / `<details>` / `<summary>`), and the KB size triggers (concept 25\nKB, protocol 15 KB, level 100 KB) all emit warnings; resolution is an owner\ndiscussion per decision #6. `scripts/check.mjs` (`structuralAndSize()`, lines\n227–265). Note: `model/STRUCTURE.md` says \"the structural-conformance check\nenforces placement\", but no placement check exists in code — placement is\nprocedure-enforced today.",
+      "gateClass": "machine",
+      "sources": [
+        "scripts/check.mjs (structuralAndSize(), lines 227–265)",
+        "model/STRUCTURE.md"
+      ],
+      "flags": [
+        "machine-run, advisory only — cannot fail the run"
+      ]
+    },
+    {
+      "id": "G9",
+      "type": "gate",
+      "title": "Declared skeleton checks",
+      "ezx": "Four checks are named but not written yet — label completeness, coverage assertions, amendment integrity, and traceability coverage. They report \"todo\" and contribute nothing to the exit code; of the four rules, only label completeness has a hand-kept interim check on record.",
+      "original": "Label completeness, coverage assertions, amendment integrity, traceability\ncoverage are named checks that currently report `todo` (\"c2 level surface\nexists — implement (R1+)\") and contribute nothing to the exit code; interim\nprocedure enforcement is on record for label completeness only (L0's \"label\ncompleteness (self-check)\" table in `model/c2/L0/_meta.md`) — the other three\nhave no interim keeper recorded (2026-07-27 arm finding #7).\n`scripts/check.mjs` (`skeletons()`, lines 483–492).",
+      "gateClass": "procedure",
+      "sources": [
+        "scripts/check.mjs (skeletons(), lines 483–492)",
+        "model/c2/L0/_meta.md"
+      ],
+      "flags": [
+        "declared, not implemented"
+      ]
+    },
+    {
+      "id": "G10",
+      "type": "gate",
+      "title": "The R1 level acceptance gate",
+      "ezx": "A level is accepted only when three legs pass: a fresh reader answers the quiz correctly, a cited table shows the level can express the canonical stories, and every rule row carries its knowledge label.",
+      "original": "Three legs: fresh-reader pass (notes-blind arm on the shared bank), scenario\nexpressibility (a cited claims table), label completeness. Defined in\n`model/PROCESS2.md` §Phases R1 (\"Gate: fresh-reader + scenario expressibility\n+ label completeness\"); executed in `model/c2/L0/_meta.md` (five consecutive\n11/11 runs; 11-row expressibility table; 20/20 labeled rows).",
+      "gateClass": "procedure",
+      "sources": [
+        "model/PROCESS2.md §Phases R1",
+        "model/c2/L0/_meta.md"
+      ]
+    },
+    {
+      "id": "G11",
+      "type": "gate",
+      "title": "Owner ratification / the Felho checkpoint",
+      "ezx": "The owner personally closes every acceptance on both tracks. It is recorded in the file's status line and in its own commit, and by definition it cannot be automated.",
+      "original": "The single identity-bound act closing every acceptance on both tracks;\nrecorded in status lines (`status: accepted (Felho, 2026-07-14)`) and its own\ncommits. `model/STRUCTURE.md` §Operational layer;\n`model/onboarding/onboarding-process.md` method step 3.",
+      "gateClass": "procedure",
+      "sources": [
+        "model/STRUCTURE.md §Operational layer",
+        "model/onboarding/onboarding-process.md method step 3"
+      ],
+      "flags": [
+        "un-automatable by definition"
+      ]
+    },
+    {
+      "id": "G12",
+      "type": "gate",
+      "title": "The stopping rule",
+      "ezx": "The review rounds end once two rounds in a row produce at most two accepted conceptual findings. The tally is kept by hand, and the owner may close earlier in a sanctioned way.",
+      "original": "Two consecutive rounds with ≤2 accepted conceptual findings close the arm\nphase; hand-tallied; the owner may close earlier under decision #4's\nsanctioned form (L0 closed on owner judgment at 5, 3, 3, 3, 2).\n`model/PROCESS2.md` §Review regime; record in `model/c2/L0/_meta.md`.",
+      "gateClass": "procedure",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model/c2/L0/_meta.md"
+      ]
+    },
+    {
+      "id": "G13",
+      "type": "gate",
+      "title": "The cadence guard",
+      "ezx": "Closing the review and accepting the work in the same sitting draws a warning addressed to the owner, and a missing per-section reading log warns but never blocks. No code implements it — it exists purely as owner discipline.",
+      "original": "A same-sitting arm-close + acceptance draws a warning addressed to the owner;\nthe per-section read-log is default gate evidence whose absence warns, never\nblocks. Defined in `model/PROCESS2.md` decision #4 as \"the check flags…\", but\nno code implements it — it exists purely as owner discipline (L0 satisfied it\nby a separate-sitting owner read, `model/c2/L0/_meta.md` gate record).",
+      "gateClass": "procedure",
+      "sources": [
+        "model/PROCESS2.md decision #4",
+        "model/c2/L0/_meta.md gate record"
+      ]
+    },
+    {
+      "id": "G14",
+      "type": "gate",
+      "title": "Arm-mechanics guard: clean tree + byte-guard + hash-citing verdict",
+      "ezx": "The outside reviewer may only run against a committed tree, the reviewed bytes are fingerprinted before and after, and a verdict that does not quote those fingerprints does not count. No script computes any of it.",
+      "original": "The review arm may only run on a committed tree; reviewed bytes are\nhash-guarded before/after; a verdict must cite the basis hashes or it is no\nverdict. `model/PROCESS2.md` §Review regime; per-round evidence (sha256 pairs)\nin `model/c2/L0/_meta.md`. No script computes these hashes.",
+      "gateClass": "procedure",
+      "sources": [
+        "model/PROCESS2.md §Review regime",
+        "model/c2/L0/_meta.md"
+      ]
+    },
+    {
+      "id": "G15",
+      "type": "gate",
+      "title": "Prerequisite-promotion guard",
+      "ezx": "A later core concept may never lean on something the tour only mentioned in passing; the moment drafting hits that, the mention must be promoted to a full core treatment. The inventory calls it the one rule that binds the two concept tiers.",
+      "original": "Standing consistency guard on the tour track: a later core concept never\npresupposes an in-passing mention — \"promote if drafting hits it\"\n(`model/onboarding/onboarding-process.md` §Method step 4). The concept\ninventory states it as the one rule binding the core and in-passing tiers: \"a\nlater core concept may not presuppose something that was only mentioned in\npassing — if drafting hits that, the passing mention promotes\".\nProcedure-enforced during drafting; no script checks it. Entered the ledger\nfrom the 2026-07-27 arm round (finding #8, missing-element) — the extraction\nrun had not surfaced it.",
+      "gateClass": "procedure",
+      "sources": [
+        "model/onboarding/onboarding-process.md §Method step 4 (Standing consistency guards)",
+        "model/spine/concept-inventory.md (\"One rule binds the two tiers\")"
+      ]
+    },
+    {
+      "id": "U1",
+      "type": "unclassified",
+      "title": "The frozen quarry `model-c1/`",
+      "ezx": "The whole first-cycle tree, kept frozen. It is at once a source to harvest from, an archive, and something the checks read — but nobody may write to it, so it has no owner and no checkpoint. It is a state with an ownership profile rather than a rule, a procedure, a document form, or a control.",
+      "original": "Simultaneously an input (R3 harvest), an archive (frozen renders, retro,\ntopics), and a check source (G7 reads it); it has no writer and therefore no\ngate (\"`model-c1/` | none — frozen | R3 quarry harvest, coverage checks |\nexempt from the checked scan surface\", `model/STRUCTURE.md` ownership table;\n\"a quarry, NOT a base\", `model/PROCESS2.md` Inputs). It resists the taxonomy\nbecause it is a *state with an ownership profile* — not a rule, not a\nprocedure, not a form the process produces, not a control.",
+      "sources": [
+        "model/STRUCTURE.md ownership table",
+        "model/PROCESS2.md Inputs"
+      ]
+    },
+    {
+      "id": "U2",
+      "type": "unclassified",
+      "title": "Off-repo inputs and their index",
+      "ezx": "Much of the material the corpus rests on lives outside the repository — a shared drive of vision documents, research reports, and field notes, plus a few local snapshots and an annotated index of that drive. No check can see any of it, the entire \"confirmed in the field\" label depends on it, and the index file belongs to neither track's ownership table.",
+      "original": "The Google Drive corpus (vision doc, research reports, field-call\nnotes), the local snapshots at the repo root\n(`architecture-design-notes.md`,\n`architecture-build-plan.html`, `design-partner-discovery-guide.html`,\ntwo PDFs), and `INDEX.md` (an annotated index *of the Drive folder* carrying\nteam and business context — not alone in that: the concept inventory's\naudience table holds team roles and validation lenses, and the design-notes\nsnapshot records operating roles and business implications; 2026-07-27 arm\nfinding #6). The entire `field-validated` epistemic label rests on artifacts\nno check can see, and `INDEX.md` sits outside both tracks' ownership tables —\nconsumed by the process but governed by nothing in it, which is why it fits no\ntype.",
+      "sources": [
+        "INDEX.md",
+        "architecture-design-notes.md",
+        "architecture-build-plan.html",
+        "design-partner-discovery-guide.html"
+      ]
+    },
+    {
+      "id": "U4",
+      "type": "unclassified",
+      "title": "Blinded multi-subagent retrospective feeding an owner decision",
+      "ezx": "Six independent AI reports — three deliberately kept from seeing each other's conclusions, three analysing an outside reference process — fed one owner decision that produced the current process constitution. It happened once and is written down nowhere as a repeatable procedure, so it fits none of the four types — yet it produced the constitution itself.",
+      "original": "Six independent retro reports fed one owner reset decision that produced\nPROCESS2 itself: reports 1–3 carry the blinded header \"run WITHOUT access to\nthe structure-retro session's conclusions (bias-free by construction)\";\nreports 4–6 are independent subagent analyses of an external reference process\n(pairflow) — report 6 the comparison proper — two of them carrying post-hoc\nowner corrections in their headers. Exists as a recorded instance\n(`model-c1/retro/2026-07-13-report-1..6-*.md`,\n`model-c1/retro/2026-07-13-reset-decision.md`) but is defined nowhere as a\nrepeatable procedure. Reclassified from Mechanism (M12) per the 2026-07-27 arm\nround (finding #12): a single dated instance, explicitly not defined as\nrepeatable, falls below the Mechanism bar's \"recurring\" — but it is too\nload-bearing to drop, so it sits here as a one-off.",
+      "sources": [
+        "model-c1/retro/2026-07-13-report-1..6-*.md",
+        "model-c1/retro/2026-07-13-reset-decision.md"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    }
+  ],
+  "coreThree": [
+    {
+      "rank": 1,
+      "title": "P1 — Sessions are ephemeral; the repo is the institution",
+      "ezx": "Every other piece of this process follows from taking one fact seriously: no work session remembers anything, so the repository has to carry it all. Strip everything else away and a process that still obeys this can regrow its machinery; drop it and no amount of remaining machinery survives the next session boundary.",
+      "itemIds": [
+        "P1"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "M1 — The external review-arm regime",
+      "ezx": "This is the only force in the loop that subtracts rather than adds — the first cycle showed what happens without a gated adversary: a ratchet, not a filter. Its evidence discipline (pinned sources, byte fingerprints, verdicts that cite them) is what makes review results trustworthy across throwaway sessions.",
+      "itemIds": [
+        "M1",
+        "M2",
+        "G14"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "G11 — Owner ratification",
+      "ezx": "The single act tied to a specific person is the process's anchor of authority: every accepted status, every settled decision, and the legitimacy of every deliberate quality-bar break traces back to it. Checks can be re-derived and document forms re-invented, but a process with no human ratification point has no way to make anything true.",
+      "itemIds": [
+        "G11"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "G15",
+      "to": "A13",
+      "type": "enforces",
+      "note": "keeps the tour chapters' core / in-passing boundary"
+    },
+    {
+      "from": "G15",
+      "to": "M8",
+      "type": "part-of",
+      "note": "one of the tour track's standing consistency guards"
+    },
+    {
+      "from": "M4",
+      "to": "P1",
+      "type": "realizes"
+    },
+    {
+      "from": "M9",
+      "to": "P1",
+      "type": "realizes"
+    },
+    {
+      "from": "A3",
+      "to": "P1",
+      "type": "realizes"
+    },
+    {
+      "from": "M13",
+      "to": "P1",
+      "type": "realizes",
+      "note": "pinned, re-verifiable bases across ephemeral sessions"
+    },
+    {
+      "from": "G3",
+      "to": "P2",
+      "type": "enforces"
+    },
+    {
+      "from": "G1",
+      "to": "P2",
+      "type": "enforces"
+    },
+    {
+      "from": "G2",
+      "to": "P2",
+      "type": "enforces",
+      "note": "one authority per section id"
+    },
+    {
+      "from": "G5",
+      "to": "P2",
+      "type": "enforces",
+      "note": "projection bijection"
+    },
+    {
+      "from": "G6",
+      "to": "P2",
+      "type": "enforces",
+      "note": "a hand edit to a generated view cannot survive"
+    },
+    {
+      "from": "M6",
+      "to": "P2",
+      "type": "realizes",
+      "note": "generated views, never copies"
+    },
+    {
+      "from": "A4",
+      "to": "P2",
+      "type": "realizes",
+      "note": "\"principle #6 in space\""
+    },
+    {
+      "from": "M14",
+      "to": "P2",
+      "type": "realizes",
+      "note": "one carrier = one authority per open question"
+    },
+    {
+      "from": "A7",
+      "to": "P2",
+      "type": "realizes",
+      "note": "one canonical line per term"
+    },
+    {
+      "from": "A9",
+      "to": "P2",
+      "type": "realizes",
+      "note": "single authority for concepts, slugs, DA claims"
+    },
+    {
+      "from": "A11",
+      "to": "P2",
+      "type": "realizes",
+      "note": "write-once, render-twice"
+    },
+    {
+      "from": "A16",
+      "to": "P2",
+      "type": "realizes",
+      "note": "write-once, render-twice"
+    },
+    {
+      "from": "A1",
+      "to": "P3",
+      "type": "realizes"
+    },
+    {
+      "from": "A2",
+      "to": "P3",
+      "type": "realizes",
+      "note": "process metadata off the reading path"
+    },
+    {
+      "from": "M2",
+      "to": "P3",
+      "type": "realizes",
+      "note": "altitude-matched findings decline out-of-genre findings"
+    },
+    {
+      "from": "M5",
+      "to": "P4",
+      "type": "realizes"
+    },
+    {
+      "from": "M3",
+      "to": "P4",
+      "type": "realizes",
+      "note": "concept-first phasing in time"
+    },
+    {
+      "from": "M2",
+      "to": "P4",
+      "type": "realizes",
+      "note": "declines mechanism findings on `invented`"
+    },
+    {
+      "from": "G9",
+      "to": "P4",
+      "type": "enforces",
+      "note": "will enforce label completeness once implemented"
+    },
+    {
+      "from": "G10",
+      "to": "P4",
+      "type": "enforces",
+      "note": "the label-completeness leg"
+    },
+    {
+      "from": "G10",
+      "to": "P5",
+      "type": "realizes",
+      "note": "the fresh-reader leg IS teachability-as-gate"
+    },
+    {
+      "from": "M8",
+      "to": "P5",
+      "type": "realizes"
+    },
+    {
+      "from": "G14",
+      "to": "P6",
+      "type": "realizes",
+      "note": "deleting byte-guard + hash-citing leaves the principle with nothing carrying it"
+    },
+    {
+      "from": "M13",
+      "to": "P6",
+      "type": "realizes"
+    },
+    {
+      "from": "M2",
+      "to": "P7",
+      "type": "realizes"
+    },
+    {
+      "from": "G5",
+      "to": "P8",
+      "type": "realizes",
+      "note": "advisory budget outcome"
+    },
+    {
+      "from": "G8",
+      "to": "P8",
+      "type": "realizes"
+    },
+    {
+      "from": "G13",
+      "to": "P8",
+      "type": "realizes"
+    },
+    {
+      "from": "G12",
+      "to": "P8",
+      "type": "realizes",
+      "note": "its L0 close on owner judgment is the feedback-not-rail form in action"
+    },
+    {
+      "from": "G11",
+      "to": "P9",
+      "type": "realizes"
+    },
+    {
+      "from": "M9",
+      "to": "P10",
+      "type": "realizes",
+      "note": "changelog + commit message as the sanctioned home for edit history"
+    },
+    {
+      "from": "A12",
+      "to": "P10",
+      "type": "realizes",
+      "note": "rows re-dispositioned so the map speaks in the present"
+    },
+    {
+      "from": "G9",
+      "to": "P11",
+      "type": "realizes",
+      "note": "skeleton checks are build-only-what-the-next-phase-consumes applied to the checks themselves"
+    },
+    {
+      "from": "A5",
+      "to": "P11",
+      "type": "realizes",
+      "note": "the absence ledger form"
+    },
+    {
+      "from": "M7",
+      "to": "P12",
+      "type": "realizes"
+    },
+    {
+      "from": "M10",
+      "to": "P12",
+      "type": "realizes"
+    },
+    {
+      "from": "A8",
+      "to": "P12",
+      "type": "realizes"
+    },
+    {
+      "from": "G7",
+      "to": "P12",
+      "type": "enforces"
+    },
+    {
+      "from": "M8",
+      "to": "P13",
+      "type": "realizes",
+      "note": "contradiction routing"
+    },
+    {
+      "from": "A13",
+      "to": "P13",
+      "type": "realizes",
+      "note": "the derivative reading-path form"
+    },
+    {
+      "from": "M15",
+      "to": "P13",
+      "type": "realizes",
+      "note": "three-way fold-back routing keeps the model the authority"
+    },
+    {
+      "from": "A10",
+      "to": "P14",
+      "type": "realizes",
+      "note": "comprehension-not-recall question form"
+    },
+    {
+      "from": "M1",
+      "to": "P14",
+      "type": "realizes",
+      "note": "notes-blind lenses"
+    },
+    {
+      "from": "P14",
+      "to": "P5",
+      "type": "derives-from"
+    },
+    {
+      "from": "M3",
+      "to": "P15",
+      "type": "realizes",
+      "note": "R1's deliverable = the conversation basis + the first honest sizing"
+    },
+    {
+      "from": "A12",
+      "to": "P15",
+      "type": "realizes",
+      "note": "the `mvp-cut-seed` store"
+    },
+    {
+      "from": "A14",
+      "to": "P15",
+      "type": "realizes",
+      "note": "the ledger's MVP-cut view section"
+    },
+    {
+      "from": "P4",
+      "to": "P15",
+      "type": "derives-from",
+      "note": "the sizing-instrument purpose is what licenses depth-by-status"
+    },
+    {
+      "from": "M2",
+      "to": "M1",
+      "type": "part-of"
+    },
+    {
+      "from": "G12",
+      "to": "M1",
+      "type": "part-of"
+    },
+    {
+      "from": "G14",
+      "to": "M1",
+      "type": "part-of"
+    },
+    {
+      "from": "M1",
+      "to": "A2",
+      "type": "produces",
+      "note": "round records"
+    },
+    {
+      "from": "M1",
+      "to": "A10",
+      "type": "consumes"
+    },
+    {
+      "from": "M1",
+      "to": "A1",
+      "type": "consumes",
+      "note": "the artifact under review"
+    },
+    {
+      "from": "M1",
+      "to": "A17",
+      "type": "produces",
+      "note": "each arm round deposits prompt + output there"
+    },
+    {
+      "from": "M2",
+      "to": "A2",
+      "type": "produces",
+      "note": "disposition tables"
+    },
+    {
+      "from": "M14",
+      "to": "M2",
+      "type": "part-of",
+      "note": "duplicate declines cite the carrier"
+    },
+    {
+      "from": "M3",
+      "to": "A1",
+      "type": "produces"
+    },
+    {
+      "from": "M3",
+      "to": "A2",
+      "type": "produces"
+    },
+    {
+      "from": "M3",
+      "to": "A11",
+      "type": "produces",
+      "note": "minted at R1 L0 as a trigger-holder fold"
+    },
+    {
+      "from": "M3",
+      "to": "A12",
+      "type": "consumes",
+      "note": "mvp-cut seeds"
+    },
+    {
+      "from": "M3",
+      "to": "A6",
+      "type": "consumes",
+      "note": "trace-first openings"
+    },
+    {
+      "from": "M3",
+      "to": "U1",
+      "type": "consumes",
+      "note": "the R3 quarry harvest, defined but not yet run"
+    },
+    {
+      "from": "M4",
+      "to": "A3",
+      "type": "consumes",
+      "note": "the bootstrap read"
+    },
+    {
+      "from": "M4",
+      "to": "A4",
+      "type": "consumes",
+      "note": "the bootstrap read"
+    },
+    {
+      "from": "M4",
+      "to": "A3",
+      "type": "produces",
+      "note": "changelog folds on the target track"
+    },
+    {
+      "from": "G11",
+      "to": "M4",
+      "type": "part-of",
+      "note": "the one identity-bound act in the operational layer"
+    },
+    {
+      "from": "M5",
+      "to": "A9",
+      "type": "consumes",
+      "note": "DA register"
+    },
+    {
+      "from": "M5",
+      "to": "A6",
+      "type": "consumes",
+      "note": "the domain-expert-track surface"
+    },
+    {
+      "from": "M5",
+      "to": "A14",
+      "type": "produces",
+      "note": "the assumption-register section of the generated ledger, currently skeleton"
+    },
+    {
+      "from": "M5",
+      "to": "U2",
+      "type": "consumes",
+      "note": "the `field-validated` label's ground truth"
+    },
+    {
+      "from": "M6",
+      "to": "A14",
+      "type": "produces"
+    },
+    {
+      "from": "M6",
+      "to": "A1",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A2",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A11",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A13",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A16",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A5",
+      "type": "consumes",
+      "note": "hover-card authority"
+    },
+    {
+      "from": "M6",
+      "to": "A6",
+      "type": "consumes",
+      "note": "hover-card authority"
+    },
+    {
+      "from": "M6",
+      "to": "A7",
+      "type": "consumes",
+      "note": "hover-card authority"
+    },
+    {
+      "from": "M6",
+      "to": "A9",
+      "type": "consumes",
+      "note": "hover-card authority"
+    },
+    {
+      "from": "M7",
+      "to": "A12",
+      "type": "produces"
+    },
+    {
+      "from": "M7",
+      "to": "U1",
+      "type": "consumes",
+      "note": "frozen sources"
+    },
+    {
+      "from": "M8",
+      "to": "A13",
+      "type": "produces"
+    },
+    {
+      "from": "M8",
+      "to": "A13",
+      "type": "consumes",
+      "note": "M8's fresh-reader test reads the chapter back"
+    },
+    {
+      "from": "M8",
+      "to": "A9",
+      "type": "consumes"
+    },
+    {
+      "from": "M8",
+      "to": "A10",
+      "type": "consumes"
+    },
+    {
+      "from": "M8",
+      "to": "A16",
+      "type": "produces",
+      "note": "tour track, trigger-holder fold"
+    },
+    {
+      "from": "M9",
+      "to": "A3",
+      "type": "produces",
+      "note": "changelog sections"
+    },
+    {
+      "from": "M10",
+      "to": "U1",
+      "type": "produces",
+      "note": "the quarry is the move commit's product"
+    },
+    {
+      "from": "M10",
+      "to": "A4",
+      "type": "produces",
+      "note": "the charter was authored in the same move commit"
+    },
+    {
+      "from": "M10",
+      "to": "A15",
+      "type": "consumes",
+      "note": "the reset decision authorizes it"
+    },
+    {
+      "from": "M11",
+      "to": "A1",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A2",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A3",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A4",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A5",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A6",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A7",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A8",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A9",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A10",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A11",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A12",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A13",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "M11",
+      "to": "A16",
+      "type": "consumes",
+      "note": "part of the whole live `model/` markdown surface"
+    },
+    {
+      "from": "U4",
+      "to": "A15",
+      "type": "produces"
+    },
+    {
+      "from": "M13",
+      "to": "A2",
+      "type": "produces",
+      "note": "the basis-register section"
+    },
+    {
+      "from": "M13",
+      "to": "A13",
+      "type": "produces",
+      "note": "the `basis:` strings of the tour chapters"
+    },
+    {
+      "from": "M13",
+      "to": "A5",
+      "type": "consumes",
+      "note": "pinned source"
+    },
+    {
+      "from": "M13",
+      "to": "A6",
+      "type": "consumes",
+      "note": "pinned source"
+    },
+    {
+      "from": "M13",
+      "to": "A7",
+      "type": "consumes",
+      "note": "pinned source"
+    },
+    {
+      "from": "M13",
+      "to": "A9",
+      "type": "consumes",
+      "note": "pinned source"
+    },
+    {
+      "from": "M14",
+      "to": "A2",
+      "type": "produces",
+      "note": "the forward flag"
+    },
+    {
+      "from": "M15",
+      "to": "A13",
+      "type": "consumes",
+      "note": "chapters + validation blocks"
+    },
+    {
+      "from": "M15",
+      "to": "A9",
+      "type": "consumes",
+      "note": "the DA register"
+    },
+    {
+      "from": "M15",
+      "to": "M5",
+      "type": "part-of",
+      "note": "M15's domain-expert leg — one agenda, never three lists"
+    },
+    {
+      "from": "G8",
+      "to": "A1",
+      "type": "enforces",
+      "note": "A1's declared form: front matter, allowlist"
+    },
+    {
+      "from": "G4",
+      "to": "A10",
+      "type": "enforces",
+      "note": "A10's keying rule"
+    },
+    {
+      "from": "G7",
+      "to": "A12",
+      "type": "enforces",
+      "note": "A12's completeness and token contract"
+    },
+    {
+      "from": "G6",
+      "to": "A14",
+      "type": "enforces",
+      "note": "A14's freshness"
+    },
+    {
+      "from": "G11",
+      "to": "A2",
+      "type": "consumes",
+      "note": "the gate evidence the owner ratifies on — report-stated edge with a gate source"
+    },
+    {
+      "from": "G11",
+      "to": "G10",
+      "type": "consumes",
+      "note": "G10's record is consumed by G11 — report-stated edge with a gate source and a gate target"
+    },
+    {
+      "from": "G13",
+      "to": "G11",
+      "type": "part-of",
+      "note": "it guards the acceptance sitting"
+    },
+    {
+      "from": "G9",
+      "to": "G10",
+      "type": "part-of",
+      "note": "today the label-completeness leg is part of G10"
+    },
+    {
+      "from": "G1",
+      "to": "A5",
+      "type": "consumes",
+      "note": "authority file — report-stated edge with a gate source"
+    },
+    {
+      "from": "G1",
+      "to": "A6",
+      "type": "consumes",
+      "note": "authority file for S-ids — report-stated edge with a gate source"
+    },
+    {
+      "from": "G1",
+      "to": "A9",
+      "type": "consumes",
+      "note": "authority file — report-stated edge with a gate source"
+    },
+    {
+      "from": "G3",
+      "to": "A5",
+      "type": "consumes",
+      "note": "the foundation set — report-stated edge with a gate source"
+    },
+    {
+      "from": "G3",
+      "to": "A6",
+      "type": "consumes",
+      "note": "the foundation set — report-stated edge with a gate source"
+    },
+    {
+      "from": "G3",
+      "to": "A7",
+      "type": "consumes",
+      "note": "the foundation set — report-stated edge with a gate source"
+    },
+    {
+      "from": "G3",
+      "to": "A8",
+      "type": "consumes",
+      "note": "the foundation set — report-stated edge with a gate source"
+    },
+    {
+      "from": "G4",
+      "to": "A9",
+      "type": "consumes",
+      "note": "report-stated edge with a gate source"
+    },
+    {
+      "from": "G5",
+      "to": "A9",
+      "type": "consumes",
+      "note": "§9 projection — report-stated edge with a gate source"
+    },
+    {
+      "from": "G7",
+      "to": "U1",
+      "type": "consumes",
+      "note": "report-stated edge with a gate source"
+    },
+    {
+      "from": "G9",
+      "to": "A8",
+      "type": "consumes",
+      "note": "the traceability-coverage skeleton names it as feeder — report-stated edge with a gate source"
+    },
+    {
+      "from": "G10",
+      "to": "A6",
+      "type": "consumes",
+      "note": "scenario expressibility — report-stated edge with a gate source"
+    },
+    {
+      "from": "G10",
+      "to": "A10",
+      "type": "consumes",
+      "note": "report-stated edge with a gate source"
+    },
+    {
+      "from": "A17",
+      "to": "G14",
+      "type": "part-of",
+      "note": "the scratchpad deposit is part of G14's evidence trail"
+    }
+  ],
+  "retired": [
+    {
+      "old": "model-c1/PROCESS.md — the frozen cycle-1 track process file",
+      "new": "model/PROCESS2.md — the cycle-2 track process file",
+      "note": "both are instances of A3; the report states the supersession between the two file instances, not between elements"
+    }
+  ],
+  "verification": {
+    "arm": "a pinned external reviewer model",
+    "findingsFile": "project-s-present-2026-07-27-arm-findings.md",
+    "findings": [
+      {
+        "disposition": "folded",
+        "summary": "M1's \"every c2 artifact is hardened by external review\" is an overclaim: the c2 debt map was owner-accepted with no arm round of its own.",
+        "itemIds": [
+          "M1",
+          "A12"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "M13's pin-and-re-verify does not in fact live in every tour chapter: the ten chapters' `basis:` strings are plain path lists with no commit pins or frozen markers.",
+        "itemIds": [
+          "M13",
+          "A13"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "M14's \"exactly one carrier per open question\" is contradicted by the debt map, which deliberately records one consent question carried by two flags.",
+        "itemIds": [
+          "M14",
+          "A12"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The §4 claim that a `Checks:` footer is practiced on every fold commit fails on a directly identified post-check.mjs fold commit that has none.",
+        "itemIds": [
+          "M9"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "A9's slug is not \"the join key for every shared asset\": worked examples are keyed by scenario ID instead.",
+        "itemIds": [
+          "A9",
+          "A11"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "U2's claim that INDEX.md is the only in-repo carrier of team and business context is false — the concept inventory and the design notes carry both.",
+        "itemIds": [
+          "U2",
+          "A9"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "G9's blanket \"their rules are procedure-enforced meanwhile\" is supported for label completeness only, not for the other three skeleton checks.",
+        "itemIds": [
+          "G9"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The inventory misses an element entirely: the prerequisite-promotion guard that keeps a later core concept from presupposing an in-passing mention.",
+        "itemIds": [
+          "M8"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "Relation errors: \"M2 enforces P3/P4\" uses a mechanism as an `enforces` source, and the asserted \"G8 consumes A3\" is false in code — check.mjs hard-codes those rules.",
+        "itemIds": [
+          "M2",
+          "P3",
+          "P4",
+          "G8",
+          "A3"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "\"M11 part-of the decision-#3 reference mechanism\" points at an unlisted, ID-less endpoint, violating the both-endpoints-are-elements rule.",
+        "itemIds": [
+          "M11",
+          "G2"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "U3 is misclassified: repository residence is not a taxonomy criterion, and the report itself argues the scratchpad is an artifact-form by function.",
+        "itemIds": [
+          "A17"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "M12 is misclassified as a Mechanism: one dated historical instance that the report itself says is defined nowhere as repeatable does not meet the recurring bar.",
+        "itemIds": [
+          "U4"
+        ]
+      }
+    ]
+  },
+  "changelog": [
+    "2026-07-28 ledger v1 created by form migration from `project-s-present-2026-07-27.md` (the published artifact's DATA, content unchanged); arm findings not yet folded.",
+    "2026-07-28 content update: folded the 12 confirmed arm findings — quantifiers narrowed on M1, M9, M13, M14, A9, U2, G9; edges retyped M2 enforces→realizes P3/P4; false edge G8 consumes A3 dropped; new gate G15 (prerequisite-promotion guard, arm finding #8 — the run had missed it); U3 → A17 (the session scratchpad is an artifact-form); M12 → U4 (one-off retro, below the recurring-mechanism bar). IDs U3 and M12 retired, never reused."
+  ]
+}

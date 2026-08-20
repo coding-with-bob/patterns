@@ -1,0 +1,902 @@
+<!doctype html>
+<!-- GENERATED FILE — confpipeline.html is a public redacted copy produced by scripts/apply-redactions.mjs from its private source via site/redactions.json. Do not edit: edit the private source and the redaction map, then regenerate. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>confpipeline — Process Ledger</title>
+</head>
+<body>
+<!-- GENERATED FILE — built from ledgers/confpipeline.md by scripts/build-ledger.mjs. Do not edit. -->
+<!--
+  Self-report artifact template.
+  Filled by docs/self-report-artifact-prompt.md: replace the `null` between
+  the __DATA_START__ / __DATA_END__ markers with the extracted DATA JSON.
+  Everything else in this file is canonical design — do not edit per run.
+  Published via the Artifact tool (which wraps this in the page skeleton,
+  so no doctype/html/head/body tags here).
+-->
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --line: #e1e0d9;
+    --border: rgba(11, 11, 11, 0.10);
+    --c-principle: #2a78d6;
+    --c-mechanism: #eb6834;
+    --c-artifact: #1baf7a;
+    --c-gate: #eda100;
+    --c-un: #898781;
+    --good: #006300;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --bg: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --line: #2c2c2a;
+      --border: rgba(255, 255, 255, 0.10);
+      --c-principle: #3987e5;
+      --c-mechanism: #d95926;
+      --c-artifact: #199e70;
+      --c-gate: #c98500;
+      --good: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --line: #2c2c2a;
+    --border: rgba(255, 255, 255, 0.10);
+    --c-principle: #3987e5;
+    --c-mechanism: #d95926;
+    --c-artifact: #199e70;
+    --c-gate: #c98500;
+    --good: #0ca30c;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  a { color: inherit; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: color-mix(in oklab, var(--ink) 6%, var(--bg));
+    border-radius: 4px;
+    padding: 0.08em 0.35em;
+  }
+  :focus-visible { outline: 2px solid var(--c-principle); outline-offset: 2px; }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- header ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 30;
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 10px 0; flex-wrap: wrap;
+  }
+  .top-title { font-weight: 650; letter-spacing: -0.01em; white-space: nowrap; }
+  .top-title .proj { text-transform: capitalize; }
+  .top-meta { color: var(--muted); font-size: 12.5px; font-family: var(--mono); }
+  .top-nav { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+  .top-nav a {
+    text-decoration: none; font-size: 12.5px; padding: 3px 10px;
+    border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2);
+  }
+  .top-nav a:hover { border-color: var(--muted); color: var(--ink); }
+  #q {
+    font: inherit; font-size: 12.5px; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 3px 12px; width: 150px;
+  }
+  #q::placeholder { color: var(--muted); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 40px 0 8px; }
+  .eyebrow {
+    font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+  }
+  h1 {
+    margin: 6px 0 4px; font-size: clamp(26px, 4vw, 38px);
+    font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;
+    text-transform: capitalize;
+  }
+  .hero-sub { color: var(--muted); font-size: 13px; font-family: var(--mono); margin-bottom: 18px; }
+  .summary { max-width: 65ch; font-size: 16.5px; color: var(--ink-2); }
+  .summary p { margin: 0 0 0.7em; }
+  .scope-note {
+    max-width: 65ch; margin-top: 10px; padding: 10px 14px;
+    border-left: 3px solid var(--muted); color: var(--muted); font-size: 13px;
+  }
+
+  /* ---------- stat tiles ---------- */
+  .tiles { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0 8px; }
+  .tile {
+    flex: 1 1 150px; min-width: 150px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px 12px;
+    text-decoration: none; display: block;
+    border-top: 3px solid var(--tc, var(--muted));
+  }
+  .tile:hover { border-color: var(--muted); border-top-color: var(--tc, var(--muted)); }
+  .tile .n { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .tile .l { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+  .tile.small { flex: 0 1 150px; }
+
+  .verif-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; color: var(--ink-2);
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px;
+    text-decoration: none;
+  }
+  .verif-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
+
+  /* ---------- sections ---------- */
+  section { padding: 30px 0 6px; }
+  h2 {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 21px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 6px;
+  }
+  h2 .dot { width: 11px; height: 11px; border-radius: 3px; background: var(--hc, var(--muted)); align-self: center; }
+  h2 .cnt { color: var(--muted); font-weight: 400; font-size: 14px; font-family: var(--mono); }
+  .sec-desc { color: var(--muted); font-size: 13.5px; max-width: 65ch; margin: 0 0 16px; }
+
+  /* ---------- core three ---------- */
+  .core-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .core-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .core-rank {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .core-card h3 { margin: 6px 0 8px; font-size: 16.5px; font-weight: 650; letter-spacing: -0.01em; text-wrap: balance; }
+  .core-card p { margin: 0 0 12px; color: var(--ink-2); font-size: 14px; }
+  .member-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* ---------- id chips ---------- */
+  .chip {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    padding: 2px 8px; border-radius: 5px; text-decoration: none;
+    color: var(--ink);
+    background: color-mix(in oklab, var(--cc, var(--muted)) 14%, var(--surface));
+    border-left: 3px solid var(--cc, var(--muted));
+    white-space: nowrap;
+  }
+  .chip:hover { background: color-mix(in oklab, var(--cc, var(--muted)) 26%, var(--surface)); }
+
+  /* ---------- relations map ---------- */
+  .map-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 4px 0 12px; }
+  .edge-toggle {
+    display: inline-flex; align-items: center; gap: 7px;
+    font: inherit; font-size: 12.5px; color: var(--ink-2); cursor: pointer;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 12px;
+  }
+  .edge-toggle[aria-pressed="false"] { opacity: 0.42; }
+  .edge-toggle svg { display: block; }
+  .map-hint { color: var(--muted); font-size: 12.5px; margin-left: auto; }
+  .map-box { position: relative; }
+  .map-scroll {
+    overflow-x: auto; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 10px;
+  }
+  .map-expand {
+    position: absolute; top: 9px; right: 9px; z-index: 3;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; padding: 0; cursor: pointer;
+    color: var(--ink-2); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .map-expand:hover { color: var(--ink); border-color: var(--muted); }
+  .map-backdrop { display: none; position: fixed; inset: 0; background: rgba(6, 7, 9, 0.66); z-index: 90; }
+  .map-backdrop.show { display: block; }
+  body.map-open { overflow: hidden; }
+  .map-wrap.expanded {
+    position: fixed; inset: 16px; z-index: 100;
+    display: flex; flex-direction: column; min-height: 0;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 14px; padding: 12px 14px 14px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  }
+  .map-wrap.expanded .map-box { flex: 1 1 auto; display: flex; min-height: 0; }
+  .map-wrap.expanded .map-scroll { flex: 1 1 auto; overflow: auto; }
+  .map-wrap.expanded #mapInfo { flex: 0 0 auto; max-height: 28vh; overflow: auto; max-width: 78ch; }
+  #map { display: block; }
+  #map .node { cursor: pointer; }
+  #map .node rect { transition: opacity 0.15s; }
+  #map .node text { font-family: var(--mono); font-size: 11px; fill: var(--ink); pointer-events: none; }
+  #map .node .nt { font-family: var(--sans); fill: var(--ink-2); }
+  #map .colhead { font-family: var(--sans); font-size: 11.5px; font-weight: 600; fill: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  #map path.edge { fill: none; stroke: var(--muted); stroke-opacity: 0.45; transition: stroke-opacity 0.15s; }
+  #map.has-sel .node:not(.on) { opacity: 0.22; }
+  #map.has-sel path.edge:not(.on) { stroke-opacity: 0.07; }
+  #map.has-sel path.edge.on { stroke: var(--ink); stroke-opacity: 0.85; }
+  #mapInfo {
+    margin-top: 12px; padding: 14px 16px; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--border);
+    max-width: 65ch; display: none;
+  }
+  #mapInfo.show { display: block; }
+  #mapInfo h4 { margin: 0 0 4px; font-size: 14.5px; }
+  #mapInfo p { margin: 0 0 8px; color: var(--ink-2); font-size: 13.5px; }
+  #mapInfo a { font-size: 13px; }
+  #map .node-info { pointer-events: all; cursor: help; color: var(--ink-2); }
+  #map .node-info circle { fill: var(--surface); fill-opacity: 0.5; stroke: currentColor; stroke-opacity: 0.45; stroke-width: 1; }
+  #map .node-info:hover circle, #map .node-info:focus-visible circle { fill-opacity: 0.95; stroke-opacity: 0.95; }
+  #map .node-info text { font-family: var(--mono); font-size: 9px; font-weight: 700; fill: currentColor; }
+  #mapTip {
+    position: fixed; z-index: 130; display: none;
+    max-width: 380px; padding: 12px 14px; border-radius: 10px;
+    background: var(--surface); border: 1px solid var(--border);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+    font-size: 13px; line-height: 1.5; color: var(--ink-2);
+  }
+  #mapTip.show { display: block; }
+  #mapTip h4 { margin: 0 0 6px; font-size: 13.5px; color: var(--ink); }
+  #mapTip p { margin: 0 0 6px; }
+  #mapTip p:last-child { margin-bottom: 0; }
+
+  /* ---------- item cards ---------- */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .card.flash { animation: flash 1.6s ease-out; }
+  @keyframes flash {
+    0%, 40% { border-color: var(--c-principle); box-shadow: 0 0 0 3px color-mix(in oklab, var(--c-principle) 30%, transparent); }
+    100% { box-shadow: none; }
+  }
+  .card-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+  .card-head .title { font-weight: 650; font-size: 14.5px; letter-spacing: -0.005em; }
+  .tag {
+    font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--line);
+    border-radius: 999px; padding: 1px 8px; white-space: nowrap;
+  }
+  .card .ezx { margin: 0; color: var(--ink-2); font-size: 13.5px; }
+  .card details { border-top: 1px solid var(--line); padding-top: 8px; margin-top: auto; }
+  .card summary {
+    cursor: pointer; list-style: none; font-size: 12.5px; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .card summary::-webkit-details-marker { display: none; }
+  .card summary::before { content: "▸"; font-size: 10px; transition: transform 0.15s; }
+  .card details[open] summary::before { transform: rotate(90deg); }
+  .card summary:hover { color: var(--ink); }
+  .orig { font-size: 13px; color: var(--ink-2); margin: 8px 0 0; }
+  .orig p { margin: 0 0 0.6em; }
+  .srcs { margin: 8px 0 0; padding: 0; list-style: none; }
+  .srcs li {
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+    padding-left: 14px; text-indent: -14px; margin-bottom: 2px;
+    overflow-wrap: anywhere;
+  }
+  .srcs li::before { content: "◦ "; }
+  .rels { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
+  .rel { font-size: 12.5px; color: var(--muted); }
+  .rel .verb { font-style: italic; }
+  .rel a { color: var(--ink-2); }
+
+  /* ---------- retired ---------- */
+  .retired-list { display: flex; flex-direction: column; gap: 0; max-width: 76ch; }
+  .retired-row {
+    display: flex; gap: 12px; align-items: baseline;
+    padding: 10px 2px; border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .retired-row .old { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in oklab, var(--muted) 55%, transparent); }
+  .retired-row .arrow { color: var(--muted); flex: 0 0 auto; }
+  .retired-row .new { color: var(--ink-2); }
+  .retired-row .note { color: var(--muted); font-size: 12px; }
+
+  /* ---------- verification ---------- */
+  .verif-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+  .verif-file { font-family: var(--mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+  .finding {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 9px 2px; border-bottom: 1px solid var(--line);
+    font-size: 13.5px; color: var(--ink-2); max-width: 86ch;
+  }
+  .disp {
+    flex: 0 0 auto; font-family: var(--mono); font-size: 11px;
+    border-radius: 5px; padding: 1px 7px;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+  .disp[data-d="confirmed"], .disp[data-d="folded"] { color: var(--good); border-color: color-mix(in oklab, var(--good) 40%, var(--line)); }
+  .finding .fchips { display: inline-flex; gap: 4px; margin-left: 6px; vertical-align: baseline; }
+
+  footer {
+    margin-top: 44px; padding: 20px 0 40px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 12.5px;
+  }
+  footer .prov { font-family: var(--mono); }
+
+  .empty-note {
+    margin: 60px auto; max-width: 60ch; padding: 24px;
+    border: 1px dashed var(--muted); border-radius: 12px; color: var(--ink-2);
+  }
+</style>
+
+<div id="app"></div>
+
+<script>
+"use strict";
+const DATA = /*__DATA_START__*/ {"project":"confpipeline","kind":"ledger","format":"ledger-v1","sourcePath":"ledgers/confpipeline.md","reportFile":"confpipeline.md","reportDate":"2026-07-28","generatedAt":"2026-07-28","repoHead":"6820e6c","inputs":["extraction run `confpipeline-present-2026-07-28.md` (prompt 1 v3.2, 2026-07-28)","arm round `confpipeline-present-2026-07-28-arm-findings.md` (a pinned external reviewer model) — 5/5 confirmed","fold pass 2026-07-28 — all 5 confirmed findings folded in"],"scopeNote":null,"summary":"confpipeline is a repository in which a single owner, working with supervised\nAI agents, designs and builds a research pipeline: a lightweight first pass, and only owner-approved cases\nproceed to in-depth research. The design lives in small owner-gated model artifacts\ncross-referenced by stable IDs, scripts generate every registry and view, and\nrecords reach the data tree only through one validated write path. Work\nadvances in build slices — interview, spec, review, ratification, delegated\nbuild, verification — with the owner's ratification as the only\nidentity-bound act. Machine checks (the master check, the data lint, the test\nsuite) enforce what the prose declares, though there is no CI, git hook, or\nlinter: the process documents, not an automated pipeline, say when a check\nmust run. The report inventories 70 elements: 15 principles, 18 mechanisms,\n19 artifact-forms, 16 checks and gates, and 2 that fit none of those types.","items":[{"id":"P1","type":"principle","title":"Repo-boundedness","ezx":"Everything that governs this project is written inside the repository itself. A stranger with a fresh copy of the repo must be able to reconstruct every rule, because no session, machine, or assistant memory is trusted to remember anything.","original":"All knowledge that governs the pipeline lives in the repository; sessions,\nmachines, and personal assistant memory are ephemeral and never an authority\n— a fresh clone by a stranger must suffice to reconstruct every rule.","sources":["CLAUDE.md (\"The repo is the sole institution\")","STRUCTURE.md (Operational layer)","README.md","docs/review-briefs.md (policed as falsifier attack surface 8)"]},{"id":"P2","type":"principle","title":"Owner ratification is the single identity-bound act","ezx":"Only the human owner can accept a piece of work as done. Any agent may write drafts, but no agent may declare its own work accepted.","original":"Acceptance of any artifact is the one act no agent may perform or\nself-declare; drafting is delegable, ratification never.","sources":["docs/process.md (Review regime)","CLAUDE.md (\"never self-declare it\")"]},{"id":"P3","type":"principle","title":"Checks enforce what prose declares","ezx":"Every written rule should have a machine check that fails when the rule is broken, because rules without checks quietly stop being followed. A failing check means the work is not finished — but checks are only built when the next phase actually needs them.","original":"A rule no check enforces is assumed to erode; prose commitments are paired\nwith machine guards, and \"a red check means the work is not done\" — qualified\nby \"Build only the checks the next phase consumes\", which binds P3 to P8.","sources":["docs/process.md (Principles §7; the driving observation \"rules that no check enforces erode\")","CLAUDE.md"]},{"id":"P4","type":"principle","title":"One authority per fact, directed citations","ezx":"Each fact is written down in exactly one file, and that file owns it. References point in one direction only — from the detailed documents toward the foundation — so two files can never quietly disagree about the same fact.","original":"Every fact has exactly one owning artifact and citation flows one way:\nfoundation cites only discovery and owner decisions, everything else cites\nthe foundation.","sources":["docs/process.md (Principles §2)","STRUCTURE.md (\"Other documents describe only their own consumption of shared assets\")"]},{"id":"P5","type":"principle","title":"Fragmented model space with IDs","ezx":"Knowledge is split into many small files, each responsible for one thing, and files point at each other with permanent ID codes instead of restating content. That way a change stays local instead of rippling through copies.","original":"Knowledge lives in small, single-responsibility artifacts cross-referenced by\nstable IDs (`S-n`, `R-n`, `ABS-n`, vocabulary slugs), never prose\nrestatement, so edits stay local and safe.","sources":["docs/process.md (Principles §1)"]},{"id":"P6","type":"principle","title":"The current version speaks in the present","ezx":"Every document reads as if it were written today, with no leftover traces of past edits or reviews. The history of changes lives in git and in changelogs, not in the text itself.","original":"Documents read as if written today: no edit scars, no review residue; history\nlives in git and changelogs, with sanctioned exceptions for DECISION blocks\nand live-cutover date notes. Litmus: would the sentence survive a day-one\nrewrite? (The fold-writing litmus in `docs/review-briefs.md` is the\n*boundedness* companion — it serves P1, and its own text says so.)","sources":["docs/process.md (Principles §5)"]},{"id":"P7","type":"principle","title":"Loud failure over silent wrongness","ezx":"A critical step must either run or fail with a visible error — it must never be skipped in a way nobody notices. Quietly swallowed errors are treated as the named enemy.","original":"Critical steps either run or fail loudly — never optional prompt instructions\nwhose execution nobody can prove; silent skips, swallowed exceptions, and\ncaught-and-dropped errors are the named enemy.","sources":["model/rules.md (R-6, with the conforg exhibit)","docs/review-briefs.md (the slice-close arm's silent-failure-hunting duty)"]},{"id":"P8","type":"principle","title":"Every rule earns its place at this project's size","ezx":"This process is a deliberately slimmed-down version of a heavier method, sized for one owner and one repo. Anyone who wants to add a new rule must argue what failure it prevents, how likely that failure is, and what the rule costs in added weight.","original":"The process is a deliberate downsizing of a heavier method; any fold that\nadds a mechanism must state the defect class, its plausibility, and the\nspec-weight cost against a stated threat model.","sources":["docs/process.md (intro: \"Every rule here earns its place at this project's size\")","docs/review-briefs.md (Proportionality gate)"]},{"id":"P9","type":"principle","title":"Extensible, never speculative; deferrals carry revisit triggers","ezx":"Nothing is built before there is a concrete reason for it, but nothing that is built may block future growth. When something is deliberately not done, that decision is written down together with the condition that would reopen it.","original":"Nothing is built ahead of its trigger and nothing built may block later\nlevels; deliberate not-doings are ledgered with the condition that reopens\nthem, and a closed absence is superseded in place, never deleted.","sources":["model/rules.md (R-13 and the absence ledger)","docs/process.md (\"Deliberate omissions (with reinstatement triggers)\")"]},{"id":"P10","type":"principle","title":"Generated, never hand-maintained","ezx":"Lists, indexes, and overview pages are always produced by scripts, never edited by hand, and a check verifies they are exactly up to date. A hand-maintained list that went stale in an earlier project is cited as the warning example.","original":"Registries, indexes, and views are produced by scripts and byte-guarded for\nfreshness; the hand-maintained predecessor artifact that rotted is cited as\nthe antithesis.","sources":["docs/process.md (Principles §6)"]},{"id":"P11","type":"principle","title":"Concept-first phasing","ezx":"First the whole system is described at a rough, conceptual level; only then does any part get precise, detailed specification. Detail is granted only to the part the next build step actually needs.","original":"The whole system reaches concept altitude before any part gets contract\ndepth, and depth is granted only to what the next build slice consumes.","sources":["docs/process.md (Principles §3 and Phases)"]},{"id":"P12","type":"principle","title":"Design artifacts graduate into runtime config","ezx":"The design documents are written so they can later be used directly as the running system's configuration. The same care — stable IDs, machine checks — therefore pays off twice: once during design and once in production.","original":"Event profiles, rules, the taxonomy, and the source registry are\nsimultaneously design fragments and future production inputs, so ID\ndiscipline and checks \"pay twice\".","sources":["docs/process.md (Principles §4)","config/taxonomy.yaml (realized graduation, per STRUCTURE.md changelog 2026-07-24)"]},{"id":"P13","type":"principle","title":"Never a guess: unsafe judgments escalate","ezx":"When the AI cannot make a judgment safely, it hands the question to the owner as a proposal instead of guessing. Anything genuinely unknown is recorded as unknown rather than filled with an invented value.","original":"A judgment the LLM cannot make safely becomes an owner proposal, never a\nguess; unknowns stay recorded as unknown (\"`unclear` is honest uncertainty,\nnever a guess\"; tokens `unknown`, \"never a guessed number\").\n\nThe written source is explicitly a rule CANDIDATE, not a ratified rule: ABS-7\nis titled \"No script-vs-LLM decision rule yet\", captures this as \"the working\npattern\", and its changelog calls it \"deliberately unratified\" — practiced\ntoday, deferred as a rule (2026-07-28 arm finding #2).","sources":["model/rules.md (ABS-7 escalation ladder)","model/data-model/assessment-deep.md","model/data-model/assessment.md"],"flags":["appended on the verification round; by load it sits near P7","rule candidate, deliberately unratified"]},{"id":"P14","type":"principle","title":"Claims carry epistemic status where uncertainty exists","ezx":"Rules and contract fields state how they are known — heard in an interview, inferred, or speculative — and where the claim comes from. The scheme is deliberately bounded to rows and rules where uncertainty exists; a machine check fails any rule missing its label.","original":"Contract rows and rules carry `interview | inferred | speculative` labels,\nfoundation entries carry a basis reference, and \"unjustified claims\" is a\nstanding review attack surface; the check fails a rule without a label.\n\n(The scheme is bounded, not claim-wide: `docs/process.md` §Labels scopes it to\n\"contract rows and rules where uncertainty exists\", and the machine guard\nchecks `R-` entries only — 2026-07-28 arm finding #3.)","sources":["docs/process.md (Labels; P0 phase)","docs/review-briefs.md (attack surface 6)","scripts/check.mjs (epistemic-label guard)"],"flags":["appended on the verification round"]},{"id":"P15","type":"principle","title":"Supervised, never autonomous, at runtime","ezx":"The system never contacts an outside person on its own: every outgoing item needs individual human approval, and no automatic outbound flow exists. Likewise, when a review raises a choice between alternatives, the owner decides, not the agent.","original":"Nothing is sent to an external human without per-item human approval, no\nautonomous outbound flows exist (deferral with per-flow graduation triggers),\nand a review finding needing a decision between alternatives escalates to the\nowner instead of being folded.","sources":["model/rules.md (R-12, ABS-4)","docs/review-briefs.md (the escalation rider)"],"flags":["appended on the verification round"]},{"id":"P16","type":"principle","title":"Model-agnostic workflow steps","ezx":"Which AI model runs a step is a per-step setting, never written into the workflow itself — every step must stay swappable to a different model later. Both accepted workflows follow this rule, and a queued design item builds on it.","original":"R-14, an accepted `interview`-labeled rule: which LLM runs a step is per-step\nconfiguration, never baked into the workflow; steps must stay swappable (best\nmodels now, cheaper local routing as a future option). Both accepted workflow\nspecs consume it, and the queued agent-layer design item is built on its\nstill-unredeemed per-step control. Entered the ledger from the 2026-07-28 arm\nround (finding #4, missing-element) — the extraction run had not surfaced it.","sources":["model/rules.md (R-14, accepted, `interview`-labeled)","model/workflows/quick-assessment.md (\"per-step configuration (R-14)\")","model/workflows/deep-dossier.md (touched rules include R-14)","docs/build-friction.md (Pre-booked: R-14's per-step control \"unredeemed\")"]},{"id":"M1","type":"mechanism","title":"The gated edit","ezx":"Every change to an already-accepted document follows the same path: anyone drafts it, the owner approves it, and the change plus its reasoning is logged in that document's changelog. This is the backbone all other change control hangs on.","original":"Any change to an accepted artifact runs draft (any session) → owner\nratification, with the fold and its rationale logged in the artifact's\nchangelog; review rounds attach at gates and on owner order, not per edit\n(\"small gated edits… stays owner-ordered\", `docs/review-briefs.md`). This is\nthe change-control spine everything else hangs from.","sources":["CLAUDE.md (\"How to work here\")","docs/process.md (Review regime)","STRUCTURE.md (Ownership table)"]},{"id":"M2","type":"mechanism","title":"The build-slice arc","ezx":"Building happens in repeating rounds called slices, each walking the same arc: interview the owner, write a detailed spec, review it, get it approved, have a fresh agent build it, verify on real data, fold lessons back, and close. The first slice ran the whole arc; the second's progress row still says mid-arc, though later run records show its verification already happened.","original":"The repeating macro-procedure: gap-only opening interview → contract-depth\nspec → review series → ratification → delegated build → DoD walk → real-data\nverification → gated fold-back → slice-close code arm and friction triage\n(their order has varied by owner decision) → owner close. Slice 1 ran the full arc to owner close; slice 2's Progress row still reads\nOPEN mid-arc (build done, verification pending), but that row is stale against\nlater repo evidence — both 2026-07-25 run files record `state: completed` (the\nrerun over its assessed cases) and the owner-approved\nverification fold-back triage is recorded in `docs/build-friction.md`\n(2026-07-28 arm finding #1).","sources":["docs/process.md (Phases P2/P3 and the Progress table)"]},{"id":"M3","type":"mechanism","title":"Review rounds with disposition triage","ezx":"Reviews are run by fresh agents who try to break the document, following a standing written brief. Every issue they raise gets an explicit recorded decision — folded in, narrowed, declined, or deferred to the build — with a one-line reason.","original":"Blind subagent falsifier rounds run from a standing written brief; every\nfinding gets an explicit recorded disposition (`folded | narrowed | declined\n| deferred-to-build`) with a one-line why in the artifact's changelog.","sources":["docs/review-briefs.md (Falsifier-light standing brief)","docs/review-briefs.md (Disposition & stopping)"]},{"id":"M4","type":"mechanism","title":"The external falsifier arm","ezx":"A special review round is run by a different AI model family, pinned to an exact version, working offline and read-only on a clean committed copy of the repo. File fingerprints are taken before the run, and the exact prompt and verdict are archived.","original":"A falsifier round run by a pinned different model family (an external reviewer model, read-only sandbox, offline), blind to the session, on a clean\ncommitted tree, with sha256 byte-guards recorded before launch and the\nverbatim prompt + verdict archived.","sources":["docs/review-briefs.md (External falsifier arm — standing brief, incl. run mechanics)","docs/reviews/ (29 evidence records)"]},{"id":"M5","type":"mechanism","title":"Repo-bound delegated build","ezx":"Each major build step is done by a fresh agent that receives only files from the repository, never chat context. This doubles as a test that the spec is complete on its own, and keeps the spec's author and the builder independent of each other.","original":"Every major build step runs in a fresh-context subagent fed only repo\nartifacts — the delegation doubles as the spec's self-containment test and\ndecorrelates author from builder; the builder's final report maps every\ndeterministic-marked spec step to its implementing script.","sources":["docs/process.md (Build regime, \"Repo-bound, delegated build\")"]},{"id":"M6","type":"mechanism","title":"Gap-only opening interview","ezx":"Before writing a design page, the owner is interviewed — but only about the questions the repository cannot already answer. The answers are written into the document as marked decision blocks, so a later reader can reconstruct why things are the way they are.","original":"Every concept page and slice spec opens with an owner interview scoped to\nonly the questions the repo cannot answer; answers land inline as DECISION\nblocks so a fresh reader reconstructs the rationale. Recorded as a rule only\nfor concept pages (`docs/process.md`, Phases, \"the P0 pattern\"); its\nextension to slice specs is evidenced in changelogs but not ruled —\npracticed, not recorded — and the interview technique itself (question\nselection, presentation) is likewise practiced, not recorded. Instance:\n`model/workflows/deep-dossier.md` (DECISION blocks, 9 decisions).","sources":["docs/process.md (Phases, \"the P0 pattern\")","model/workflows/deep-dossier.md (DECISION blocks, 9 decisions)"],"flags":["extension to slice specs and the interview technique itself: practiced, not recorded"]},{"id":"M7","type":"mechanism","title":"Capture-don't-fix friction loop","ezx":"When something annoying or wrong turns up during a build, it gets one logged line immediately, but it is not fixed on the spot unless it blocks progress. All logged lines are decided on at the end of the slice.","original":"Mid-build frictions get one appended line the moment they occur; nothing is\nfixed mid-flow unless blocking, and every line is dispositioned at slice\nclose.","sources":["docs/process.md (Build regime)","docs/build-friction.md (log + triage ledgers)"]},{"id":"M8","type":"mechanism","title":"Real-data verification with gated fold-back","ezx":"Once a build is nominally done, it is run on real subjects and the owner judges the outputs against known-good reference material. Anything that misses feeds back into the design documents through the normal owner-approved edit path.","original":"After DoD, the slice runs on real subjects; the owner judges outputs —\nagainst the frozen exemplar bar for the deep dossier, against owner-known\nreference outcomes for the quick gate — and misses fold back into\nthe model as ordinary gated edits; this is where spec-time\n`deferred-to-build` findings are checked.","sources":["model/workflows/deep-dossier.md (\"Verification plan (slice gate)\" section)","model/workflows/quick-assessment.md (\"Verification plan (slice gate)\" section)","docs/build-friction.md (fold-back ledger)"]},{"id":"M9","type":"mechanism","title":"The deterministic write path","ezx":"Data records are never written by hand. A single script takes a declared bundle of intended writes, validates it against the data contracts on a staging copy, and then writes everything or nothing.","original":"Records are never hand-written: the runbook assembles a write-intent bundle\nand `scripts/write-records.mjs` validates it against the entity contracts on\na staging copy, then flushes all-or-nothing (batch grain for quick,\nper-subject for deep, plus `finalize-deep` and the approval-acceptance job\nexecutor).","sources":["scripts/write-records.mjs (header + code)"]},{"id":"M10","type":"mechanism","title":"The quick→deep pipeline gating","ezx":"The cheap quick assessment and the expensive deep dossier are chained by data records: a quick pass files a proposal, the owner's acceptance turns it into a queued job, and only that job unlocks the deep work. Costly work can therefore only start from a machine-visible owner approval.","original":"The runtime research pipeline is itself process machinery: the quick gate's\n`advance` files an approval proposal, the owner's acceptance creates a queued\njob, and the deep runbook consumes the job — machine-visible records gate\nexpensive spend.","sources":[".claude/skills/Research/SKILL.md (routing)",".claude/skills/Research/Workflows/ (the two runbooks)"]},{"id":"M11","type":"mechanism","title":"Finder/verifier separation with round zero and a round cap","ezx":"Inside a deep dossier, one agent drafts and a different agent verifies. A script first catches everything machine-checkable, then at most three judgment correction rounds are allowed; if a blocking problem still stands after that, the case fails visibly.","original":"Within a deep dossier, drafting and verification are distinct delegated\nroles; a deterministic round zero (`scripts/draft-check.mjs`) catches\neverything machine-checkable first, then at most three judgment correction\nrounds; a blocking finding standing after the cap fails the case loudly.","sources":["model/workflows/deep-dossier.md (phase 12)",".claude/skills/Research/Workflows/deep-dossier.md"]},{"id":"M12","type":"mechanism","title":"Generation machinery","ezx":"Every index, view, and report in the repo is produced by a script and regenerated in the same commit as the data it reflects. The same generator scripts also serve as steps inside the runtime workflows.","original":"Scripts produce every registry and view — `scripts/build-index.mjs` →\n`model/index.md`, `scripts/build-views.mjs` → person indexes +\n`data/indexes/`, `scripts/build-report.mjs` → run reports,\n`scripts/build-taxonomy-view.mjs` → `config/taxonomy.html` — regenerated in\nthe same commit as their source; the view/report generators are also runtime\nworkflow phases (`scripts/build-views.mjs` declares itself\n\"W-quick-assessment phase 5; W-deep-dossier phase 14\").","sources":["scripts/","package.json","STRUCTURE.md (Placement rule, Operational layer)"]},{"id":"M13","type":"mechanism","title":"Session bootstrap","ezx":"Every new work session starts the same way: read the two core process documents, then do whatever the progress table says is next. This is how a fresh session with no memory picks up exactly where the last one stopped.","original":"A fresh session re-enters the work through a pinned starter prompt: read\n`docs/process.md` including its changelog tail plus `STRUCTURE.md`, then\nexecute the next step in the Progress table — the mechanism that makes the\nrepo, not the session, the institution.","sources":["README.md (\"Session starter\")","STRUCTURE.md (Operational layer)"]},{"id":"M14","type":"mechanism","title":"Build-decision logging","ezx":"Every technical decision made during building is logged as one flat entry: the date, the decision, the reason, and the alternative that was rejected. Because the default is zero external dependencies, adding any dependency automatically requires such an entry.","original":"Every build/tech decision lands as a flat entry — date, decision, why, the\nrejected alternative — with explicit, non-deciding ADR-graduation triggers;\nthe zero-dependency default makes every dependency admission an entry.","sources":["docs/process.md (Build regime)","docs/build-decisions.md"]},{"id":"M15","type":"mechanism","title":"Design-provenance recording","ezx":"When a design choice rests on gathered evidence, that evidence is written into a dedicated background file inside the repo, so the justification does not point anywhere outside it. The habit exists but no document states it as a general rule.","original":"When a design rests on evidence, the evidence is mined (including blind\nmulti-lens subagent brainstorms) and recorded in a dedicated non-normative\nprovenance file so justifications terminate inside the repo. One instance\nexists (`docs/taxonomy-provenance.md`) and no document states the general\nrule — practiced, thinly recorded.","sources":["docs/taxonomy-provenance.md (the one instance)"],"flags":["practiced, thinly recorded"]},{"id":"M16","type":"mechanism","title":"Redesign design-doc with gated-edit derivation list","ezx":"A change too big for normal small edits is first written up as a standalone design document, which gets its own external review. After the owner approves it, the document is turned into a numbered list of ordinary approved edits, and stays behind as the record of why.","original":"A change too large for in-place gated edits is written as a self-contained\ndesign document, arm-reviewed at first draft, and after ratification derives\nan enumerated list of gated edits while remaining as the rationale record.\nPracticed in `docs/deep-dossier-redesign.md` (§8 \"Gated-edit derivation\nlist\"); the file shape itself is listed as A19. The procedure is defined only\ninside its one instance — neither `STRUCTURE.md` nor `docs/process.md` names\nthis artifact class (practiced, thinly recorded).","sources":["docs/deep-dossier-redesign.md (§8 \"Gated-edit derivation list\")"],"flags":["practiced, thinly recorded"]},{"id":"M17","type":"mechanism","title":"The owner one-by-one triage session (\"EZX session\")","ezx":"A dedicated session format exists in which the owner goes through the logged friction lines one by one and makes a call on each. It is referred to by name in the repo but its format is never actually specified anywhere.","original":"The friction ledgers were produced by a named session format in which the\nowner walks the captured lines item by item and decides each; cited three\ntimes (`docs/build-friction.md`, `docs/process.md` changelog 2026-07-25) with\nan inline gloss at each site, but its format is specified nowhere in the\nrepo. Practiced, not recorded.","sources":["docs/build-friction.md","docs/process.md (changelog 2026-07-25)"],"flags":["practiced, not recorded"]},{"id":"M18","type":"mechanism","title":"The environment survey","ezx":"Before building anything that talks to the outside world, the builder first tests what the actual runtime environment can and cannot do, and logs the answer as a build decision. It has run twice, with opposite outcomes each time.","original":"A standing build item: before building any step that touches the outside\nworld, empirically survey what the runtime environment can do and log the\nanswer as a build decision — run twice with opposite results (two external sources, one interactive, one\nheadless).","sources":["model/workflows/quick-assessment.md (\"the environment survey build item\")","model/workflows/deep-dossier.md","docs/build-decisions.md (its two product entries)"],"flags":["appended on the verification round; by load it ranks near M14"]},{"id":"A1","type":"artifact","title":"Workflow spec","ezx":"The central design document for one workflow: what triggers it, its inputs, its numbered steps with machine steps and judgment steps marked apart, and how it will be verified. Each build slice is cut from one of these.","original":"(`model/workflows/<name>.md`). The accepted design unit a build slice is cut\nfrom: Status/Serves/Basis/Touched-rules header, trigger & inputs, numbered\nphases with deterministic vs LLM steps marked, batch report, verification\nplan, DECISION blocks, build items, changelog. The core row shape (trigger,\ninputs, phases with deterministic vs LLM steps marked, outputs, served\n`S-n`, touched `R-n`) is declared in `docs/process.md` (Building blocks); the\nricher section set is uniform across the two instances\n(`model/workflows/deep-dossier.md`, `model/workflows/quick-assessment.md`)\nbut practiced, not recorded.","sources":["docs/process.md (Building blocks; core row shape)","model/workflows/deep-dossier.md","model/workflows/quick-assessment.md"],"flags":["richer section set beyond the declared core row shape: practiced, not recorded"]},{"id":"A2","type":"artifact","title":"Entity contract","ezx":"One file per data type stating exactly which fields a record has, what values they may take, and how the record's life cycle works. The validation scripts read these files directly at run time instead of keeping their own copy of the rules.","original":"(`model/data-model/<entity>.md`). Per-entity owner-gated contract — field\ntable with `label` and `mvp` columns, id scheme, lifecycle semantics — that\nis the single field authority: scripts and lints parse it at runtime rather\nthan restating shapes.","sources":["docs/process.md (Building blocks; column shape)","STRUCTURE.md (Layout; path registration)","model/data-model/job.md (one of 7 instances)"]},{"id":"A3","type":"artifact","title":"Foundation ID ledgers","ezx":"Three small foundation files — scenarios, rules plus deliberate omissions, and a glossary — each assigning permanent ID codes. Every other document refers to these items by ID instead of restating them.","original":"The scenario ledger (`model/scenarios.md`, `S-n`), rules catalog + absence\nledger (`model/rules.md`, `R-n`/`ABS-n`), and glossary\n(`model/vocabulary.md`, term slugs) — small single-authority files everything\nelse cites by ID.","sources":["docs/process.md (Building blocks)"]},{"id":"A4","type":"artifact","title":"Spec-paired runbook workflow","ezx":"The hands-on execution script that pairs with each workflow spec: it says only how to run things, and points back at the spec for every why. If it needs to say something the spec does not cover, that is treated as a gap in the spec and fixed there.","original":"(`.claude/skills/<Phase>/Workflows/<name>.md`). Execution mechanics only,\nopening with a bare `Spec: model/workflows/<same-basename>.md` line; anything\nit wants to say beyond the spec is a spec gap routed through the gated edit.\nThe skill's `SKILL.md` (frontmatter, routing table, worked examples) is a\nsecond, distinct file shape of the same form family\n(`.claude/skills/Research/SKILL.md`).","sources":["docs/process.md (Build regime, Skill rules)",".claude/skills/Research/Workflows/ (instances)",".claude/skills/Research/SKILL.md"]},{"id":"A5","type":"artifact","title":"Status header + changelog tail","ezx":"Governed documents open with a status line saying how far they are trusted, and end with a dated changelog carrying every review finding and the decision taken on it. This changelog tail is where the process actually keeps its review bookkeeping.","original":"Owner-gated `model/` artifacts and the reviewed `docs/` set open with\n`Status:` (+ `Authority:`/`Basis:`) and end with a dated `## Changelog` whose\nentries carry review findings, dispositions with one-line whys, and arm-run\nhash citations — the process's actual finding ledger (not universal: the\nappend-only logs, runbooks, and `README.md` carry no changelog). The logging\nduty is recorded (`docs/process.md`, Review regime); the header/changelog\nshape itself is practiced, not recorded — even though `scripts/check.mjs`\nalready machine-depends on the `Status:` line for the pairing exemption.","sources":["docs/process.md (Review regime; the logging duty)","scripts/check.mjs (machine-depends on the `Status:` line)"],"flags":["the header/changelog shape itself: practiced, not recorded"]},{"id":"A6","type":"artifact","title":"External-arm evidence record","ezx":"One archived file per external review run, never edited after commit: which model was used, what was reviewed, the file fingerprints taken beforehand, and the exact prompt and verdict word for word. Twenty-nine of these exist.","original":"(One file per run under `docs/reviews/`, dated\n`<date>-<subject>-…arm(-<n>).md`.) Never-edited-after-commit run record: arm\npin, artifact under review, pre-launch byte-guard list + HEAD, guard-held\nflag, result summary, then verbatim prompt and verbatim verdict. 29\ninstances; the filename convention itself is practiced, not recorded (and not\nperfectly uniform — two records vary the suffix pattern).","sources":["docs/review-briefs.md (Evidence-record assembly)","docs/reviews/ (29 instances)"],"flags":["the filename convention itself: practiced, not recorded"]},{"id":"A7","type":"artifact","title":"Write-intent bundle","ezx":"A single declared bundle listing every record a run intends to write. It is the only approved way data enters the data tree — the write script accepts this bundle and nothing else.","original":"(`intents.yaml`). The only sanctioned door into `data/`: run/date/workflow\nplus a subjects list carrying each subject's person/candidacy/assessment/job\nfields.","sources":["scripts/write-records.mjs (shape specified in the header)","scripts/test/fixtures/write/intents.yaml (durable instance)","scripts/test/fixtures/deep/intents.yaml (durable instance)"]},{"id":"A8","type":"artifact","title":"Per-person record tree","ezx":"Each researched person gets one directory, with separate subfolders for their base data, candidacies, and assessments. A deep dossier lands there as a structured data file plus a narrative text twin.","original":"(`data/people/<slug>/`). One directory per person, one subdirectory per\nindependent concern (`person.yaml`, `candidacies/`, `assessments/`, generated\n`index.md`); the deep dossier lands as a structured `<date>-deep.yaml` plus a\nsame-basename narrative `.md` carrying verifier findings and dispositions.","sources":["model/data-model.md (Storage layout)","data/people/"]},{"id":"A9","type":"artifact","title":"Run record + generated report pair","ezx":"Every pipeline run leaves one record file in which every subject that went in must be accounted for — assessed, skipped for a named reason, or failed with a named failure. A generated human-readable report sits beside it.","original":"(`data/runs/<date>-<hhmm>-<workflow>.yaml` + `-report.md`). One record per\nworkflow invocation in which every input subject owes an entry (`assessed`,\none of the typed `skipped-*` outcomes, or `failed` with named failure), plus\na generated, freshness-guarded report sibling; the contract grandfathers the\nearliest time-less filename form.","sources":["model/data-model/run.md (contract)"]},{"id":"A10","type":"artifact","title":"Proposal and queue-job gate tokens","ezx":"Two tiny record types that carry the owner's go/no-go as data: a proposal awaiting the owner's decision, and the job that decision creates. Because approval exists as a record, expensive work cannot be run twice off one approval.","original":"(`data/proposals/`, `data/queue/`). Two small YAML shapes carrying owner\ngating as data: a typed open item with state and disposition, and the job a\n`deep-dossier-approval` acceptance creates (`queued | done | failed`),\npreventing re-spend of expensive work.","sources":["model/data-model/proposal.md (contract)","model/data-model/job.md (contract)"]},{"id":"A11","type":"artifact","title":"Generated view with banner","ezx":"Overview pages produced by scripts, each opening with a do-not-edit banner and a sentence stating what it selects and in what order. Some views only exist while they have content, so a leftover file is itself an error signal.","original":"Markdown views opening with an identical \"Generated by `scripts/…` — do not\nedit\" banner and a prose statement of the selection/ordering rule;\nconditional views exist only while a row stands behind them, so a stray file\nis itself an error.","sources":["data/indexes/selection-view.md (instance)","data/indexes/open-gaps.md (instance)","model/index.md (instance)","per-person index.md (instances)"]},{"id":"A12","type":"artifact","title":"The build logs","ezx":"Two plain append-only logs kept during building: one line per friction as it happens, and one entry per technical decision with its reason and rejected alternative. Neither has any workflow machinery — they are simply added to at the bottom.","original":"Two flat append-forms of the Build regime: the friction log\n(`docs/build-friction.md` — one dated line per friction under an append\nmarker, followed by dated triage-ledger sections and a \"Pre-booked\" section\nholding owner-deferred next work items with their opening triggers) and the\ndecision log (`docs/build-decisions.md` — date, decision, why, rejected\nalternative; no numbering, no status machinery).","sources":["docs/process.md (Build regime)","STRUCTURE.md"]},{"id":"A13","type":"artifact","title":"Golden-run fixture scene","ezx":"A test style where a miniature fake repository is the starting state, the real write path runs over it, and the result is compared byte for byte against a committed expected tree. Six such fixture scenes exist.","original":"A miniature repo tree as pre-state plus a committed expected-output tree\nbyte-compared after the write — the mandated golden-run test layer. 6 fixture\ndirectories under `scripts/test/fixtures/`: `deep/`→`deep-post/` is the one\nnamed sibling pair, the quick golden run compares `write/` against `report/`,\nand the view scenes carry expected outputs inside the same tree — the\npractice exceeds the rule's \"one golden-run fixture\".","sources":["docs/process.md (Test minimum)","scripts/test/fixtures/ (6 fixture directories)"]},{"id":"A14","type":"artifact","title":"Schema-checked config instance","ezx":"Owner-approved configuration files that the running pipeline reads directly, with a machine check guarding their allowed keys. They are design decisions that have already graduated into runtime inputs.","original":"(`config/events/<event>.yaml`, `config/taxonomy.yaml`). Owner-gated runtime\nYAML whose keys are schema-guarded by the check; `config/taxonomy.html` is\nits generated, freshness-guarded view.","sources":["STRUCTURE.md (Layout, Placement rule)"]},{"id":"A15","type":"artifact","title":"Frozen exemplar","ezx":"Known-good reference analyses copied into the repository to serve as the quality bar. When real outputs are verified, they are judged against these frozen examples.","original":"(`docs/exemplars/`). Reference analyses and frameworks imported into the repo\nas quality bars — real-data verification passes are judged against them.","sources":["STRUCTURE.md (Layout)","model/workflows/deep-dossier.md (consumed by the verification plan)"]},{"id":"A16","type":"artifact","title":"Delegation brief","ezx":"The instruction package handed to each fresh agent doing delegated work. What it must contain is described in prose, but no template or saved copy of any actual brief exists in the repository.","original":"The fresh-context brief every delegated builder, researcher segment, and\nverifier receives. Its *content* is prescribed fairly tightly in prose\n(`docs/process.md` Build regime; the feed lists and output contracts in\n`.claude/skills/Research/Workflows/deep-dossier.md`), but no brief template\nor archived brief instance exists anywhere in the repo — unlike the external\narm, whose prompt is archived verbatim — and the draft redesign\n(`docs/deep-dossier-redesign.md` §5) already proposes making it a file class.\nPracticed, not recorded as an artifact.","sources":["docs/process.md (Build regime)",".claude/skills/Research/Workflows/deep-dossier.md (feed lists and output contracts)","docs/deep-dossier-redesign.md (§5)"],"flags":["practiced, not recorded as an artifact"]},{"id":"A17","type":"artifact","title":"Concept page","ezx":"One rough-design page per phase of the pipeline's life cycle, describing pieces, data flow, and responsibilities, with the owner's interview decisions written in. Five exist, and later specs cite them as authority.","original":"(`model/concepts/<phase>.md`). One page per lifecycle phase (five instances):\ncomponents, data flow, responsibilities, DECISION blocks from its opening\ninterview, changelog — the entire output form of the P1 phase, cited as an\nauthority by `CLAUDE.md` and both accepted specs.","sources":["STRUCTURE.md (Layout)","docs/process.md (Phases)"],"flags":["appended on the verification round; by load it sits near A1"]},{"id":"A18","type":"artifact","title":"The frozen input","ezx":"The original owner-interview record, kept frozen: it may only be corrected on the owner's instruction, with the correction noted in the commit. Every foundation document ultimately cites it as its basis.","original":"(`docs/discovery.md`). The interview record with its own gate class —\n\"frozen; corrections only via owner instruction, logged in the commit\nmessage\" — and the terminal `Basis:` citation of every foundation artifact.","sources":["STRUCTURE.md (Ownership)","docs/process.md (Building blocks)"],"flags":["appended on the verification round"]},{"id":"A19","type":"artifact","title":"Redesign design memo","ezx":"A standalone proposal document that carries one big change through its own review gate before it is broken into ordinary approved edits. One such memo exists, and the form is not named anywhere else.","original":"A self-contained numbered-section proposal (basis, measured problem, design\nprinciples, target structure, gated-edit derivation list, verification plan,\nchangelog) that carries a large change through its own review gate before\nfolding into the authorities. One instance: `docs/deep-dossier-redesign.md`;\nthe form is named nowhere else — practiced, not recorded.","sources":["docs/deep-dossier-redesign.md (the one instance)"],"flags":["practiced, not recorded","appended on the verification round"]},{"id":"G1","type":"gate","title":"`npm run check`, the master gate","ezx":"One command runs about a dozen guard families over the whole repository — ID integrity, reference direction, freshness of generated files, data validity, config schemas — and exits red on any error. A red result is defined as the work not being done.","original":"MACHINE-enforced (exit 1 on any error). Twelve numbered guard steps — eleven\nblocking families (duplicate IDs/terms, referential integrity of\n`S-/R-/ABS-` refs, authority direction, epistemic labels,\nindex/view/report/taxonomy-view freshness, the data lint, spec↔skill pairing,\nconfig schema) plus the warning-only size advisory split out below as G14.","gateClass":"machine","sources":["scripts/check.mjs","CLAUDE.md (\"a red check means the work is not done\" — declared definition of done)"]},{"id":"G2","type":"gate","title":"The data lint","ezx":"A validator that checks every stored data record against the data contracts, reading the allowed values live from the contract files themselves. It also guards that append-only files were really only appended to.","original":"MACHINE-enforced. Validates every `data/` record against the entity\ncontracts, parsing closed sets live from the owning artifacts (\"a failed\nparse throws, so the lint never runs against an empty authority\"); includes\nappend-only guards via `git show HEAD:` probes, history-entry requirements,\nthe verifier round-cap read against the run's own recorded cap, and\nevent-profile sanity. Runs inside G1.","gateClass":"machine","sources":["scripts/data-lint.mjs"]},{"id":"G3","type":"gate","title":"The write-path pre-flush gate","ezx":"Before any data is written, the whole intended write is validated on a staging copy. If anything is invalid, nothing at all is written.","original":"MACHINE-enforced. `write-records.mjs` runs the lint over a staging copy\nbefore touching `data/`: an invalid quick batch is rejected all-or-nothing\n(\"batch rejected, nothing written\"), an invalid deep subject writes nothing,\nintent assertions refuse under-specified records before any flush, and\n`finalize-deep` refuses an unlawful job move.","gateClass":"machine","sources":["scripts/write-records.mjs"]},{"id":"G4","type":"gate","title":"The spec↔skill pairing check","ezx":"A check that every accepted workflow spec has exactly one matching execution runbook and vice versa. A runbook that does not point back to a real spec fails the check.","original":"MACHINE-enforced. Blocks a runbook without a resolving `Spec:` header, an\naccepted model workflow with no runbook, duplicate runbooks, and a stale\n`Runbook: pending (build)` marker; exempts drafts and the acceptance→build\nwindow.","gateClass":"machine","sources":["scripts/check.mjs (checkSkillPairing)","docs/process.md (Skill rules)"]},{"id":"G5","type":"gate","title":"Generated-artifact freshness guards","ezx":"Every generated file is rebuilt and compared byte for byte against what is committed. If a source changed but its generated view did not, the check fails.","original":"MACHINE-enforced. Byte-comparison against regeneration for `model/index.md`,\ndata views, run reports, and the taxonomy view — a source change cannot be\ncommitted green without regenerating its view in the same commit.","gateClass":"machine","sources":["scripts/check.mjs","STRUCTURE.md (Operational layer)"]},{"id":"G6","type":"gate","title":"The test suite with mandated layers","ezx":"The test suite, with three required layers: for every guard a test proving the guard can actually fail, at least one full end-to-end fixture run through the real write path, and freshness tests. 672 tests are green at the current state.","original":"MACHINE-enforced when run (`npm test`, `node:test`; 672 tests green at HEAD —\nthe \"501 tests green\" in `docs/process.md` is the slice-2 build-done\nsnapshot). Three mandated layers: a negative test per invariant guard written\nfrom the declared prohibition (\"a guard no test can fail is decoration\"), one\ngolden-run fixture through the full write path, freshness guards; positive\nfixtures must exercise the guarded path.","gateClass":"machine","sources":["docs/process.md (Test minimum; layers declared)","scripts/test/ (suites)"]},{"id":"G7","type":"gate","title":"Phase-tool exit contracts","ezx":"The tools that run individual workflow steps promise specific exit codes: they finish clean, finish degraded, or stop loudly. Nothing they process may vanish without either a result or a named failure.","original":"MACHINE-enforced. Workflow phase tools stop or reroute by contract exit\ncodes: `scripts/draft-check.mjs` (round zero; a skipped required check is\nnon-clean, exit 2), the external-source fetch tool (every planned talk\nleaves as transcript or named failure — \"a talk that appears in neither is a\nsilent skip and throws\"; degraded is a distinct exit),\nthe prior-record lookup tool (stops loudly rather than invent another\nworkflow's data shape).","gateClass":"machine","sources":["scripts/draft-check.mjs","the external-source fetch tool","the prior-record lookup tool"]},{"id":"G8","type":"gate","title":"Owner ratification","ezx":"The owner personally approving something is the one step no machine or agent can substitute. Nothing becomes accepted, and no phase or slice closes, without it.","original":"PROCEDURE-enforced. The single identity-bound act: nothing moves `draft →\naccepted`, no slice or phase closes, and no gated fold lands on an accepted\nartifact without it.","gateClass":"procedure","sources":["docs/process.md (Review regime)","CLAUDE.md","STRUCTURE.md (Ownership)"]},{"id":"G9","type":"gate","title":"The external-arm regime","ezx":"The rules around the outside-model review: it runs at three fixed points in the life of a design and otherwise only on the owner's order. If the reviewed files changed underneath it, the verdict is void; if the pinned reviewer model is unavailable, work waits loudly or the owner records a waiver.","original":"PROCEDURE-enforced end to end (the sha256 byte-guard is a hand-run hash per\nthe recorded run mechanics — no repo script computes or verifies it). The arm\nruns automatically at three concrete points (design first draft, design\npost-OK series to plateau, build done) and nowhere else without an owner\norder; a byte-guard mismatch voids the verdict; semantic findings escalate to\nthe owner instead of being folded; an unavailable pin means a loud wait or a\nrecorded owner waiver, never a silent pass.","gateClass":"procedure","sources":["docs/review-briefs.md (Disposition & stopping)","docs/review-briefs.md (External falsifier arm)"]},{"id":"G10","type":"gate","title":"Disposition & stopping rules","ezx":"The standing rules for judging review findings and for deciding when reviewing stops. A finding with no concrete failure story stays minor, every added rule must justify its weight, and review ends after two consecutive quiet rounds.","original":"PROCEDURE-enforced. The evidence rule (no concrete failure scenario →\n`minor`), the proportionality gate against the stated threat model, the\naltitude rule (`deferred-to-build` by rule), the plateau stop (two\nconsecutive rounds each with ≤2 accepted content findings and zero blockers),\nand delta re-checks over fresh full rounds.","gateClass":"procedure","sources":["docs/review-briefs.md"]},{"id":"G11","type":"gate","title":"The Build DoD","ezx":"Five things must all be true before a build counts as done: the master check is green, the tests are green, the runbook has been walked end to end on a made-up subject, every item is its own commit, and the decision log is current.","original":"PROCEDURE-enforced. Five conditions before a build is done: check green with\nthe new guards, tests green, the runbook walked end-to-end on a fictional\nsubject with files landing per spec, every item committed\none-item-one-commit, decision log current — real-data verification and the\nslice-close arm follow as their own gates. The broader commit discipline\n(\"one logical change per commit; foundation folds are commit-atomic\") rides\nthe same procedural surface.","gateClass":"procedure","sources":["docs/process.md (Build DoD; Review regime)"]},{"id":"G12","type":"gate","title":"The divergence stop","ezx":"If the builder finds a problem in the spec mid-build, the code is not quietly adjusted around it. Work stops, the spec itself is fixed through the normal approval path, and the build resumes from the corrected spec.","original":"PROCEDURE-enforced. Code never silently departs from the spec: a spec or\nmodel bug found mid-build goes back to the model plane as a gated edit and\nreturns through it; the runbooks mirror it (\"stop and route it to the model\nplane…, never improvise\").","gateClass":"procedure","sources":["docs/process.md (Build regime)",".claude/skills/Research/Workflows/deep-dossier.md"]},{"id":"G13","type":"gate","title":"The deep-spend approval gate and runbook STOP boundaries","ezx":"Expensive deep research may only start from an owner-approved job record, and each runbook ends in a hard stop so the final status move stays a human act. The write script refuses to create a second job from the same approval.","original":"PROCEDURE-enforced, carried by machine tokens — and the once-per-approval leg\nis itself MACHINE-refused (`scripts/write-records.mjs` fails a second job\nfrom the same approval: \"no re-queue door exists\"). Deep work requires an\nowner-accepted proposal that creates a queued job; each runbook ends in a\nhard STOP (\"STOP after phase 14\" / \"STOP after phase 5\") keeping status moves\nowner or curator acts. Backed by G2/G3 on the token shapes.","gateClass":"procedure","sources":["model/workflows/deep-dossier.md",".claude/skills/Research/Workflows/ (both runbooks)"]},{"id":"G14","type":"gate","title":"The size advisory","ezx":"The check warns when a reference file grows past roughly 20 kilobytes, but the warning never blocks anything. It opens a conversation about splitting the file; the owner decides, and several accepted oversizes are on record.","original":"MACHINE-surfaced, deliberately non-blocking: a WARN above ~20 KB per\nreference-surface file (the check's surface is `model/**.md` plus\n`config/**.yaml`) that \"opens a split/accept discussion, never decides\";\nseveral accepted breaches are on record. (`docs/process.md` also states the\nadvisory watches `docs/build-decisions.md`; the check's surface does not\ncurrently include `docs/`.)","gateClass":"machine","sources":["scripts/check.mjs","scripts/lib.mjs","docs/process.md (Review regime)"]},{"id":"G15","type":"gate","title":"The deterministic-step mapping duty","ezx":"At the end of a delegated build, the builder must show, step by step, which script implements each spec step that was marked as mechanical. A step with no matching script is caught right there, not later in review.","original":"PROCEDURE-enforced. The delegated builder's final report must map every spec\nstep marked deterministic to the script implementing it — an unmapped\ndeterministic step is a divergence surfaced at build time, not at review; a\nper-build pass/fail condition with a named failure mode.","gateClass":"procedure","sources":["docs/process.md (Build regime)"],"flags":["appended on the verification round"]},{"id":"G16","type":"gate","title":"The fold-writing litmus","ezx":"Before writing a review answer into a document, the author applies two tests: the document must carry the reasoning, not just the conclusion, and the change must be made at every place it touches.","original":"PROCEDURE-enforced. Before an author commits a fold that answers a review\nquestion, two admissibility tests apply: the artifact carries the rationale,\nnot just the conclusion (boundedness), and the fold is applied at every\ntouchpoint (carry-through).","gateClass":"procedure","sources":["docs/review-briefs.md (Fold-writing litmus — author-side)","docs/process.md (Review regime)"],"flags":["appended on the verification round"]},{"id":"U1","type":"unclassified","title":"Incident-distilled rulemaking","ezx":"Almost every rule in the project was born from a specific named failure, and the rule is written down next to the story of that failure. The habit of turning failures into rules is itself written down nowhere — it only shows in its products.","original":"Nearly every rule in the repo carries the named failure that bred it, beside\nthe rule (the fold cascade → the triage rules; hash citations terminating\noutside the repo → `docs/reviews/`; untested check guards → the negative-test\nduty; the phase-4 lesson → the builder phase-mapping report — all traceable\nin the changelogs of `docs/process.md` and `docs/review-briefs.md`). It\nresists the taxonomy: it is not one rule (each product is a different\nprinciple or gate), not a procedure anyone wrote down (no document says\n\"distill rules from named failures\"), and not a form or check — it is the\nstanding habit that *produces* the other elements. Practiced, recorded only\nas its instances.","sources":["docs/process.md (changelogs)","docs/review-briefs.md (changelogs)"],"flags":["practiced, recorded only as its instances"]},{"id":"U2","type":"unclassified","title":"The stated threat model","ezx":"A one-sentence statement of what the process is protecting against: one human curator, supervised agents, a single repository, with git as the audit trail. Every judgment about whether a rule is worth its weight is measured against this assumption.","original":"\"A single curator plus supervised agents on one repo; git is the audit\ntrail\" (`docs/review-briefs.md`, Proportionality gate). It is neither a rule\nthe process obeys, nor a procedure, form, or check — it is the scoping\nassumption that parameterizes G10's proportionality decisions and P8's\n\"earns its place\" judgment.","sources":["docs/review-briefs.md (Proportionality gate)"]}],"coreThree":[{"rank":1,"title":"P1 — Repo-boundedness","ezx":"Everything else in this process exists because the repository alone must be enough to rebuild the work: any session or machine can vanish at any time. Keep only this one commitment and the rest could be regrown from the repo's own text.","itemIds":["P1"]},{"rank":2,"title":"G8 — Owner ratification","ezx":"Even with every check, review arm, and log removed, the one step where the owner personally accepts work would still keep truth in human hands and agents limited to proposals. It is the one control that cannot be delegated away without changing what the project is.","itemIds":["G8"]},{"rank":3,"title":"G1 — `npm run check`, the master gate","ezx":"The project's founding observation is that rules nobody checks quietly stop being followed, and this single command is where that conviction lives. On its own it still keeps the web of documents and data internally true.","itemIds":["G1"]}],"edges":[{"from":"M13","to":"P1","type":"realizes"},{"from":"M15","to":"P1","type":"realizes"},{"from":"A6","to":"P1","type":"realizes"},{"from":"G9","to":"P1","type":"enforces","note":"repo-boundedness is a standing attack surface its rounds police"},{"from":"G8","to":"P2","type":"realizes","note":"the gate's operation IS the practice; deleting it leaves P2 with nothing"},{"from":"M1","to":"P2","type":"realizes"},{"from":"G13","to":"P2","type":"realizes"},{"from":"G1","to":"P3","type":"realizes","note":"the check's own operation is the named practice"},{"from":"G6","to":"P3","type":"realizes"},{"from":"G1","to":"P4","type":"enforces","note":"authority-direction guard"},{"from":"A2","to":"P4","type":"realizes"},{"from":"G2","to":"P4","type":"enforces","note":"parses closed sets only from the owning artifact"},{"from":"A3","to":"P5","type":"realizes"},{"from":"G1","to":"P5","type":"enforces","note":"ID integrity/duplicate guards"},{"from":"A1","to":"P5","type":"realizes","note":"one workflow per file"},{"from":"A5","to":"P6","type":"realizes","note":"history exits the body into the changelog"},{"from":"G3","to":"P7","type":"realizes"},{"from":"G7","to":"P7","type":"realizes"},{"from":"G9","to":"P7","type":"enforces","note":"silent-failure hunting duty of the slice-close arm"},{"from":"G10","to":"P8","type":"enforces","note":"proportionality gate on every fold"},{"from":"G14","to":"P8","type":"realizes","note":"advisory that never decides"},{"from":"A3","to":"P9","type":"realizes","note":"the absence ledger with revisit triggers"},{"from":"A12","to":"P9","type":"realizes","note":"the Pre-booked ledger defers whole work items with triggers"},{"from":"M12","to":"P10","type":"realizes"},{"from":"G5","to":"P10","type":"enforces"},{"from":"M2","to":"P11","type":"realizes","note":"depth granted only to what the slice consumes"},{"from":"A17","to":"P11","type":"realizes","note":"the concept page is the concept-altitude unit"},{"from":"A14","to":"P12","type":"realizes"},{"from":"M2","to":"P12","type":"realizes","note":"graduation happens at slice ratification"},{"from":"A3","to":"P13","type":"realizes","note":"the ABS-7 escalation ladder"},{"from":"G7","to":"P13","type":"realizes","note":"refusal over invented data in the ratings tool"},{"from":"G1","to":"P14","type":"enforces","note":"the epistemic-label guard"},{"from":"A2","to":"P14","type":"realizes","note":"label columns on contract rows"},{"from":"G13","to":"P15","type":"realizes"},{"from":"G9","to":"P15","type":"enforces","note":"the semantic-finding escalation rider"},{"from":"M1","to":"A5","type":"produces"},{"from":"M1","to":"A1","type":"consumes","note":"the artifacts it amends"},{"from":"M1","to":"A2","type":"consumes"},{"from":"M1","to":"A3","type":"consumes"},{"from":"G8","to":"M1","type":"part-of","note":"ratification is the gate inside it"},{"from":"M2","to":"A1","type":"produces"},{"from":"M5","to":"M2","type":"part-of"},{"from":"M6","to":"M2","type":"part-of","note":"also of the concept-phase pass before the slice arc"},{"from":"M7","to":"M2","type":"part-of"},{"from":"M8","to":"M2","type":"part-of"},{"from":"M3","to":"A5","type":"produces","note":"disposition entries"},{"from":"M3","to":"A1","type":"consumes","note":"review inputs"},{"from":"M3","to":"A2","type":"consumes"},{"from":"M3","to":"A3","type":"consumes"},{"from":"M3","to":"A18","type":"consumes"},{"from":"G10","to":"M3","type":"enforces"},{"from":"M4","to":"M3","type":"instance-of"},{"from":"M4","to":"A6","type":"produces"},{"from":"M4","to":"P1","type":"realizes"},{"from":"G9","to":"M4","type":"enforces"},{"from":"M5","to":"A1","type":"consumes"},{"from":"M5","to":"A16","type":"consumes"},{"from":"M5","to":"A13","type":"produces","note":"fixture scenes are build items"},{"from":"G12","to":"M5","type":"enforces"},{"from":"G11","to":"M5","type":"enforces"},{"from":"M6","to":"A1","type":"produces"},{"from":"M6","to":"A17","type":"produces","note":"the DECISION blocks land in the page or spec"},{"from":"M6","to":"P1","type":"realizes","note":"decisions land in artifacts, never only in session context"},{"from":"M7","to":"A12","type":"produces"},{"from":"M7","to":"P8","type":"realizes","note":"frictions become rules only after triage, not reflexively"},{"from":"M8","to":"A1","type":"consumes","note":"the verification plan lives in the spec"},{"from":"M8","to":"A9","type":"consumes"},{"from":"M8","to":"A15","type":"consumes"},{"from":"M8","to":"A12","type":"produces","note":"the fold-back triage ledger"},{"from":"M9","to":"A7","type":"consumes"},{"from":"M9","to":"A14","type":"consumes","note":"indirectly, through the staged lint"},{"from":"M9","to":"A8","type":"produces"},{"from":"M9","to":"A9","type":"produces"},{"from":"M9","to":"A10","type":"produces"},{"from":"G3","to":"M9","type":"part-of"},{"from":"M10","to":"A4","type":"consumes"},{"from":"M10","to":"A10","type":"consumes"},{"from":"M10","to":"A14","type":"consumes","note":"event profile reads"},{"from":"M10","to":"A7","type":"produces","note":"the proposals and jobs themselves land through M9"},{"from":"M10","to":"P2","type":"realizes","note":"owner acceptance gates spend"},{"from":"G13","to":"M10","type":"enforces"},{"from":"M11","to":"M10","type":"part-of"},{"from":"M11","to":"P7","type":"realizes","note":"cap failure is loud, subject returns fresh"},{"from":"G7","to":"M11","type":"part-of","note":"the draft-check/round-zero component only; the acquisition and ratings tools are phase-4/phase-10 gates (arm finding #5)"},{"from":"A1","to":"P16","type":"realizes","note":"both accepted specs consume R-14's per-step model rule"},{"from":"G2","to":"M11","type":"enforces","note":"round-cap lint"},{"from":"M12","to":"A11","type":"produces"},{"from":"M12","to":"A9","type":"produces","note":"the report half"},{"from":"M12","to":"M10","type":"part-of","note":"the generators are runtime workflow phases"},{"from":"G5","to":"M12","type":"enforces"},{"from":"M13","to":"A5","type":"consumes","note":"the changelog tail is a mandated bootstrap read"},{"from":"M14","to":"M2","type":"part-of"},{"from":"M14","to":"A12","type":"produces"},{"from":"M14","to":"P8","type":"realizes","note":"every dependency admission argues its place"},{"from":"M15","to":"P4","type":"realizes","note":"evidence gets one non-normative home"},{"from":"M16","to":"A19","type":"produces"},{"from":"M16","to":"P1","type":"realizes","note":"the rationale record stays in the repo"},{"from":"M4","to":"A19","type":"consumes","note":"the draft is arm-reviewed at first draft"},{"from":"M17","to":"M7","type":"part-of","note":"its processing half"},{"from":"M17","to":"A12","type":"consumes"},{"from":"M17","to":"P2","type":"realizes","note":"every disposition is an owner decision"},{"from":"M18","to":"M5","type":"part-of","note":"a standing delegated build item"},{"from":"M18","to":"A12","type":"produces","note":"its findings land as decision-log entries"},{"from":"M9","to":"A2","type":"consumes","note":"contracts consulted at write time"},{"from":"G2","to":"A2","type":"enforces","note":"polices its declared rules against every record"},{"from":"M4","to":"A3","type":"consumes"},{"from":"G1","to":"A3","type":"enforces","note":"referential integrity of its ID namespaces"},{"from":"M5","to":"A4","type":"produces","note":"the build creates the skill workflow"},{"from":"G4","to":"A4","type":"enforces"},{"from":"A4","to":"P4","type":"realizes","note":"mechanics only, every why cites the spec"},{"from":"M3","to":"A6","type":"consumes","note":"changelog dispositions cite the records by their recorded hashes"},{"from":"M10","to":"A8","type":"consumes","note":"dedupe and prior-chain reads"},{"from":"M12","to":"A8","type":"consumes","note":"view inputs"},{"from":"G2","to":"A8","type":"enforces","note":"contract and append-only guards"},{"from":"G5","to":"A9","type":"enforces","note":"report freshness"},{"from":"G3","to":"A10","type":"enforces","note":"finalize and once-per-approval refusals"},{"from":"A11","to":"P10","type":"realizes"},{"from":"G5","to":"A11","type":"enforces"},{"from":"A13","to":"G6","type":"part-of","note":"the golden-run layer's input"},{"from":"A13","to":"P3","type":"realizes"},{"from":"G1","to":"A14","type":"enforces","note":"schema guards"},{"from":"A15","to":"P1","type":"realizes","note":"imported so citations terminate inside the repo (STRUCTURE.md changelog 2026-07-17)"},{"from":"M11","to":"A16","type":"consumes"},{"from":"A16","to":"P1","type":"realizes","note":"in intent (repo-artifact-only feeding), while itself being the least repo-bound form"},{"from":"M3","to":"A17","type":"produces","note":"review folds land in the page"},{"from":"M2","to":"A17","type":"consumes","note":"spec drafting reads the concept page"},{"from":"M4","to":"A18","type":"consumes","note":"a mandated review input"},{"from":"A18","to":"P4","type":"realizes","note":"the terminal basis citation of the foundation"},{"from":"A19","to":"P1","type":"realizes"},{"from":"G2","to":"G1","type":"part-of"},{"from":"G4","to":"G1","type":"part-of"},{"from":"G5","to":"G1","type":"part-of"},{"from":"G14","to":"G1","type":"part-of"},{"from":"G3","to":"A2","type":"enforces","note":"at write time"},{"from":"G4","to":"P4","type":"realizes"},{"from":"G6","to":"G1","type":"enforces","note":"resident guards must be driven and able to fail"},{"from":"G6","to":"G2","type":"enforces"},{"from":"G9","to":"P8","type":"realizes","note":"the enumerated trigger list keeps cost bounded"},{"from":"U2","to":"G10","type":"part-of"},{"from":"G11","to":"M2","type":"part-of"},{"from":"G12","to":"P4","type":"realizes","note":"the spec stays the sole authority over code behavior"},{"from":"G13","to":"A10","type":"consumes","note":"reads the gate tokens"},{"from":"G15","to":"M5","type":"part-of"},{"from":"G15","to":"G12","type":"enforces","note":"polices the no-shear rule at build time"},{"from":"G16","to":"M1","type":"part-of"},{"from":"G16","to":"P1","type":"enforces","note":"a fold must be reconstructible from the repo alone"},{"from":"U1","to":"A5","type":"produces","note":"its instances are changelog entries"},{"from":"U1","to":"A12","type":"consumes","note":"frictions are its raw material"}],"retired":[],"verification":{"arm":"a pinned external reviewer model","findingsFile":"confpipeline-present-2026-07-28-arm-findings.md","findings":[{"disposition":"folded","summary":"The slice-2 \"OPEN mid-arc, verification pending\" Progress row is stale: both 2026-07-25 run files are completed and the fold-back triage is recorded.","itemIds":["M2"]},{"disposition":"folded","summary":"ABS-7 is a deliberately unratified rule candidate, not a ratified Principle source.","itemIds":["P13"]},{"disposition":"folded","summary":"The epistemic-label scheme is bounded to contract rows and rules with uncertainty, not claim-wide.","itemIds":["P14"]},{"disposition":"folded","summary":"Missing element: R-14 model-agnostic workflow steps — accepted rule consumed by both workflow specs; added as P16.","itemIds":["P16"]},{"disposition":"folded","summary":"The composite \"G7 part-of M11\" edge pulled the phase-4/phase-10 tools into round zero; scoped to the draft-check component.","itemIds":["G7","M11"]}]},"changelog":["2026-07-28 ledger v1 created by form migration from `confpipeline-present-2026-07-28.md` (prompt 1 v3.2 run); arm round pending.","2026-07-28 content update: folded the 5 confirmed arm findings — M2's stale slice-2 row noted, P13 marked as deliberately unratified candidate, P14 retitled to its bounded scope, new P16 (model-agnostic workflow steps, arm finding #4 — the run had missed it), the G7 part-of M11 edge scoped to the round-zero component, and A1 realizes P16 added."]} /*__DATA_END__*/;
+
+/* ---------- constants ---------- */
+const TYPES = {
+  principle:    { label: "Principles",     one: "principle",    css: "var(--c-principle)", desc: "Timeless rules and convictions — the WHY that survives tooling change." },
+  mechanism:    { label: "Mechanisms",     one: "mechanism",    css: "var(--c-mechanism)", desc: "Recurring procedures through which the work flows." },
+  artifact:     { label: "Artifact-forms", one: "artifact-form", css: "var(--c-artifact)", desc: "Document and file shapes produced or consumed as working units." },
+  gate:         { label: "Checks & Gates", one: "check/gate",   css: "var(--c-gate)",      desc: "Machine- or procedure-enforced controls that can stop or redirect work." },
+  unclassified: { label: "Unclassified",   one: "unclassified", css: "var(--c-un)",        desc: "Elements the report itself could not fit into the four types." }
+};
+const TILE_ORDER = ["principle", "mechanism", "artifact", "gate", "unclassified"];
+const COL_ORDER = ["gate", "principle", "mechanism", "artifact", "unclassified"];
+const EDGE_STYLES = {
+  "enforces":     { width: 1.8, dash: null,          label: "enforces" },
+  "realizes":     { width: 1.6, dash: "14 3",        label: "realizes" },
+  "produces":     { width: 1.5, dash: "9 3 2 3",     label: "produces" },
+  "consumes":     { width: 1.5, dash: "9 3 2 3 2 3", label: "consumes" },
+  "derives-from": { width: 1.6, dash: "3 3",         label: "derives from" },
+  "part-of":      { width: 1.4, dash: "5 3",         label: "part of" },
+  "instance-of":  { width: 1.6, dash: "1.5 4",       label: "instance of" },
+  "supersedes":   { width: 1.4, dash: "11 5",        label: "supersedes" }
+};
+const EDGE_VERBS = {
+  "enforces":     ["enforces", "enforced by"],
+  "realizes":     ["realizes", "realized by"],
+  "produces":     ["produces", "produced by"],
+  "consumes":     ["consumes", "consumed by"],
+  "derives-from": ["derives from", "gives rise to"],
+  "part-of":      ["part of", "contains"],
+  "instance-of":  ["instance of", "has instance"],
+  "supersedes":   ["supersedes", "superseded by"]
+};
+
+/* ---------- tiny helpers ---------- */
+const $ = (sel, root) => (root || document).querySelector(sel);
+function h(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null) continue;
+    if (k === "style") el.setAttribute("style", v);
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v);
+  }
+  for (const c of children.flat()) {
+    if (c == null) continue;
+    el.append(c.nodeType ? c : document.createTextNode(c));
+  }
+  return el;
+}
+const SVGNS = "http://www.w3.org/2000/svg";
+function s(tag, attrs, ...children) {
+  const el = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) if (v != null) el.setAttribute(k, v);
+  for (const c of children.flat()) if (c != null) el.append(c.nodeType ? c : document.createTextNode(c));
+  return el;
+}
+function esc(str) {
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+/* minimal inline markdown: paragraphs, `code`, **bold**, *em* */
+function md(str) {
+  const inline = t => esc(t)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
+  return String(str).trim().split(/\n{2,}/)
+    .map(p => "<p>" + inline(p) + "</p>").join("");
+}
+function typeOf(id) {
+  const it = byId.get(id);
+  return it ? it.type : "unclassified";
+}
+function chip(id, extraTitle) {
+  const it = byId.get(id);
+  return h("a", {
+    class: "chip",
+    href: "#card-" + id,
+    style: "--cc:" + (TYPES[typeOf(id)] || TYPES.unclassified).css,
+    title: extraTitle || (it ? it.title : id),
+    onclick: e => { e.preventDefault(); openCard(id); }
+  }, id);
+}
+function openCard(id) {
+  const card = document.getElementById("card-" + id);
+  if (!card) return;
+  const det = $("details", card);
+  if (det) det.open = true;
+  card.scrollIntoView({ block: "center" });
+  card.classList.remove("flash");
+  requestAnimationFrame(() => card.classList.add("flash"));
+}
+
+/* ---------- guard: unfilled template ---------- */
+const app = $("#app");
+if (!DATA) {
+  app.append(h("div", { class: "wrap" },
+    h("div", { class: "empty-note" },
+      h("strong", null, "Template not filled."),
+      " Replace the ", h("code", null, "null"),
+      " between the __DATA_START__ / __DATA_END__ markers in this file's script with the extracted DATA object (see docs/self-report-artifact-prompt.md).")));
+  throw new Error("DATA missing");
+}
+
+/* ---------- indices ---------- */
+const byId = new Map(DATA.items.map(it => [it.id, it]));
+const edges = (DATA.edges || []).filter(e => byId.has(e.from) && byId.has(e.to));
+const outEdges = new Map(), inEdges = new Map();
+for (const e of edges) {
+  (outEdges.get(e.from) || outEdges.set(e.from, []).get(e.from)).push(e);
+  (inEdges.get(e.to) || inEdges.set(e.to, []).get(e.to)).push(e);
+}
+const counts = {};
+for (const it of DATA.items) counts[it.type] = (counts[it.type] || 0) + 1;
+document.title = DATA.project + " — Process Self-Report";
+
+/* ---------- header ---------- */
+const nav = h("nav", { class: "top-nav", "aria-label": "Sections" },
+  h("a", { href: "#core" }, "Core"),
+  h("a", { href: "#map-sec" }, "Map"),
+  TILE_ORDER.filter(t => counts[t]).map(t => h("a", { href: "#sec-" + t }, TYPES[t].label)),
+  (DATA.retired || []).length ? h("a", { href: "#retired" }, "Retired") : null,
+  DATA.verification ? h("a", { href: "#verif" }, "Verification") : null);
+
+app.append(h("header", { class: "top" },
+  h("div", { class: "wrap top-row" },
+    h("span", { class: "top-title" }, h("span", { class: "proj" }, DATA.project), " · self-report"),
+    h("span", { class: "top-meta" }, DATA.reportDate),
+    nav,
+    h("input", { id: "q", type: "search", placeholder: "Filter cards…", "aria-label": "Filter cards" }))));
+
+/* ---------- hero ---------- */
+const verifChip = DATA.verification
+  ? h("a", { class: "verif-chip", href: "#verif" },
+      h("span", { class: "dot", "aria-hidden": "true" }),
+      "Cross-checked by an independent model (" + DATA.verification.findings.length + " findings)")
+  : null;
+
+const summaryDiv = h("div", { class: "summary" });
+summaryDiv.innerHTML = md(DATA.summary);
+
+app.append(h("div", { class: "wrap hero" },
+  h("div", { class: "eyebrow" }, DATA.kind === "ledger" ? "Process ledger · present state" : "Process self-report · present state"),
+  h("h1", null, DATA.project),
+  h("div", { class: "hero-sub" },
+    DATA.reportDate + (DATA.repoHead ? " · HEAD " + DATA.repoHead : "") +
+    (DATA.kind === "ledger" ? " · curated ledger of the project's process" : " · the project describing its own process, from the inside")),
+  summaryDiv,
+  DATA.scopeNote ? h("div", { class: "scope-note" }, "Scope: " + DATA.scopeNote) : null,
+  h("div", { class: "tiles" },
+    TILE_ORDER.filter(t => counts[t]).map(t =>
+      h("a", { class: "tile" + (t === "unclassified" ? " small" : ""), href: "#sec-" + t, style: "--tc:" + TYPES[t].css },
+        h("div", { class: "n" }, String(counts[t])),
+        h("div", { class: "l" }, TYPES[t].label)))),
+  verifChip));
+
+/* ---------- core three ---------- */
+if ((DATA.coreThree || []).length) {
+  app.append(h("section", { id: "core", class: "wrap" },
+    h("h2", null, "If everything else were stripped away"),
+    h("p", { class: "sec-desc" },
+      "The report's own priority ranking: forced to radically simplify, these are the elements the process would defend last."),
+    h("div", { class: "core-grid" },
+      DATA.coreThree.map(c => {
+        const p = h("p", null); p.innerHTML = md(c.ezx);
+        return h("div", { class: "core-card" },
+          h("div", { class: "core-rank" }, "DEFENDED #" + c.rank),
+          h("h3", null, c.title),
+          p,
+          h("div", { class: "member-chips" }, (c.itemIds || []).map(id => chip(id))));
+      }))));
+}
+
+/* ---------- relations map ---------- */
+const mapItems = DATA.items.filter(it => COL_ORDER.includes(it.type));
+if (edges.length && mapItems.length) {
+  const NODE_H = 30, VGAP = 9, PAD = 16, HEAD_H = 30, LINE_H = 14, INFO_W = 22;
+  const COMPACT = { nodeW: 176, colGap: 104, wrap: false };
+  const cols = COL_ORDER.filter(t => mapItems.some(it => it.type === t));
+  const colItems = new Map(cols.map(t => [t, mapItems.filter(i => i.type === t)]));
+
+  /* text metrics — the map sizes its boxes to the text it actually draws */
+  const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const ctx2d = (() => { try { return document.createElement("canvas").getContext("2d"); } catch (_) { return null; } })();
+  const FONT_TITLE = "11px " + (cssVar("--sans") || "sans-serif");
+  const FONT_ID = "700 11px " + (cssVar("--mono") || "monospace");
+  function textW(str, font) {
+    if (!ctx2d) return String(str).length * 6.2;
+    ctx2d.font = font;
+    return ctx2d.measureText(str).width;
+  }
+  function fit(str, font, max) {
+    if (textW(str, font) <= max) return str;
+    let t = String(str);
+    while (t.length > 1 && textW(t + "…", font) > max) t = t.slice(0, -1);
+    return t.trimEnd() + "…";
+  }
+  function wrapTitle(str, max) {
+    const out = [];
+    let cur = "";
+    for (const w of String(str).split(/\s+/)) {
+      const next = cur ? cur + " " + w : w;
+      if (cur && textW(next, FONT_TITLE) > max) { out.push(cur); cur = w; } else cur = next;
+    }
+    if (cur) out.push(cur);
+    return out.map(l => fit(l, FONT_TITLE, max));
+  }
+  const TITLE_X = 9 + Math.ceil(Math.max(...mapItems.map(it => textW(it.id, FONT_ID)))) + 8;
+  const TITLE_W_MAX = Math.max(...mapItems.map(it => textW(it.title, FONT_TITLE)));
+
+  const svg = s("svg", { id: "map", role: "img", "aria-label": "Relation map between the process elements" });
+  const info = h("div", { id: "mapInfo", role: "status" });
+  const tip = h("div", { id: "mapTip", role: "tooltip" });
+  document.body.append(tip);
+
+  const hiddenTypes = new Set();
+  let geo = COMPACT, pos = new Map(), edgeEls = [], selected = null, expanded = false;
+
+  /* ---- render (re-run whenever the geometry changes) ---- */
+  function render() {
+    const nodeW = geo.nodeW, colGap = geo.colGap;
+    const titleW = nodeW - TITLE_X - INFO_W - 8;
+    const colX = new Map(cols.map((t, i) => [t, PAD + i * (nodeW + colGap)]));
+    const lines = new Map();
+    pos = new Map();
+    edgeEls = [];
+    let maxY = 0;
+    for (const t of cols) {
+      let y = PAD + HEAD_H;
+      for (const it of colItems.get(t)) {
+        const ls = geo.wrap ? wrapTitle(it.title, titleW) : [fit(it.title, FONT_TITLE, titleW)];
+        const hh = Math.max(NODE_H, ls.length * LINE_H + 14);
+        lines.set(it.id, ls);
+        pos.set(it.id, { x: colX.get(t), y, h: hh });
+        y += hh + VGAP;
+      }
+      maxY = Math.max(maxY, y);
+    }
+    const W = PAD * 2 + cols.length * nodeW + (cols.length - 1) * colGap;
+    const HGT = maxY + PAD;
+
+    svg.replaceChildren();
+    svg.setAttribute("viewBox", "0 0 " + W + " " + HGT);
+    svg.setAttribute("width", W);
+    svg.setAttribute("height", HGT);
+
+    for (const t of cols) {
+      svg.append(s("text", { class: "colhead", x: colX.get(t) + nodeW / 2, y: PAD + 12, "text-anchor": "middle" },
+        TYPES[t].label + " (" + counts[t] + ")"));
+    }
+
+    edges.forEach((e, i) => {
+      if (hiddenTypes.has(e.type)) return;
+      const a = pos.get(e.from), b = pos.get(e.to);
+      if (!a || !b) return;
+      const st = EDGE_STYLES[e.type] || EDGE_STYLES["part-of"];
+      let d;
+      const ay = a.y + a.h / 2, by = b.y + b.h / 2;
+      if (a.x === b.x) {
+        const x = a.x + nodeW, bulge = 34 + 16 * (i % 3);
+        d = "M" + x + " " + ay + " C" + (x + bulge) + " " + ay + " " + (x + bulge) + " " + by + " " + x + " " + by;
+      } else {
+        const goRight = a.x < b.x;
+        const x1 = goRight ? a.x + nodeW : a.x, x2 = goRight ? b.x : b.x + nodeW;
+        const dx = Math.abs(x2 - x1) * 0.45 * (goRight ? 1 : -1);
+        d = "M" + x1 + " " + ay + " C" + (x1 + dx) + " " + ay + " " + (x2 - dx) + " " + by + " " + x2 + " " + by;
+      }
+      const p = s("path", { class: "edge", d, "stroke-width": st.width, "data-type": e.type, "data-from": e.from, "data-to": e.to },
+        s("title", null, e.from + " " + st.label.replace(/ $/, "") + " " + e.to + (e.note ? " — " + e.note : "")));
+      if (st.dash) p.setAttribute("stroke-dasharray", st.dash);
+      edgeEls.push(p);
+      svg.append(p);
+    });
+
+    for (const it of mapItems) {
+      const { x, y, h: hh } = pos.get(it.id);
+      const ls = lines.get(it.id);
+      const base = y + (hh - ls.length * LINE_H) / 2 + 11;
+      const g = s("g", { class: "node", "data-id": it.id, tabindex: "0", role: "button", "aria-label": it.id + " — " + it.title });
+      g.append(s("rect", { x, y, width: nodeW, height: hh, rx: 6, fill: TYPES[it.type].css, "fill-opacity": "0.16", stroke: TYPES[it.type].css, "stroke-width": "1.25" }));
+      /* the native title bubble only repeats what a truncated node hides — expanded nodes show it already */
+      if (!expanded) g.append(s("title", null, it.id + " — " + it.title));
+      g.append(
+        s("text", { x: x + 9, y: base, "font-weight": "700" }, it.id),
+        s("text", { class: "nt", x: x + TITLE_X, y: base },
+          ls.map((l, i) => s("tspan", { x: x + TITLE_X, y: base + i * LINE_H }, l))));
+      g.append(s("g", { class: "node-info", "data-id": it.id, "aria-hidden": "true" },
+        s("circle", { cx: x + nodeW - 14, cy: y + 15, r: 7 }),
+        s("text", { x: x + nodeW - 14, y: y + 18.5, "text-anchor": "middle" }, "i")));
+      svg.append(g);
+    }
+
+    if (selected && byId.has(selected)) highlight(selected); else svg.classList.remove("has-sel");
+  }
+
+  /* ---- selection ---- */
+  function highlight(id) {
+    svg.querySelectorAll(".on").forEach(el => el.classList.remove("on"));
+    svg.classList.add("has-sel");
+    const linked = new Set([id]);
+    for (const p of edgeEls) {
+      if (p.dataset.from === id || p.dataset.to === id) {
+        p.classList.add("on");
+        linked.add(p.dataset.from); linked.add(p.dataset.to);
+      }
+    }
+    svg.querySelectorAll(".node").forEach(n => { if (linked.has(n.dataset.id)) n.classList.add("on"); });
+  }
+  function clearSel() {
+    selected = null;
+    svg.classList.remove("has-sel");
+    svg.querySelectorAll(".on").forEach(el => el.classList.remove("on"));
+    info.classList.remove("show");
+  }
+  function selectNode(id) {
+    selected = id;
+    highlight(id);
+    const it = byId.get(id);
+    info.replaceChildren(
+      h("h4", null, chip(id), " ", it.title),
+      (() => { const p = h("p", null); p.innerHTML = md(it.ezx); return p; })(),
+      h("a", { href: "#card-" + id, onclick: e => { e.preventDefault(); openCard(id); } }, "Open the full card ↓"));
+    info.classList.add("show");
+  }
+
+  /* ---- hover card on the info dot ---- */
+  const TIP_DELAY = 450;
+  let tipTimer = null, tipHideTimer = null, tipFor = null;
+  function showTip(id, anchor) {
+    const it = byId.get(id);
+    if (!it) return;
+    const body = h("div", null);
+    body.innerHTML = md(it.ezx);
+    tip.replaceChildren(h("h4", null, it.id + " — " + it.title), body);
+    tip.classList.add("show");
+    tipFor = id;
+    const r = anchor.getBoundingClientRect();
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = r.right + 12;
+    if (left + tw > window.innerWidth - 10) left = r.left - tw - 12;
+    if (left < 10) left = Math.max(10, (window.innerWidth - tw) / 2);
+    const top = Math.min(Math.max(10, r.top + r.height / 2 - th / 2), Math.max(10, window.innerHeight - th - 10));
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+  }
+  function hideTip() {
+    clearTimeout(tipTimer);
+    tip.classList.remove("show");
+    tipFor = null;
+  }
+  svg.addEventListener("mouseover", e => {
+    const ic = e.target.closest(".node-info");
+    if (!ic) return;
+    clearTimeout(tipHideTimer);
+    if (tipFor === ic.dataset.id) return;
+    clearTimeout(tipTimer);
+    tipTimer = setTimeout(() => showTip(ic.dataset.id, ic), TIP_DELAY);
+  });
+  svg.addEventListener("mouseout", e => {
+    if (!e.target.closest(".node-info")) return;
+    clearTimeout(tipTimer);
+    tipHideTimer = setTimeout(hideTip, 180);
+  });
+  tip.addEventListener("mouseenter", () => clearTimeout(tipHideTimer));
+  tip.addEventListener("mouseleave", () => { tipHideTimer = setTimeout(hideTip, 120); });
+
+  svg.addEventListener("click", e => {
+    const ic = e.target.closest(".node-info");
+    const g = e.target.closest(".node");
+    if (ic) { clearTimeout(tipTimer); showTip(ic.dataset.id, ic); }
+    if (g) selectNode(g.dataset.id); else clearSel();
+  });
+  svg.addEventListener("keydown", e => {
+    const g = e.target.closest(".node");
+    if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); selectNode(g.dataset.id); }
+  });
+
+  /* ---- edge-type toggles ---- */
+  const usedTypes = [...new Set(edges.map(e => e.type))];
+  const toggles = usedTypes.map(t => {
+    const st = EDGE_STYLES[t];
+    const sample = s("svg", { width: 26, height: 8, "aria-hidden": "true" },
+      s("path", { d: "M1 4 H25", stroke: "currentColor", "stroke-width": st.width, "stroke-dasharray": st.dash || "none", fill: "none" }));
+    return h("button", { class: "edge-toggle", "aria-pressed": "true", onclick: ev => {
+      const btn = ev.currentTarget;
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", String(on));
+      if (on) hiddenTypes.delete(t); else hiddenTypes.add(t);
+      clearSel();
+      render();
+    } }, sample, st.label, " (" + edges.filter(e => e.type === t).length + ")");
+  });
+
+  /* ---- expand / collapse ---- */
+  function cornerIcon(collapse) {
+    const d = collapse
+      ? "M9 3v6H3 M15 3v6h6 M15 21v-6h6 M9 21v-6H3"
+      : "M3 9V3h6 M15 3h6v6 M21 15v6h-6 M9 21H3v-6";
+    return s("svg", { width: 15, height: 15, viewBox: "0 0 24 24", fill: "none", "aria-hidden": "true" },
+      s("path", { d, stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+  }
+  const expandBtn = h("button", { class: "map-expand", type: "button", "aria-label": "Expand the map", title: "Expand the map" }, cornerIcon(false));
+  const scrollBox = h("div", { class: "map-scroll" }, svg);
+  const mapBox = h("div", { class: "map-box" }, expandBtn, scrollBox);
+  const mapWrap = h("div", { class: "map-wrap" },
+    h("div", { class: "map-controls" }, toggles, h("span", { class: "map-hint" }, "click a node · hover ⓘ for the description · Esc to clear")),
+    mapBox, info);
+  const backdrop = h("div", { class: "map-backdrop", onclick: () => setExpanded(false) });
+
+  function geoFor(boxW) {
+    const avail = Math.max(360, boxW - 22);
+    const gapMin = 70;
+    const fitW = Math.floor((avail - PAD * 2 - (cols.length - 1) * gapMin) / cols.length);
+    const nodeW = Math.max(COMPACT.nodeW, Math.min(fitW, Math.ceil(TITLE_X + TITLE_W_MAX + INFO_W + 10)));
+    const gap = Math.max(gapMin, Math.min(240, Math.floor((avail - PAD * 2 - cols.length * nodeW) / (cols.length - 1))));
+    return { nodeW, colGap: gap, wrap: true };
+  }
+  function relayout() {
+    if (!expanded) { geo = COMPACT; render(); return; }
+    const boxW = scrollBox.clientWidth;
+    geo = geoFor(boxW);
+    render();
+    /* a scrollbar may have appeared during that render — re-fit once against the real width */
+    if (scrollBox.clientWidth !== boxW) { geo = geoFor(scrollBox.clientWidth); render(); }
+  }
+  function setExpanded(on) {
+    if (expanded === on) return;
+    expanded = on;
+    hideTip();
+    mapWrap.classList.toggle("expanded", on);
+    backdrop.classList.toggle("show", on);
+    document.body.classList.toggle("map-open", on);
+    expandBtn.replaceChildren(cornerIcon(on));
+    expandBtn.setAttribute("aria-label", on ? "Collapse the map" : "Expand the map");
+    expandBtn.setAttribute("title", on ? "Collapse the map (Esc)" : "Expand the map");
+    requestAnimationFrame(relayout);
+  }
+  expandBtn.addEventListener("click", () => setExpanded(!expanded));
+  scrollBox.addEventListener("scroll", hideTip);
+  window.addEventListener("scroll", hideTip, { passive: true });
+  let resizeTimer = null;
+  window.addEventListener("resize", () => {
+    if (!expanded) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(relayout, 120);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (tipFor) hideTip();
+    else if (selected) clearSel();
+    else if (expanded) setExpanded(false);
+  });
+
+  render();
+  app.append(h("section", { id: "map-sec", class: "wrap" },
+    h("h2", null, "How the pieces hold each other"),
+    h("p", { class: "sec-desc" }, "Every line is a relation the report states explicitly. Gates enforce principles; procedures nest inside the main loop. Click an element to see what it is connected to — or expand the map for full titles."),
+    mapWrap, backdrop));
+}
+
+/* ---------- item sections ---------- */
+function relLine(verb, otherId) {
+  const other = byId.get(otherId);
+  return h("div", { class: "rel" },
+    h("span", { class: "verb" }, verb + " "),
+    h("a", { href: "#card-" + otherId, onclick: e => { e.preventDefault(); openCard(otherId); } },
+      otherId + (other ? " — " + other.title : "")));
+}
+function itemCard(it) {
+  const orig = h("div", { class: "orig" });
+  orig.innerHTML = md(it.original);
+  const rels = [
+    ...(outEdges.get(it.id) || []).map(e => relLine(EDGE_VERBS[e.type][0], e.to)),
+    ...(inEdges.get(it.id) || []).map(e => relLine(EDGE_VERBS[e.type][1], e.from))
+  ];
+  const ezx = h("p", { class: "ezx" }); ezx.innerHTML = md(it.ezx);
+  return h("article", { class: "card", id: "card-" + it.id, "data-search": (it.id + " " + it.title + " " + it.ezx).toLowerCase() },
+    h("div", { class: "card-head" },
+      h("span", { class: "chip", style: "--cc:" + TYPES[it.type].css }, it.id),
+      h("span", { class: "title" }, it.title),
+      it.gateClass ? h("span", { class: "tag" }, it.gateClass + "-enforced") : null,
+      (it.flags || []).map(f => h("span", { class: "tag" }, f))),
+    ezx,
+    h("details", null,
+      h("summary", null, "Original text & sources"),
+      orig,
+      (it.sources || []).length ? h("ul", { class: "srcs" }, it.sources.map(src => h("li", null, src))) : null,
+      rels.length ? h("div", { class: "rels" }, rels) : null));
+}
+for (const t of TILE_ORDER) {
+  const items = DATA.items.filter(it => it.type === t);
+  if (!items.length) continue;
+  app.append(h("section", { id: "sec-" + t, class: "wrap" },
+    h("h2", { style: "--hc:" + TYPES[t].css },
+      h("span", { class: "dot", "aria-hidden": "true" }),
+      TYPES[t].label,
+      h("span", { class: "cnt" }, String(items.length))),
+    h("p", { class: "sec-desc" }, TYPES[t].desc),
+    h("div", { class: "card-grid" }, items.map(itemCard))));
+}
+
+/* ---------- retired ---------- */
+if ((DATA.retired || []).length) {
+  app.append(h("section", { id: "retired", class: "wrap" },
+    h("h2", null, "Superseded along the way"),
+    h("p", { class: "sec-desc" }, "The process retires its own rules with the same care it births them. What was replaced, and by what."),
+    h("div", { class: "retired-list" },
+      DATA.retired.map(r => h("div", { class: "retired-row" },
+        h("span", { class: "old" }, r.old),
+        h("span", { class: "arrow", "aria-hidden": "true" }, "→"),
+        h("span", { class: "new" }, r.new),
+        r.note ? h("span", { class: "note" }, r.note) : null)))));
+}
+
+/* ---------- verification ---------- */
+if (DATA.verification) {
+  const v = DATA.verification;
+  app.append(h("section", { id: "verif", class: "wrap" },
+    h("h2", null, "External verification"),
+    h("p", { class: "sec-desc" },
+      "A different vendor's model (" + v.arm + ") reviewed this report against the repository. Findings and their recorded dispositions:"),
+    h("div", { class: "verif-head" }, h("span", { class: "verif-file" }, v.findingsFile)),
+    h("div", null, v.findings.map(f =>
+      h("div", { class: "finding" },
+        h("span", { class: "disp", "data-d": f.disposition }, f.disposition),
+        h("span", null, f.summary,
+          (f.itemIds || []).length ? h("span", { class: "fchips" }, f.itemIds.map(id => chip(id))) : null))))));
+}
+
+/* ---------- footer ---------- */
+app.append(h("footer", null, h("div", { class: "wrap" },
+  h("div", { class: "prov" }, "Source: " + (DATA.sourcePath || "raw/_cross/self-reports/" + DATA.reportFile) + " · rendered " + DATA.generatedAt),
+  h("div", null, "Descriptive only, like the report itself: the form is changed, the content is not."))));
+
+/* ---------- text filter ---------- */
+$("#q").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".card").forEach(c => {
+    c.style.display = !q || c.dataset.search.includes(q) ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>

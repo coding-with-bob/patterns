@@ -1,0 +1,2148 @@
+{
+  "_generated": "GENERATED FILE — pairflow.json is a public redacted copy produced by scripts/apply-redactions.mjs from its private source via site/redactions.json. Do not edit: edit the private source and the redaction map, then regenerate.",
+  "project": "pairflow",
+  "kind": "ledger",
+  "format": "ledger-v1",
+  "sourcePath": "ledgers/pairflow.md",
+  "reportFile": "pairflow.md",
+  "reportDate": "2026-08-18",
+  "generatedAt": "2026-08-18",
+  "repoHead": "21aedbe",
+  "inputs": [
+    "extraction run `pairflow-present-2026-07-28.md` (prompt 1 v3.2, 2026-07-28, v3-plane scope)",
+    "arm round `pairflow-present-2026-07-28-arm-findings.md` (a pinned external reviewer model) — 8 confirmed, 2 declined",
+    "fold pass 2026-07-28 — all 8 confirmed findings folded in",
+    "extraction run `pairflow-present-2026-08-18.md` (prompt 1 v3.2, 2026-08-18, v3-plane scope; the source repo 185 commits later)",
+    "extraction run `pairflow-history-2026-08-18.md` (prompt 2 v3, 2026-08-18) — turning-point material, consulted for element provenance only",
+    "arm round `pairflow-present-2026-08-18-arm-findings.md` (a pinned external reviewer model) — 12 confirmed, 1 declined",
+    "arm round `pairflow-history-2026-08-18-arm-findings.md` (a pinned external reviewer model) — 3 confirmed, 0 declined",
+    "fold pass 2026-08-18 — the 08-18 run's new elements and content deltas plus every confirmed arm finding"
+  ],
+  "scopeNote": "Operator-set scope note (owner-ratified 2026-07-25): the pairflow repository\ncarries TWO process planes — the v1 product-development process and the v3\nkernel-rebuild process. This ledger describes STRICTLY the v3 plane's\nprocess; v1 machinery enters only where the v3 process explicitly consumes\nit. v3 work follows its own process, not the v1 bubble workflow — no live v1\nbubble is created, routed, or closed by the v3 process today, and\nchapter-level delivery through the v1 machinery is a declared future\n\"chaining\" stage. What v3 consumes from v1 today is a short concrete list:\nthe root local-CI suite, the reviewer severity ontology, commit-message\nguidance, and content ported from v1 skills as rubric text; the v3 plane has\nits own repo-local skill, with authority explicitly retained by the docs.",
+  "summary": "pairflow is a tool for running AI coding agents through a review-gated\ndevelopment workflow, and the v3 plane covered here is the ground-up rebuild\nof its kernel. A single human owner ratifies every real decision while\nephemeral AI sessions do the work. A ratified design model is the sole\nsource of semantic truth; the plan advances chapter by chapter, and each\nstep is projected into a self-contained task packet that a fresh-context\nsub-agent builds under machine gates, a five-lens review panel, and a\nsecond, different AI model acting as external reviewing arm. The ledger\ninventories 77 elements: 17 principles, 20 mechanisms, 17 artifact-forms,\n20 checks and gates, and 3 that fit none of those types. Every claim is\nverified against the source repository at the head named above; where a\nsurface moved since an earlier fold, the element carries the current\nreading and the change log records the shift.",
+  "items": [
+    {
+      "id": "P1",
+      "type": "principle",
+      "title": "The two planes must not shear",
+      "ezx": "The ratified design corpus is the only source of meaning, and the code side only reads it, never edits it. If implementation work reveals a bug in the design, the fix goes back through the design side — never quietly into the code.",
+      "original": "The ratified model corpus (`v3/model/`) is the sole source of semantic\ntruth; the implementation consumes it and never edits it, and a model bug\nfound during implementation is \"NEVER silently patched in code\" — it returns\nthrough the model plane and the regenerated ledger.",
+      "sources": [
+        "v3/implementation/README.md §6 (\"Model↔code divergence (mandatory stop)\")",
+        "v3/README.md (plane table: \"the implementation consumes it, never edits it\")"
+      ]
+    },
+    {
+      "id": "P2",
+      "type": "principle",
+      "title": "Projection, not invention",
+      "ezx": "Once the source documents are approved, writing a task spec means selecting and compiling content that was already decided. Nothing new is invented at spec-writing time.",
+      "original": "Once sources are ratified, writing a task spec is selecting and compiling\nalready-decided content: \"the plan orders and scopes; the task packet\nprojects; the gates verify.\"",
+      "sources": [
+        "v3/implementation/README.md §5.1–§5.2 (\"spec-writing becomes *projection, not invention*\")",
+        "v3/implementation/task-packet-template.md (\"Operative material (full text — projection, not invention)\")"
+      ]
+    },
+    {
+      "id": "P3",
+      "type": "principle",
+      "title": "Autonomy is proportional to contract density; the loop stops exactly where a new semantic decision is needed",
+      "ezx": "The AI loop may run unattended exactly as far as a machine can check its results; the moment a genuinely new decision is needed, it stops and hands the choice to the human. Human sign-offs are explicit, given on named file contents, and never delegated or inferred. Two qualifications keep the rule honest: the first work item of a new kind always goes to the human however strong the machine checks are, and there is a second, separate family of stops that fires on the loop's economics — too many rounds, or rounds that stop yielding — where nothing new needs deciding at all.",
+      "original": "\"A task may run hands-off exactly when its acceptance is\nmachine-checkable\"; the human's seat is where decisions are born, and\nratification acts are explicit, on named bytes, never delegated or inferred.\nMachine-checkable acceptance is NECESSARY, not sufficient: the\nfirst-of-a-kind rule holds a new task class at the human approve \"regardless\nof trust stage\" (`v3/implementation/README.md` §5.5;\n`.claude/skills/CreateTaskPacket/Workflows/ReviewPacket.md` carries the\ncounterpart) — 2026-08-18 arm finding #2. And the new-semantic-decision\ncondition governs what the loop may not DECIDE, not every path back to the\nhuman: the loop-economics STOPs (`3:watchdog` at 8 rounds, `3:plateau`) are a\nsecond, orthogonal stop family that returns the work with no new decision\npending (2026-08-18 arm finding #1).",
+      "sources": [
+        "v3/implementation/README.md §5.1, §5.5 (standing human checkpoints)",
+        "v3/implementation/README.md §5.5 (\"the first packet of a new task class is human-approved regardless of trust stage\")",
+        "v3/implementation/autonomy-realignment.md (\"The human's seat is where decisions are born\")",
+        "AGENTS.md \"V3 Implementation Plane\""
+      ]
+    },
+    {
+      "id": "P4",
+      "type": "principle",
+      "title": "One authority per fact; every durable decision has exactly one home",
+      "ezx": "Every fact and every lasting decision lives in exactly one file, so copies can never drift apart. A triage rule sorts each decision into one of four homes: the design model, an architecture decision record, a contract row, or the code with its tests.",
+      "original": "No fact is stored twice where copies could drift; decisions are triaged by\ncontent nature to exactly one of four homes — model (admission test K0), ADR\n(lift tests K1–K4), contract-draft C-row, or code+tests.",
+      "sources": [
+        "v3/implementation/README.md §6 (\"Decision-home triage (the four-home rule)\")",
+        "v3/design/design-method-playbook.md §8 (boundary rule)",
+        "v3/design/design-method-playbook.md §6 (record-level instance of the same law, scoped to the model source layout's stored facts)"
+      ]
+    },
+    {
+      "id": "P5",
+      "type": "principle",
+      "title": "A rule without an enforcement surface is a planning gap, and a decision record without a verification clause is prose",
+      "ezx": "A binding rule that nothing enforces is treated as a hole in the plan, not as a rule. Likewise, a recorded decision must say how to check that it is still being followed — otherwise it is just prose.",
+      "original": "Every binding `IC-*` constraint maps to a test, a check, or an ADR (\"An item\nwith none of the three is a planning gap\"), every `PI-*` item has a home in\nthe plan, and every ADR's `Verification` section is mandatory (\"an ADR\nwithout a way to check it is still in force is prose, not a contract\").",
+      "sources": [
+        "v3/design/implementation-contract.md",
+        "v3/design/design-method-playbook.md §8"
+      ]
+    },
+    {
+      "id": "P6",
+      "type": "principle",
+      "title": "Push constraints down the ladder: environment > data > in-context rule",
+      "ezx": "A constraint enforced by the environment — types, schemas, linters, fixtures — costs nothing to remember and fails locally, so it beats a rule written as text an AI must keep in mind. When a rule is needed, the order of preference is: mechanize it, extend an existing reviewer duty, and only as a last resort write new prose.",
+      "original": "A constraint the environment enforces (types, schema, lint, fixtures) costs\nzero context and fails locally; data (the finished artifact) beats prose\nrules; the in-context budget is the scarce resource, and the admission bias\nprefers \"mechanize → extend an existing lens duty → new prose rule\".",
+      "sources": [
+        "v3/implementation/README.md §5.3 (the three-row table)",
+        "v3/implementation/README.md §7 (admission bias)"
+      ]
+    },
+    {
+      "id": "P7",
+      "type": "principle",
+      "title": "Evidence over claims; \"driven\" means able to fail",
+      "ezx": "A claim that something is complete or was swept only counts when it comes with the actual, untruncated measurement output — a list recalled from memory is not a measurement. A test only counts if it is proven able to fail when the thing it guards is broken.",
+      "original": "A completeness or sweep claim is admissible only with its untruncated\nmeasurement (\"enumeration from memory is not a measurement\"); a gate's\nnegative test derives from its DECLARED claim, never from the implemented\nrule list; a test lane counts only when it can catch a violation of its\nrow's meaning (\"'Driven' means ABLE TO FAIL … presence is not sensitivity\").",
+      "sources": [
+        "v3/implementation/README.md §4 step 2, §5.5 (finding policy; build-close sensitivity pass)",
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (R-LANE-SENSITIVITY)"
+      ]
+    },
+    {
+      "id": "P8",
+      "type": "principle",
+      "title": "Self-containment: everything lives on repo surfaces, in full, at the point of use",
+      "ezx": "Everything an AI session needs is written in full in the repository files it is handed — no memory of earlier sessions is required or assumed. The work-order document (the packet) carries its material inline, not as pointers to other files.",
+      "original": "\"Everything an agent needs lives on repo surfaces — no session memory is\nrequired or assumed\"; the packet is self-contained for its operative set —\nno pointer-shaped constraint dumps.",
+      "sources": [
+        "AGENTS.md \"V3 Implementation Plane\"",
+        "v3/implementation/README.md §5.3"
+      ]
+    },
+    {
+      "id": "P9",
+      "type": "principle",
+      "title": "Capture, don't fix: the process changes only at chapter boundaries, and rule retirement has equal standing with addition",
+      "ezx": "Friction is written down the moment it happens, but the process itself is only changed at chapter boundaries, unless something is blocking. Removing an old rule is treated as seriously as adding a new one, backed by a tally of how often each rule actually caught something.",
+      "original": "Friction is logged append-only the moment it happens; no process edits\nmid-chapter unless blocking; each boundary disposes the lines and sweeps the\nstanding rule registries with a per-rule catch tally. The retirement half is\nobservable, not just declared: the LearnedRules registry stood at 23 rows at\nthe 2026-07-28 fold and stands at 16 at this one — the ch13 boundary absorbed\nseveral rows into broader ones (R-NUMERIC-LADDER into R-DIMENSIONS,\nR-FIELD-LISTS into R-DELEGATION-CLOSURE) rather than accumulating them. The\nmid-chapter ban is likewise not absolute in the record: `git show` at this\nhead finds process/workflow edits taken inside a chapter under the blocking\nclause, plus one taken as a ratification-sanctioned named exception (the\nADR-015 plane consolidation) — the blocking clause and the ratifying act are\nthe two lawful doors (2026-08-18 history-arm finding #1).",
+      "sources": [
+        "v3/implementation/README.md §7",
+        "v3/implementation/process-log.md (header: \"Capture, don't fix\")"
+      ]
+    },
+    {
+      "id": "P10",
+      "type": "principle",
+      "title": "Reliability comes from decorrelated, diverse verification loops",
+      "ezx": "Because an author is blind to their own wrong premises, checking is spread across independent loops that fail in different ways: fresh-context reviewers, a different AI model, and mechanical gates. Any tool that joins the checking machinery first gets its own outside review.",
+      "original": "The author is structurally blind to their own premise, so verification is\nlayered across loops that fail differently: fresh-context panel lenses, a\ndifferent model as external arm, mechanical tier-0 gates; any tool\nparticipating in the verification surface gets an outside review before\nfirst load-bearing use (\"exactly the class the tool's own author is\nstructurally blind to\").",
+      "sources": [
+        "v3/implementation/README.md §5.5 (\"Verification-surface tooling review\")",
+        "v3/implementation/process-log.md (2026-07-22 entries on decorrelated loops)"
+      ]
+    },
+    {
+      "id": "P11",
+      "type": "principle",
+      "title": "The convergence ramp is itself the coherence test",
+      "ezx": "Capability grows in small, coherent steps. If a new capability fits into the existing model as a small branch or guard, the model is sound; if it forces a tear-up, the earlier model was wrong — so the growth path doubles as a test of the design.",
+      "original": "Capability grows in small coherent increments; if a new capability slots\ninto the existing model as a small branch or guard, the abstraction holds —\nif it forces a tear-up, the earlier model was wrong.",
+      "sources": [
+        "v3/design/approach.md §2 (\"The ramp is also a coherence test\"; \"one coherent capability per level\")",
+        "v3/design/design-method-playbook.md §6 (the algorithm-level form of the same test)"
+      ]
+    },
+    {
+      "id": "P12",
+      "type": "principle",
+      "title": "Scope is a declared decision, and coverage accounting must close",
+      "ezx": "What is in scope is an explicit plan decision, never \"everything by default\". The declared slices of work must together cover the declared inventory exactly — no orphans and no piece with two undeclared owners — and this arithmetic is the mechanical answer to whether the plan is concrete enough.",
+      "original": "\"'In scope' is a plan decision, not a default of 'everything'\"; the union of\ndeclared packet slices must cover the declared inventory with no orphans and\nno undeclared double owners — this is the mechanical answer to \"is the plan\nconcrete enough\".",
+      "sources": [
+        "v3/implementation/README.md §5.4",
+        "v3/implementation/plan.md §1.4"
+      ]
+    },
+    {
+      "id": "P13",
+      "type": "principle",
+      "title": "Tier 0 checks hard deterministic facts over declared data, never semantics from prose",
+      "ezx": "The fully automatic checks only verify hard, deterministic facts about declared data — shapes, existence, resolvable references, equality. Judging the meaning of prose always stays with reviewers, and this line settles every future argument about what the linter should check.",
+      "original": "Machine gates verify schema shape, existence, reference resolution, and\nequality-at-commit; prose obligations are lens duties — \"This principle\ndecides every future 'should the lint check this?' dispute.\"",
+      "sources": [
+        "v3/implementation/README.md §5.5 (\"Tier-0 scoping principle\")"
+      ]
+    },
+    {
+      "id": "P14",
+      "type": "principle",
+      "title": "Authority-bearing documents declare their status and, at the top of the ladder, the act that conferred it",
+      "ezx": "Documents that carry authority open with a status line saying whether they are ratified, and the most important ones also name the human act that made them so. In practice about half the process documents do this, and the rule is only written down for some document kinds.",
+      "original": "*Practiced, partly recorded.* About half the v3 process documents open with\na `Status:` banner (\"Status: ratified 2026-07-07\" in\n`v3/implementation/README.md`; \"RATIFIED 2026-07-10 — the user's explicit\nact\" in `v3/implementation/autonomy-realignment.md`; \"Status: AUDIT RECORD\"\nin `v3/implementation/flip-claims.md`), and only a minority name the\nconferring act — the plan itself opens with a genre note, not a banner. The\nconvention is written as a rule for contract-drafts\n(`v3/implementation/contract-draft-template.md` status enum), ADRs\n(`v3/adr/_template.md`), and topic memos (the `_open-`/`_closed-` lifecycle\nprefix, `v3/design/topics/README.md`); its extension to process docs\ngenerally is practiced, not recorded.",
+      "sources": [
+        "v3/implementation/README.md (\"Status: ratified 2026-07-07\")",
+        "v3/implementation/autonomy-realignment.md (\"RATIFIED 2026-07-10 — the user's explicit act\")",
+        "v3/implementation/flip-claims.md (\"Status: AUDIT RECORD\")",
+        "v3/implementation/contract-draft-template.md (status enum)",
+        "v3/adr/_template.md",
+        "v3/design/topics/README.md (the `_open-`/`_closed-` lifecycle prefix)"
+      ],
+      "flags": [
+        "practiced, partly recorded"
+      ]
+    },
+    {
+      "id": "P15",
+      "type": "principle",
+      "title": "The threat model, stated once",
+      "ezx": "The gates protect one operator working with review-gated AI agents against agent drift and sloppiness — silent edits of ratified text, broken references, boundary escapes — and deliberately not against someone forging history, because git history and the operator's own diff review cover that. This boundary shapes every gate's design and justifies declining findings that fall outside it.",
+      "original": "The gates defend \"one operator plus review-gated agents on a single repo\"\nagainst agent drift and sloppiness — \"silent edit of ratified text,\nunresolved reference, boundary escape\" — and \"never against adversarial\nhistory forgery; git history plus the operator's diff review own that\nlayer\"; this bounds every gate's design and grounds the routine finding\nroute `declined: out of threat model`.",
+      "sources": [
+        "v3/implementation/README.md §5.5 (\"Threat model, stated once\")"
+      ]
+    },
+    {
+      "id": "P16",
+      "type": "principle",
+      "title": "Reference economy: the operative surface speaks present",
+      "ezx": "A cross-reference is only kept if its value beats the risk of it rotting; a reference worth keeping is upgraded into something a machine checks, and the rest are deleted rather than maintained. Working text stays in the present tense, free of review leftovers (one packet still carries a leftover round note), and a retired rule's row is deleted from its registry.",
+      "original": "A cross-reference earns its upkeep only if benefit exceeds rot-risk times\nmiss-cost — a reference worth keeping is PROMOTED to a machine-checked class\n(lint / coverage / the `DEFERRED(chN)` marker class), otherwise DROPPED\nrather than maintained as a \"rotting pointer\"; operative text is meant to carry no round references or review residue — one\nrecorded counterexample survives (`ch6-p4b-dev-cli.md` opens with \"Approved\nafter two refine rounds\"; 2026-07-28 arm finding #5) — and a retired rule's\nrow is deleted from its registry.",
+      "sources": [
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (R-PRESENT-TENSE)",
+        "v3/implementation/README.md §4 (\"the broader default is R-PRESENT-TENSE's reference economy\")",
+        "v3/implementation/README.md §7 (\"the operative surface speaks present\")"
+      ]
+    },
+    {
+      "id": "P17",
+      "type": "principle",
+      "title": "The process governs its own changes",
+      "ezx": "The documents that define the process are put through the same machinery as ordinary work: multiple review rounds, an outside reviewer, explicit human ratification, and the process's own rules applied to itself. No document anywhere states this as a rule — it is visible only in how the process documents were actually produced.",
+      "original": "*Practiced, not recorded.* Process-defining documents are themselves run\nthrough the process's adversarial machinery rather than written by fiat:\n`v3/implementation/process-v2-design.md` went through six review rounds and\napplies its own D2 one-authority rule to itself; the autonomy realignment was\nenumerated as AL-rows, arm-reviewed, and ratified by an explicit dated act;\nauthority rewrites go through the claim-enumeration ritual (M13) before the\nprose is written. No surface states \"process changes obey the process\" as a\nprinciple — it is inferable only from how the process documents were\nproduced, which is what makes it a genuine institutionalization datum rather\nthan a quoted rule. Its written cousins exist but are narrower: P9 governs\nWHEN the process may change (boundaries only), P11 governs WHAT may be\nadmitted; neither says the change itself must be reviewed and ratified like\nwork.",
+      "sources": [
+        "v3/implementation/process-v2-design.md (six review rounds; applies its own D2 rule to itself)",
+        "v3/implementation/autonomy-realignment.md (\"RATIFIED 2026-07-10 — the user's explicit act\")",
+        "v3/implementation/flip-claims.md (the claim-enumeration audit of an authority rewrite)"
+      ],
+      "flags": [
+        "practiced, not recorded"
+      ]
+    },
+    {
+      "id": "M1",
+      "type": "mechanism",
+      "title": "Chapter-based plan progression",
+      "ezx": "The plan is written and executed one chapter at a time: each chapter is proposed, then explicitly approved by the human, then committed — there is no single big up-front plan. Approval freezes the chapter's table of work items, execution modes, and pre-registered predictions.",
+      "original": "The plan is written and executed chapter by chapter, \"each chapter proposed\n→ ratified → committed. No monolithic draft\"; new chapters append via the\n§1.3 map-extension mechanism with an explicit build-order slot (ch11–ch13\nentered this way), and ratification fixes the packet table, flow modes,\npre-registered predictions, and (under experiment 2) the chapter's\nmain-thread model.",
+      "sources": [
+        "v3/implementation/README.md §3",
+        "v3/implementation/plan.md (header + §1.3)"
+      ]
+    },
+    {
+      "id": "M2",
+      "type": "mechanism",
+      "title": "The packet build loop",
+      "ezx": "Every planned step runs the same fixed cycle: write the packet (the self-contained work-order document), read the sources, write tests first, implement, get the drift tests green, record a decision if one was made, review, commit once, then audit. A packet decision that contradicts the ratified plan must be folded up into the plan in the same commit, never silently and never later.",
+      "original": "Every plan step runs the same fixed cycle (steps 0–8): author the packet →\nread the spec + ledger slice → TDD from declared claims → implement → drift\ntests green → ADR if a trigger fires → review (code + ADR compliance) →\none-step-one-commit → post-build audit; a red audit \"is a defect fixed\nbefore any further packet work, never advisory\". A packet decision\ncontradicting ratified plan text flows UP into the plan \"IN THE SAME COMMIT,\nmarked 'aligned at <packet-id> pre-approval'. Never silent, never deferred\"\n(R-ALIGNED-UP).\n\nThe one-packet-one-commit rule carries NAMED exception classes, not\njudgment calls. The plan's own §14.4 text at this head names ONE — the\nschema re-lock follow-up commit, which cannot ride the build commit because\nits re-lock block records that commit's own sha. A SECOND is defined and\nconfined in `v3/implementation/task-packet-template.md`: the\nINSTRUMENT-LANDING commit, where a packet whose acceptance proof needs a\nbaseline recomputable at a pre-change ref lands its measuring instrument in\nthe build commit's PARENT, declared by content in the opt-in\n`instrument_manifest` block (exact keyset, nonempty, unique, repo-relative,\nevery path under `v3/src/testkit/`) and audited by its own lint leg. The two\nsurfaces disagree at this head: the template calls the instrument landing\n\"the plan §14.4 SECOND named exception\" while §14.4 itself still says \"ONE\"\n— the plan-side text was written but is uncommitted at this head\n(2026-08-18 arm finding #3, the ledger's own review-basis lesson).",
+      "sources": [
+        "v3/implementation/README.md §4",
+        "v3/implementation/packets/ (45 packets + a README, ch4–ch14)",
+        "v3/implementation/task-packet-template.md (the `instrument_manifest` block — the second commit exception's confinement)",
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (R-ALIGNED-UP)"
+      ]
+    },
+    {
+      "id": "M3",
+      "type": "mechanism",
+      "title": "The five-lens fresh-context review panel",
+      "ezx": "Every packet and draft is reviewed by five sub-agents with no prior context, each looking through a different lens, sharing one verdict vocabulary: split, refine, or approve. Approval is tied to the exact final content hash — any later content change voids it — and before any approve, an audit verifies that every required output actually exists in the target document.",
+      "original": "One review engine for packets and drafts: five fresh-context sub-agent\nlenses with a Gate Coverage Matrix and one verdict set\n(`split`/`refine`/`approve` + STOP); first round FULL, content folds trigger\nTARGETED re-runs with mandatory escalation triggers, bookkeeping folds get\none reconciliation pass, and the approve requires a clean top-level\nreconciliation close bound to the final content hash (\"any later CONTENT\nfold voids it\"); includes the once-per-packet fresh-implementer lens\nexperiment. Before any approve, the Mandatory Output Audit verifies every\ntriggered mandatory output is MATERIALIZED in the target (adjacent prose may\nnot substitute); the finding policy is fix-by-default because \"the fresh\nreviewer is a proxy for the build-time implementer\", and the spec-vs-build\naltitude line routes fixture-level demands to `deferred-to-build` by rule.",
+      "sources": [
+        ".claude/skills/CreateTaskPacket/Workflows/ReviewPacket.md",
+        "v3/implementation/README.md §5.5"
+      ]
+    },
+    {
+      "id": "M4",
+      "type": "mechanism",
+      "title": "The contract-drafting ritual (DraftContract)",
+      "ezx": "A chapter's design decisions are frozen once as numbered contract rows, panel-reviewed, then ratified by the human in a two-commit ceremony that records the date, the reviewers, and the commit. Reopening a ratified contract is a deliberate, loudly-marked exception window, and the human sign-off itself is never automated.",
+      "original": "A chapter's memo-born surface is decided once as `C<n>` rows,\npanel-reviewed, then human-ratified via a two-commit act (content commit at\n`draft`, ratifying commit appending `{date, arms, commit}` and flipping to\n`ratified`); packets anchor as `contract:chN-<surface>#Cn`; reopen is a\ndeliberate loud-red two-commit window, and chapter close fills the\n`realized_map` and flips to `realized` in one act.\n`tools/v3-plan/reopen_runner.py` executes the file operations of a reopen —\n\"the human ratification act stays human\".",
+      "sources": [
+        "v3/implementation/contract-draft-template.md",
+        ".claude/skills/CreateTaskPacket/Workflows/DraftContract.md",
+        "v3/implementation/contracts/ (7 drafts: ch8, ch9, ch11, ch12, ch13, ch13-v2, ch14)",
+        "tools/v3-plan/reopen_runner.py"
+      ]
+    },
+    {
+      "id": "M5",
+      "type": "mechanism",
+      "title": "External-arm invocation",
+      "ezx": "For an outside opinion, a different AI model — pinned to an exact version per chapter — reviews the exact target bytes, under a guard that proves the bytes did not change during the review. Since August 2026 the main route runs the outside model as an agent, with the older wrapper script kept as the portable fallback; on the agent route the same guards are performed by hand. A record may name which model tier ran only when a machine confirmed it.",
+      "original": "A different model (pinned per chapter in `v3/implementation/arm-pin.md` —\ncurrently an external reviewer model at high reasoning effort) reviews target bytes under a byte guard.\nTRANSPORT (user ruling 2026-08-10, pin row landed at the ch13 boundary\n2026-08-14): the PRIMARY transport is the external reviewer agent — model and effort\npinned in the agent definition, and the guards reproduced BY HAND on that\nroute (basis-hash check before and after the run; provenance — transport ·\nmodel · effort · timestamps — in the verdict header). The FALLBACK is\n`tools/v3-plan/arm_run.sh`, which carries the same guards mechanically:\navailability preflight, pin match read from the pin table's last row,\nforeground launch under a 45-minute timeout (recalibrated from 20 after the\ncap killed four actively-working runs), header-pin validation, and\nbefore/after byte-guard; exits `2 usage/preflight · 3 pin-mismatch · 4\nguard-trip · 5 arm-error · 6 guard-infra`. The asymmetry between the two\nroutes is recorded rather than papered over: the primary transport carries no\nrunner-side timeout, and \"a requested-vs-actual assertion is not buildable on\nthe agent transport today\" — the call must also not pass a model parameter,\nsince one `model:` override invalidated a run as a pin mismatch. TIER-RECORD\nRULE (same boundary, born from a tier-mismatched ratification\nreview the owner caught at the gate): a record names a MODEL TIER only when\nthe tier is MACHINE-CONFIRMED (a pin-validated header, or a transport that\nreports its model); otherwise it names the REQUEST and the uncertainty, and\n\"a silent tier claim is the named defect\".",
+      "sources": [
+        "v3/implementation/arm-pin.md (transport column + operational notes)",
+        "tools/v3-plan/arm_run.sh",
+        ".claude/skills/CreateTaskPacket/Workflows/ReviewPacket.md §6"
+      ]
+    },
+    {
+      "id": "M6",
+      "type": "mechanism",
+      "title": "Friction capture and the chapter boundary review",
+      "ezx": "Observations about the process are appended to a log the moment they happen; at each chapter boundary every new line gets a verdict — become a gate, become a rule, edit the docs, watch it, or acknowledge it as a non-issue. A tally of how often each standing rule actually caught something feeds the retirement sweep, and one-off observations default to \"watch\".",
+      "original": "Observations are appended to the process log the moment they happen; at each\nchapter boundary every new line gets a verdict (gate / checkpoint rule /\nREADME edit / WATCH / acknowledged non-issue), `later-chapter` verdicts land\ntheir plan-map rows in the same act, a per-rule catch tally feeds the\nretirement sweep, and single-occurrence candidates default to WATCH. The\nboundary is also where the autonomy machinery is measured and where two\nstanding settings may move: autonomously-approved packets are post-hoc\naudited for `detector_misses` — \"a miss is a DETECTOR bug: fix the rule, do\nnot add process\", and the boundary \"evaluates the gates' yield from the\n`detector_misses` stream\" (`v3/implementation/README.md` §5.5, §7) — and the\nexternal-arm pin is revisable at chapter boundaries ONLY. A boundary verdict\ncan also close a running pilot on its own recorded data (the ch13 boundary,\n2026-08-14, stopped the mutation-testing pilot — see U2).",
+      "sources": [
+        "v3/implementation/README.md §7",
+        "v3/implementation/process-log.md",
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (\"updated at chapter boundaries only\")"
+      ]
+    },
+    {
+      "id": "M7",
+      "type": "mechanism",
+      "title": "Fresh-context delegated build (the conductor architecture) with the entry-mode trust dial",
+      "ezx": "By default the actual build work is handed to a fresh sub-agent that receives only the self-contained packet, while the main session keeps orchestration, the verification chain, and the commit boundary. The user's opening prompt sets how far the loop may run unattended.",
+      "original": "The default build is a subagent fed the self-contained packet executing\nsteps 1–3, while the main context keeps orchestration, the verification\nchain, both arm gates, and the commit boundary; delegation prompts must\nQUOTE any discipline stronger than the existing suite; under standing\nchapter mode \"every heavy step — authoring, build, arm runs — delegates to\nfresh-context subagents\". The user's opening prompt sets how far the loop\nruns unattended: bare \"go ahead with chN-pM\" = PER-PACKET (flag-free ⇒ autonomous\nthrough build, announced in one line, stop after the packet); \"review chN-pM\"\n= stop at the approve; \"delegate chapter chN\" = STANDING chapter mode,\nvalid only under the conductor architecture. A per-item token overrides a\nstanding mode, and an undetermined mode on a flag-free approve resolves to\nthe letter WITH the announcement — \"never a silent discretionary stop\"\n(`AGENTS.md`, V3 Implementation Plane).\n\nSUBAGENT AUTHORIZATION (user-ratified 2026-07-31): the entry prompt IS the\nuser's request for every subagent the invoked workflow's ratified form\nprescribes — the panel's fresh-context lenses, the close pass, conductor-mode\nheavy steps. A harness-level \"agents only on user request\" default in the\nsession's system prompt is SATISFIED by that invocation and is never\nre-raised as a human gate; only subagent work OUTSIDE a ratified workflow\nform needs a fresh ask. Origin: a harness line built into the Claude Code\nbinary collided with the review workflow's fresh-context mandate at ch13-P1\n(`AGENTS.md`, V3 Implementation Plane).",
+      "sources": [
+        "v3/implementation/README.md §4 (\"Build execution context\", \"Delegation-prompt rule\")",
+        ".claude/skills/CreateTaskPacket/SKILL.md",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "id": "M8",
+      "type": "mechanism",
+      "title": "The model-wave path",
+      "ezx": "Changes to the design model follow one fixed path: edit the sources, rebuild, regenerate the machine-readable ledger, pass the check that the rebuild is byte-identical and the ledger fresh, get human ratification, and re-pin the code mirrors. Semantic changes never go straight into code, and every model-touching act leaves a one-line reflection in the process log.",
+      "original": "Model-plane changes flow: edit `v3/model/` sources → `tools/v3-model/build.py`\n→ regenerated `ledger.md` (`report_ledger.py`) → `tools/v3-model/check.sh`\n(byte-identical rebuild plus a fresh-ledger comparison that fails while the\ncommitted ledger is stale — so regeneration precedes the gate; ordering\ncorrected per 2026-07-28 arm finding #3) → human ratification → drift tests\nre-pin the code mirrors; K0-admitted\nsemantics route here and never as direct code edits, and every\nmodel-touching act appends a one-line K0-gate reflection to the process log.\nSource-first is the prescribed flow, not an absolute: the playbook itself\nnames the escape — \"A direct HTML edit requires re-extraction and is the\nexception, not the flow\" (`v3/design/design-method-playbook.md` §6;\n`tools/v3-model/README.md` says the same, provided extraction is rerun so the\nsources follow) — so the invariant that actually holds is that sources and\nrendered face must end byte-identical, whichever end the edit entered from\n(2026-08-18 arm finding #5).",
+      "sources": [
+        "v3/implementation/README.md §6",
+        "tools/v3-model/ (+ its README)",
+        "v3/implementation/ch11-model-sync-delta.md (worked example)"
+      ]
+    },
+    {
+      "id": "M9",
+      "type": "mechanism",
+      "title": "ADR authoring and lifecycle",
+      "ezx": "Implementation-side decisions are written as numbered architecture decision records with a fixed lifecycle, a mandatory screen against the binding constraints, and a mandatory section saying how to verify the decision still holds. An index lists them all, a watch table tracks declared-but-dormant triggers, and compliance with these records is its own review axis.",
+      "original": "Implementation-plane decisions become flat-numbered ADRs (`proposed →\naccepted → deprecated | superseded`) with mandatory IC-N screen and\nVerification, a flat index, a dormant-trigger watch table (\"Declared\ntriggers with no ADR yet — dormant by design, not gaps\"), three acceptance\nlanes tied to ratification acts, and an ADR compliance review as the third\nQA axis.",
+      "sources": [
+        "v3/adr/README.md",
+        "v3/adr/_template.md (20 ADRs)",
+        "v3/design/design-method-playbook.md §8"
+      ]
+    },
+    {
+      "id": "M10",
+      "type": "mechanism",
+      "title": "Dogfooding runs",
+      "ezx": "Before a chapter closes, the shipped tooling is driven by hand or by script against the real environment — real terminals, real worktrees — to catch the \"reality is not what we assumed\" failures that test suites structurally miss. Findings go into the process log, and only the user can waive the run, explicitly and on record.",
+      "original": "Before a chapter close, the shipped operator surface is driven by hand or\nscript against real substrate (real tmux, worktrees, gate spawns) — \"the one\nproof tier the CI journeys deliberately exclude\", catching \"the 'reality\nisn't what we assumed' class that test lanes structurally miss\"; findings\nland as process-log lines; waivable only by the user's explicit recorded\nact; from ch9 on includes a real-LLM basic-workflow run.",
+      "sources": [
+        "v3/implementation/README.md §6 (chapter DoD)",
+        "v3/implementation/dogfooding-ch9.md"
+      ]
+    },
+    {
+      "id": "M11",
+      "type": "mechanism",
+      "title": "Receipt-backed mutation probes",
+      "ezx": "To prove a test can fail, the builder runs a controlled sabotage through a runner: back the file up byte-for-byte, break it, run the tests, restore, and emit a receipt recording the command, exit code, and verified restore. The same spirit applies at writing time: claims about how the environment behaves must carry an actual probe result or a cited source, not an assumption.",
+      "original": "Builder mutation probes run through `tools/v3-plan/probe_runner.py`:\nbyte-copy backup (\"git-based restore is FORBIDDEN for mutation rollback\"),\nmutate, run, cmp-verified restore, and a receipt JSON (test command, exit\ncode, `suite_red`, `restore_verified`, plus a pointer to the full-output\nfile) that the packet's Build-record probe table cites by id; exit 3 (suite\nstayed green) is a build-time finding. Since the ch13-P0 measured hole — all\n11 probes ran against an already-red baseline, so every `suite_red` receipt\nwas vacuous — the runner opens with a GREEN-BASELINE GATE that aborts the run\non a non-green baseline and records the abort as its own class (G20). Its authoring-time sibling:\n\"Substrate claims are PROBED, not presumed\" — any matrix cell resting on\ndriver/OS behavior carries an in-session probe result or a cited source at\nauthoring time.",
+      "sources": [
+        "tools/v3-plan/probe_runner.py",
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (R-DERIVED-PROBES)",
+        ".claude/skills/CreateTaskPacket/Workflows/AuthorPacket.md §6"
+      ]
+    },
+    {
+      "id": "M12",
+      "type": "mechanism",
+      "title": "Pre-registered model-tier experiments",
+      "ezx": "Questions about which AI model tier to use are settled by pre-registered experiments: the design is written once and may not be edited afterwards — only its log and analysis sections may be appended. The first experiment closed with a revert; the second alternates the model tier per chapter, fixed at chapter approval.",
+      "original": "Model-choice questions run as write-once pre-registered experiments (\"only\nthe §8 log and the §7 analysis entries may be appended; any other edit voids\nthe pre-registration\"): experiment 1 closed REVERT at the ch12 boundary;\nexperiment 2 alternates the main-thread tier per chapter, fixed at chapter\nratification, with a 5-axis mechanical difficulty index frozen at approve.",
+      "sources": [
+        "v3/implementation/model-tier-experiment.md",
+        "v3/implementation/model-tier-experiment-2.md"
+      ]
+    },
+    {
+      "id": "M13",
+      "type": "mechanism",
+      "title": "The claim-enumeration audit ritual for authority rewrites",
+      "ezx": "Before rewriting a document that agents execute, every claim the new text will make is first listed as rows, swept, and reviewed by the external model; the change is then written to satisfy exactly those rows. The row file stays behind as the audit record of the change.",
+      "original": "Before a change rewrites surfaces agents execute, every claim the new text\nwill make is enumerated as rows, swept, and arm-reviewed; the change is\nwritten to satisfy exactly those rows and the file becomes the post-landing\naudit record — used for the Phase-1 authority flip, the autonomy realignment\n(AL-1…AL-20), and the ADR-015 migration (with a machine census).",
+      "sources": [
+        "v3/implementation/flip-claims.md",
+        "v3/implementation/autonomy-realignment.md",
+        "v3/implementation/adr-015-migration-report.md",
+        "tools/v3-plan/adr015_sweep.py (machine census)"
+      ]
+    },
+    {
+      "id": "M14",
+      "type": "mechanism",
+      "title": "The per-packet commit triad grammar",
+      "ezx": "Each work item tends to produce the same three commits: the feature commit, an optional aftermath-fix commit, and a process-log commit. The one-item-one-commit rule and the message prefix are written down and machine-checked, but the three-part subject-line pattern itself lives only in practice, in no document.",
+      "original": "*Practiced, not recorded (in its subject-line half).* From roughly ch7/ch8\nonward the commit stream follows a three-part grammar per packet —\n`feat(v3): chN-PM — <thing> (packet + code + tests)` → `fix(v3): chN-PM\nbuild-close aftermath — …` (conditional by design: only when aftermath\nfindings exist) → `docs(v3): process-log — chN-PM …` (verbatim: `e27f33ac` /\n`b03ad399` / `76be99d8`; the full triad holds for 22 of the 27 packets from\nch7-P2 on; 185 conventional `(v3)`-scoped commits sit on the post-ADR-015\n`v3/` home, 762 across both historical homes). The one-packet-one-commit\nrule and the aftermath choreography are written, and the `type(scope)`\nprefix is machine-enforced by the commit-msg hook (G17) — but the\nsubject-line grammar itself appears in no document, including\n`docs/commit-message-guidance.md`.",
+      "sources": [
+        "v3/implementation/README.md §4 (one-packet-one-commit + aftermath choreography)",
+        "AGENTS.md",
+        "git log (commits e27f33ac / b03ad399 / 76be99d8 — a verbatim triad; 22 of 27 packets from ch7-P2 on)"
+      ],
+      "flags": [
+        "practiced, not recorded (in its subject-line half)"
+      ]
+    },
+    {
+      "id": "M15",
+      "type": "mechanism",
+      "title": "The human-gate presentation discipline",
+      "ezx": "Whenever a decision reaches the human, the message follows eight fixed rules: one decision per message, all context included, a clear statement of what the human judges versus what machines already verified, the risk and its reversibility, and always a recommendation with reasoning. A question whose answer needs more than one word is treated as a defect in the presentation, not in the human.",
+      "original": "Whenever a decision reaches the human — a STOP, a flag-bearing approve, a\nratification, a boundary verdict, a close act — the presentation follows\neight adopted rules: one decision per message; self-contained context (\"the\nreader assumed to hold NONE of the process state in their head\"); the ROLE\nstatement (what the human judges vs. what machines already verified); the\nRISK statement with reversibility; a RECOMMENDATION with reasoning, always\n(\"the human adjudicates a proposal, never composes from a blank page\"); a\nclosed decision vocabulary; a roadmap-then-steps cadence; and \"a ONE-WORD\nanswer must suffice — a question whose answer needs an essay is a\npresentation defect\".",
+      "sources": [
+        "v3/implementation/README.md §6 (adopted 2026-07-18 at the ch11 close)"
+      ]
+    },
+    {
+      "id": "M16",
+      "type": "mechanism",
+      "title": "`check_docs.py`, the composite doc-gate runner",
+      "ezx": "A recurring wrapper procedure that runs the canonical document gates in per-mode bundles — quick, packet-approve, chapter-close — and prints what it does not cover. It is deliberately never a gate itself: the gates it calls remain the real authority.",
+      "original": "A composite RUNNER for the doc-family gates: recurring `quick` /\n`packet-approve` / `chapter-close` bundles select and run the canonical gate\ncommands, handle timeouts, go red if any member gate is red, and print what\nthey do NOT cover. The repo denies it gate status by declaration (\"WRAPPER,\nnever a replacement … never a gate-point substitute\") and the ledger keeps\nthat denial; as a recurring procedure through which work flows it is a\nMechanism. Reclassified from Unclassified (U1) per the 2026-07-28 arm round\n(finding #10).",
+      "sources": [
+        "tools/v3-plan/check_docs.py (pnpm v3:check-docs)",
+        "v3/implementation/README.md §5.5 (\"composite RUNNER for the doc-family gates\")"
+      ]
+    },
+    {
+      "id": "M17",
+      "type": "mechanism",
+      "title": "Finding triage and disposition routing",
+      "ezx": "Every finding raised by anyone — a reviewer lens, the outside model, the human — must be given a written disposition: folded in, narrowed, declined, pushed to build, or handed to a named owner such as the chapter boundary or a later chapter. Each one carries a severity from a shared scale and a one-line reason, and every round reports the tally.",
+      "original": "Every finding from any round — panel lens, external arm, or the user — gets\nan explicit recorded disposition: `folded` / `narrowed` / `declined` /\n`deferred-to-build`, or an ownership ROUTE (`boundary-review`,\n`later-chapter`, `declined`, `approve-ratified`) that names where the\nquestion goes next. Each carries a severity graded on the v1-inherited\nontology `docs/reviewer-severity-ontology.md` and a one-line why, and the\nround report carries the disposition tally. This is what makes fix-by-default\n(P10) affordable: the default routes effort, never truth, and a declined\nfinding leaves a record of the ground it was declined on — the routine\n`declined: out of threat model` line is P15 in operation.",
+      "sources": [
+        "v3/implementation/README.md §5.5 (finding policy; the routes table)",
+        "docs/reviewer-severity-ontology.md (the P0–P3 scale, inherited from the v1 plane)"
+      ]
+    },
+    {
+      "id": "M18",
+      "type": "mechanism",
+      "title": "The aftermath fold loop",
+      "ezx": "Findings that arrive after a work item is already closed are not lost and not silently patched: they fold back into the same work order and its build record through the same reconciliation pass a normal review fold takes, and land as one fix commit carrying document, code, and tests together.",
+      "original": "Post-close findings fold into the packet's claim surface and the Build\nrecord's Aftermath section through the SAME lens-4 reconciliation pass as a\npanel fold — \"an aftermath fold IS a fold\". The aftermath `fix(v3)` commit\ncarries packet + code + tests together and may extend the `mutation_boundary`\naftermath-scoped, audited at its own sha; process-log lines ride separate\ndocs commits. The loop closes the gap that would otherwise open between \"the\npacket is committed\" and \"the packet is true\".",
+      "sources": [
+        "v3/implementation/README.md §4 (\"an aftermath fold IS a fold\")"
+      ]
+    },
+    {
+      "id": "M19",
+      "type": "mechanism",
+      "title": "The re-derivation arm procedure (the ch13 pattern)",
+      "ezx": "When a line of work hits a measured quality floor it is not patched in place: it is superseded forward onto a fresh branch and derived again phase by phase, with four named roles — the human as ratifier and relay, an orchestrating session, an executing session, and a verifying outside arm — each phase handed over as a paste-ready, self-contained instruction block and closed by a filed verdict.",
+      "original": "*One executed instance; the role choreography is homed only in its own plan.*\nWhen a ratified line hits a measured semantic drift floor, it is superseded\nFORWARD onto an oracle branch (\"Supersede FORWARD — no history surgery\") and\nre-derived phase by phase, run by four roles — user (ratifier/relay), general\n(orchestrator, fresh session), executor (fresh session), arm (fresh-context\nverifier) — with paste-ready self-contained instruction blocks and per-phase\nverdicts filed in an `-arm/` directory. Scope note, folded from the\n2026-08-18 arm round (finding #6): this four-role relay is NOT the general\nstaffing model for heavy v3 work — that is M7's conductor architecture,\nhomed in `v3/implementation/README.md` §4. The re-derivation plan scopes\nitself explicitly to its own hand-over (\"the executing sessions read THIS\ndocument\"), and the record shows no later chapter running the relay.",
+      "sources": [
+        "v3/implementation/ch13-rederivation-plan.md §2–§6",
+        "v3/implementation/ch13-rederivation-arm/ (the filed per-phase verdicts)"
+      ],
+      "flags": [
+        "one executed instance; the role choreography is homed only in its own plan"
+      ]
+    },
+    {
+      "id": "M20",
+      "type": "mechanism",
+      "title": "Skill-ification: template first, skill only after live validation",
+      "ezx": "A new way of working starts as a document plus a checklist that a human or agent follows by hand. Only after enough live runs prove the shape does it become a packaged skill — and even then the canonical documents keep authority: if the skill and the documents disagree, the documents win and the disagreement is logged as friction.",
+      "original": "A process flow starts as a template + checklist executed manually; only after\nrepeated live use validates the shape does it become a repo-local skill, with\ncontent authority staying in the canonical files — \"If this skill and those\nfiles disagree, the files win — and the disagreement becomes a friction-log\nline\". Executed once, at the ch6→ch7 boundary (2026-07-08): the written\ncriterion was \"2–3 real tasks validate the shape\" and it was met \"several\ntimes over — 14 live packets across chapters 4–6, the last 10 on a\nstructurally unchanged template\". The authority boundary is stated in the\nsame section: the template, the projection checklist, the `REV-*` registry\nand the contract-draft template stay canonical in `v3/implementation/`, while\nthe skill carries procedure plus the distilled failure-class registry and is\namended at chapter boundaries only. The rule is P9's empiricism applied to\ntooling — the skill is a mechanics relocation, never an authority move — and\nthe repo-local scope is deliberate: the skill is NOT promoted to the global\nskill set, \"the corpus pattern has a sample size of one, so nothing is\ngeneralized yet\".",
+      "sources": [
+        "v3/implementation/README.md §8",
+        ".claude/skills/CreateTaskPacket/SKILL.md (\"If this skill and those files disagree, the files win\")"
+      ]
+    },
+    {
+      "id": "A1",
+      "type": "artifact",
+      "title": "The task packet",
+      "ezx": "The packet is the self-contained work order a build runs from: it carries the plan step, the exact slice of the design ledger it implements, the full text of everything the builder needs, machine-checkable gates, a row-by-row record of where each requirement came from, and the acceptance tests. Its shape is enforced by writing disciplines more than by a fill-in skeleton.",
+      "original": "The executable working unit of the build loop: header (plan step, autonomy\nstage, predicted `projection|invention` class), declared `ledger_slice`,\nmaterialized `## Sizing/risk` record, full-text operative material,\nin-context notes, embedding gates + `mutation_boundary` machine block, the\n`packet_rows` provenance manifest (`anchored`/`derived`/`new-decision`),\npre-approval flags with routes, acceptance (CT-*/CHK-*/REV-* + discipline\nand family inventories), Build record, and one `packet_metrics` machine\nblock written at build close; since the ch14-p2a boundary a packet may\nadditionally declare the opt-in `instrument_manifest` block that confines the\ninstrument-landing commit exception (M2). Live packets additionally carry a semantic\nspine hardened by write-time disciplines rather than template slots: a wide\n`## Claim`, its enumerated dimensions, canonical contract matrices with\ncollapsed-lane member inventories, and a Mirrored Surface Map naming every\nrestatement of a canonical row (shape by discipline, not by skeleton).",
+      "sources": [
+        "v3/implementation/task-packet-template.md (template + projection checklist + REV-* registry)",
+        "v3/implementation/packets/ (45 instances + a README, ch4–ch14)",
+        ".claude/skills/CreateTaskPacket/Workflows/AuthorPacket.md §4"
+      ]
+    },
+    {
+      "id": "A2",
+      "type": "artifact",
+      "title": "The chapter contract-draft",
+      "ezx": "One chapter's design decisions written as numbered normative rows in a single file, with a status field (draft, ratified, reopened, realized) and an append-only ratification history. The bar for a row: it must stay true and decidable even if all the code were deleted and rebuilt from the work orders.",
+      "original": "One chapter's memo-born surface as normative `C<n>` rows: JSON meta block\n(`status: draft|ratified|reopened|realized`), non-normative Context, the\ncontract-rows table, append-only ratification history (`{date, arms,\ncommit}`), and the close-time `realized_map`. Content law: the bar for a row\nis tree-independence (\"if `v3/src` were deleted and rewritten from the\npackets, would this row still be true and decidable?\"), every normative\nstatement is a C-row — an iff-clause discovered in prose is a review\nfinding, never a legal edit path — and the round-0 skeleton answers the\nControl-Model checklist in the non-normative Context.",
+      "sources": [
+        "v3/implementation/contract-draft-template.md (\"the canonical FORM authority … on any mismatch the TEMPLATE wins and the lint is the bug\")",
+        "v3/implementation/contracts/ (7 instances: ch8, ch9, ch11, ch12, ch13, ch13-v2, ch14)",
+        ".claude/skills/CreateTaskPacket/Workflows/DraftContract.md §1–§2"
+      ]
+    },
+    {
+      "id": "A3",
+      "type": "artifact",
+      "title": "The model ledger",
+      "ezx": "The generated, do-not-edit machine face of the design model: four registries covering deferred items, invariant rules, rejected names, and domains. It is the contract surface between model and code that every work order anchors to.",
+      "original": "The generated machine face of the model — \"GENERATED — do not edit\" — four\nregistries: the 140-item deferral ledger, the 116-rule invariant catalog,\nthe 54-name rejection registry, and the domain registry; it is \"the\nmodel↔code contract surface every packet anchors to\".",
+      "sources": [
+        "v3/model/ledger.md",
+        "tools/v3-model/report_ledger.py (generator)",
+        "tools/v3-model/check.sh (freshness guard)",
+        "v3/README.md"
+      ]
+    },
+    {
+      "id": "A4",
+      "type": "artifact",
+      "title": "The core-model source corpus",
+      "ezx": "The hand-authored sources of the design model: annotated section files, protocol pseudocode stored as deltas rather than copies, full config snapshots, and one-record-per-fact JSON files — all rebuilt byte-identically into a single model document.",
+      "original": "The model's authoring surface: `sections/NN-<id>.html` with\n`[[@code/@fold/@absent/@invariants]]` markers, protocol pseudocode in\nunit-delta form (`units/<block>/<unit>.txt` + `deltas/<block>.json` — \"a new\nlevel is a delta, not a copy\"), full config snapshots, one-record-per-fact\n`records/absent|invariants/*.json`, and `manifest.json` — rebuilt\nbyte-identically into `core-model.html`.",
+      "sources": [
+        "v3/model/",
+        "tools/v3-model/README.md (spec)",
+        "v3/design/design-method-playbook.md §6 (method rules)"
+      ]
+    },
+    {
+      "id": "A5",
+      "type": "artifact",
+      "title": "The plan chapter",
+      "ezx": "The chapter as a planning unit: a header with the ratification date and autonomy stage, scope and boundaries, a table of work items with predicted class and execution mode, deliverables, and a definition of done. Its shape is a convention described in prose — there is no written template.",
+      "original": "*Shape by convention, no written template.* The ordering/scoping unit:\nchapter header with ratified date and autonomy stage, scope and boundaries,\na `Packets and flow mode` table with per-packet predicted class and mode,\ndeliverables and DoD; chapter 1 additionally holds the IC/PI intake tables\nand the §1.4 coverage inventory. The packet table is the LATER form, not a\nuniversal one: at this head the first `Packets and flow mode` section is\n§6.7, and the earlier calibration chapters do not each carry one — §3.7 says\nchapter 3 runs with \"no task packets: the ledger slices here are thin\"\n(2026-08-18 arm finding #4). What the process authority requires of every\nlater chapter is the scope/deliverables/acceptance triple\n(`v3/implementation/README.md` §3); the packet table joined as the\npacket-derivation surface once packets became the working unit. New chapters\nappend through the §1.3 map-extension mechanism with an explicit build-order\nslot — the mechanism ch11–ch14 all entered through.",
+      "sources": [
+        "v3/implementation/plan.md (chapters 1–9, 11–13)",
+        "v3/implementation/README.md §3 (shape prescribed in prose)"
+      ],
+      "flags": [
+        "shape by convention, no written template"
+      ]
+    },
+    {
+      "id": "A6",
+      "type": "artifact",
+      "title": "The ADR",
+      "ezx": "A numbered architecture decision record with a status lifecycle line, context, the decision, alternatives considered, a mandatory screen against the binding constraints, and a mandatory verification section. The index file adds a summary table and a watch table for declared-but-dormant triggers.",
+      "original": "`ADR-NNN` with Status lifecycle line, Links, Context, Decision, Alternatives\nConsidered, a mandatory IC-N Screen, Consequences, mandatory Verification,\nand Related; the index README adds the flat id/title/status/date table and\nthe dormant-trigger watch table.",
+      "sources": [
+        "v3/adr/_template.md",
+        "v3/adr/README.md",
+        "v3/adr/ (20 instances, ADR-000–ADR-019)"
+      ]
+    },
+    {
+      "id": "A7",
+      "type": "artifact",
+      "title": "The process-log entry",
+      "ezx": "One dated, append-only line per observation in a single long log file, with the outcome appended to the same line later, at boundary-review time. In practice recent entries have grown into multi-paragraph dated narratives while the log's own header still prescribes one line — the written form rule was never amended.",
+      "original": "*Form drift: practiced form has outgrown the recorded form.* Append-only\none-liner: \"`- YYYY-MM-DD · <phase/chapter> · <observation>`\", with \"`→\n<outcome>`\" appended at boundary-review time. The file has grown from ~4,800\nlines at the 2026-07-28 fold to 6,157 at this one, and the recent entries are\nmulti-paragraph dated narratives (boundary-review records run dozens of lines\nwith bolded verdict headings) — the declared one-line form was never amended\nto match, so the divergence is a project fact about the log, not a violation\nanyone is policing.",
+      "sources": [
+        "v3/implementation/process-log.md (format header + 6157-line single instance)"
+      ],
+      "flags": [
+        "form drift: practiced form has outgrown the recorded form"
+      ]
+    },
+    {
+      "id": "A8",
+      "type": "artifact",
+      "title": "The learned-rule registry row",
+      "ezx": "A distilled lesson-learned as one table row: a rule ID, an imperative rule sentence, and provenance pointing at the document section it changed and the dated log line it was born from. Rules are admitted by a written procedure, and a sibling registry holds the standing review rules.",
+      "original": "Distilled failure-class rules as table rows: `R-<SLUG>` + imperative rule\nstatement + provenance citing the README/template section and the dated log\nline, with a written admission procedure; sibling form: the `REV-*` standing\nreview rules in `v3/implementation/task-packet-template.md` §3. The registry\nis 16 rows at this head, DOWN from 23 at the 2026-07-28 fold: rows are\nabsorbed into broader ones rather than accumulated (R-NUMERIC-LADDER into\nR-DIMENSIONS, R-FIELD-LISTS into R-DELEGATION-CLOSURE, both at the ch13\nboundary), and a surviving row grows scope extensions in place, each dated by\nthe boundary that adopted it. The form is therefore a shrinking-and-deepening\nregistry, not a changelog.",
+      "sources": [
+        ".claude/skills/CreateTaskPacket/references/LearnedRules.md (16 R-rows)",
+        "v3/implementation/task-packet-template.md §3 (the REV-* sibling form)"
+      ]
+    },
+    {
+      "id": "A9",
+      "type": "artifact",
+      "title": "The panel report block",
+      "ezx": "The verdict document of every review round: exactly which bytes were reviewed, the machine-gate results, the five lens reports, the findings with their dispositions, and the verdict. A verdict given in chat without this block is itself a process defect; the block is handed back in-thread rather than stored, and its residue lands in the packet and the log.",
+      "original": "The verdict artifact of every review round: packet basis (sha256 @ commit,\nworktree state), tier-0 results, re-run mode with transcript-verified model\nids, Gate Coverage Matrix, five lens reports, findings + disposition tally,\nyield curve + plateau counter, size + growth, and the verdict — \"a verdict\ndelivered in commentary without the report block is a workflow defect\".\nEphemeral: handed back in-thread; residue lands in packet flags/Build record\nand the log.",
+      "sources": [
+        ".claude/skills/CreateTaskPacket/Workflows/ReviewPacket.md (Report section)"
+      ]
+    },
+    {
+      "id": "A10",
+      "type": "artifact",
+      "title": "The chapter-trace / journey golden test",
+      "ezx": "A model walkthrough turned into an executable test: a declarative fixture listing the steps, the expected event transcript, and post-condition checks. The convention when lifting a test to a new level is that an assertion may never be weakened.",
+      "original": "The model trace as an executable expectation: a declarative fixture (step\nlist + final `[seq, opId]` transcript expectation + post-condition checkers)\ntyped in `v3/src/testkit/traceHarness.ts`, with the level-lifting convention\nthat \"may never weaken a trace assertion\". Instances: `v3/src/l0aTrace.test.ts`\n… `l2aTrace.test.ts`, `l0dJourney.test.ts`. The file-level shape is\nconvention; the fixture data shape is specified.",
+      "sources": [
+        "v3/src/testkit/traceHarness.ts",
+        "v3/implementation/plan.md §5.2",
+        "v3/src/l0aTrace.test.ts … l2aTrace.test.ts, l0dJourney.test.ts (instances)"
+      ]
+    },
+    {
+      "id": "A11",
+      "type": "artifact",
+      "title": "The invariant-disposition map",
+      "ezx": "A single machine-validated file that assigns every one of the 116 model invariants to one enforcement class — test, type/schema, checker, or review. No work order may declare an assignment that contradicts a row here.",
+      "original": "A one-instance, machine-validated classification: a rubric for four\nenforcement classes (`test` / `type/schema` / `checker` / `review`) plus one\nmachine block mapping all 116 ledger invariants; \"no packet may declare a\ndisposition that contradicts a row here (the packet↔map lock)\".",
+      "sources": [
+        "v3/implementation/invariant-disposition-map.md",
+        "tools/v3-plan/check_coverage.py (validator)"
+      ]
+    },
+    {
+      "id": "A12",
+      "type": "artifact",
+      "title": "The arm-pin table",
+      "ezx": "An append-only table recording which external reviewer model is pinned, at what reasoning effort, and — since August 2026 — over which transport, changeable only at chapter boundaries. Consumers read the last row, and a review whose output header disagrees with the pin is an invalid verdict. Each arm run additionally files its own bundle of prompts, raw transcripts, and verdicts in the repository.",
+      "original": "Append-only `Pinned at | Model | Reasoning effort | Transport | Note` rows —\nthe transport column added at the ch13 boundary (2026-08-14) per the\n2026-08-10 user ruling — revisable at chapter boundaries only; consumers read\nthe last row, and an invocation whose output header disagrees with the pin is\nan invalid verdict. The file carries operational notes beside the table\n(transport rules, the serial-regression-run hazard, the tier-record rule), so\nit is the pin's home and the transport's home at once. *Bundle half, thinly\nrecorded:* arm runs file per-phase bundles — charter, round prompts, raw\n`-out.txt` transcripts, verdicts, review records — in `-arm/` directories;\nthe convention is executed consistently but authorized by a single sentence\nin `v3/implementation/ch13-rederivation-plan.md`.",
+      "sources": [
+        "v3/implementation/arm-pin.md (table + operational notes)",
+        "v3/implementation/ch13-rederivation-arm/ (a filed verdict bundle)"
+      ],
+      "flags": [
+        "the bundle-filing convention is executed consistently but authorized by a single sentence"
+      ]
+    },
+    {
+      "id": "A13",
+      "type": "artifact",
+      "title": "The pre-registered experiment report",
+      "ezx": "The report form of a pre-registered experiment: a status line carrying the write-once rule, an analysis-and-verdict section, and an append-only log. The middle sections vary between the two existing instances, and there is no written template.",
+      "original": "*Shape by convention across two instances, no written template.* The stable\nskeleton is thin: a Status line carrying the write-once rule, a §7\nanalysis/verdict block, and a §8 append-only log; the middle sections\n(hypothesis / design / metrics / stop rules) vary between the two instances.",
+      "sources": [
+        "v3/implementation/model-tier-experiment.md",
+        "v3/implementation/model-tier-experiment-2.md"
+      ],
+      "flags": [
+        "shape by convention across two instances, no written template"
+      ]
+    },
+    {
+      "id": "A14",
+      "type": "artifact",
+      "title": "The design memo and external-study forms",
+      "ezx": "The design-side working papers the process consumes: topic memos whose filenames carry an open/closed lifecycle prefix and a routing index, and studies of outside systems mapped onto the model's levels with precise file-and-line citations and learn/avoid/orthogonal verdicts.",
+      "original": "Model-plane working documents the v3 process consumes: topic memos with\n`_open-`/`_closed-` lifecycle naming and a routing README, and\nexternal-system studies mapping one system onto v3 levels with `file:line`\ncitations and LEARN/AVOID/ORTHOGONAL verdicts.",
+      "sources": [
+        "v3/design/topics/README.md",
+        "v3/design/research/README.md"
+      ]
+    },
+    {
+      "id": "A15",
+      "type": "artifact",
+      "title": "The implementation contract (IC-*/PI-* rows)",
+      "ezx": "The register of binding implementation constraints: IC rows that each must map to a test, a check, or a decision record, plus a plan-intake checklist realized as tables whose status flips when a chapter completes.",
+      "original": "The binding constraint register the plan consumes: `IC-*` rows, each of\nwhich \"maps to one or more of: an acceptance/contract test, a\nschema/lint/CI check, or an ADR\", and the `PI-*` plan-intake checklist —\nrealized as the chapter-1 intake tables whose status flips at chapter DoD.",
+      "sources": [
+        "v3/design/implementation-contract.md",
+        "v3/implementation/plan.md §1.2–§1.3 (intake tables)"
+      ]
+    },
+    {
+      "id": "A16",
+      "type": "artifact",
+      "title": "The deferred-hardening register (FH-* rows)",
+      "ezx": "A durable list of robustness gaps knowingly postponed at a human decision point. Each row records where the gap came from, the premise under which deferring was accepted, a proposed (not yet ratified) landing spot, and the trigger for revisiting it — so the deferral is never silently lost.",
+      "original": "Implementation-plane robustness gaps consciously deferred at a human\ndecision point — each row carries provenance, the ratified premise, a\nproposed (not yet ratified) landing, and a revisit trigger: \"a durable\nrecord so the deferral is never silently lost\"; the terminal home for\naccept-now resolutions of `4:flagged-approve` STOPs (FH-1 was born from the\nch12-P2 approve).",
+      "sources": [
+        "v3/implementation/future-hardening.md"
+      ]
+    },
+    {
+      "id": "A17",
+      "type": "artifact",
+      "title": "The drift unit map",
+      "ezx": "A machine-readable manifest that pairs every unit of the design model with its realization status and the exact code reference that realizes it. Two independent gates read it: the drift tests assert its key set equals the model's source tree and that every code reference resolves, and the coverage checker uses it as one leg of a three-way lock.",
+      "original": "`v3/src/drift/unitMap.json`: the machine manifest mapping every ledger unit to\nits realization status and code reference. It is the only artifact-form both\nverification families read — the drift suite (G5) asserts its key set equals\nthe `v3/model/units/` tree and that every `codeRef` resolves under\n`tsc --noEmit`, and the coverage accounting (G4) locks it against the ledger\nand the packets as the third leg of the three-way lock. Listed as its own\nform rather than as part of the model ledger because its authority is\ncode-side: it is written and maintained on the implementation plane, while\nthe ledger it is checked against is generated on the model plane.",
+      "sources": [
+        "v3/src/drift/unitMap.json",
+        "v3/src/drift/unitMap.test.ts (keyset + codeRef resolution, PI-3/ADR-007)",
+        "tools/v3-plan/check_coverage.py (the third leg of the lock)"
+      ]
+    },
+    {
+      "id": "G1",
+      "type": "gate",
+      "title": "Pre-push hook → `pnpm ci:local`",
+      "ezx": "Every git push runs the full local CI battery, whose v3 part chains the six v3 quality checks — lint, typecheck, tests, decision-record check, coverage lock, and packet lint. Any red result blocks the push.",
+      "original": "*Machine-enforced.* Every `git push` runs the full local CI gate\n(`.githooks/pre-push`, `core.hooksPath=.githooks`), whose v3 quality child\nis `pnpm v3:lint && v3:typecheck && v3:test && v3:adr-check && v3:coverage\n&& v3:packet-lint` (`scripts/ci-local.sh` line 327); any red blocks the\npush. The same script rebuilds `PATH` to HIDE the external arm binary for the run,\nso the external arm can never execute inside the machine chokepoint — the two\nverification families stay decorrelated by construction (P10). The hiding has\na declared opt-out: one documented environment flag restores the original\nPATH, and the run then announces \"local PATH preserved\" (`scripts/ci-local.sh`\nlines 33–35; 2026-08-18 arm finding #8 — the ledger states the opt-out rather\nthan an absolute).",
+      "gateClass": "machine",
+      "sources": [
+        ".githooks/pre-push (core.hooksPath=.githooks)",
+        "scripts/ci-local.sh (line 327)"
+      ]
+    },
+    {
+      "id": "G2",
+      "type": "gate",
+      "title": "GitHub Actions \"V3 checks\"",
+      "ezx": "The same six v3 quality checks run in GitHub Actions on every push to the main branch — the only piece of the shared v1 CI that touches the v3 work.",
+      "original": "*Machine-enforced.* The same six v3 bridges run on every push to `main`\n(`.github/workflows/release.yml` lines 74–75) — the only v1 CI surface that\ntouches v3.",
+      "gateClass": "machine",
+      "sources": [
+        ".github/workflows/release.yml (lines 74–75)"
+      ]
+    },
+    {
+      "id": "G3",
+      "type": "gate",
+      "title": "Packet/draft lint (`check_packet.py`)",
+      "ezx": "A linter validates work orders and contract drafts: machine-block schemas, contract references that must resolve to a ratified draft, complete lane IDs, and that ratified rows are byte-equal to what git history says was ratified. Its stricter modes gate approvals, chapter closes, and the after-build audit.",
+      "original": "*Machine-enforced (plain mode in G1/G2); its strict modes are\nprocedure-triggered.* Validates the packet and draft claim families:\nmachine-block schemas, `contract:chN-<surface>#Cn` refs resolving to a\n\"ratified-or-later draft; reopened does NOT qualify\", lane-id completeness,\nratification-block shape with `git show` C-row equality. `--forbid-reopened`\ngates packet approve / chapter close / process flips; `--post-build <sha>`\nis the build-close audit (\"no CI surface runs this mode\").",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-plan/check_packet.py (pnpm v3:packet-lint)",
+        "v3/implementation/README.md §4 (\"no CI surface runs this mode\")"
+      ]
+    },
+    {
+      "id": "G4",
+      "type": "gate",
+      "title": "The coverage three-way lock (`check_coverage.py`)",
+      "ezx": "A script asserts that the coverage arithmetic closes: the declared work slices together cover the model inventory with no orphans and no undeclared double owners, the unit map matches the source tree, and at build close what a packet owns equals what was actually realized.",
+      "original": "*Machine-enforced (default mode in G1/G2); `--fold-time`\nprocedure-triggered at approve.* Asserts the union of declared\n`ledger_slice`s covers the model inventory, no orphans, no undeclared double\nowners, `unitMap.json` keyset == the units tree, and (build-close default)\nowned == realized with matching dispositions. THREE modes with distinct gate\npoints: default = build-close, `--fold-time` = the approve-time gate,\n`--assert-closed` = the closure check that answers \"is the plan concrete\nenough\". The invariant lane REQUIRES `v3/implementation/invariant-disposition-map.md`\n(A11) from packet ch5-P2 on — the map's key set must equal ledger §2, a\npacket-declared invariant must carry the SAME disposition as the map, and\nrealized rows must have packet owners; `--disposition-map` overrides the path\nas the negative-test seam. Its declared inputs are the model tree, the\ngenerated ledger, the packet files, `unitMap.json` and the disposition map —\nit does not read the plan (the false `G4 consumes A5` edge was dropped at this\nfold, 2026-08-18 arm finding #10).",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-plan/check_coverage.py (\"This is the BUILD-CLOSE gate point\"; --fold-time: \"the APPROVE-TIME gate point\")"
+      ]
+    },
+    {
+      "id": "G5",
+      "type": "gate",
+      "title": "The drift-test trio + source hygiene",
+      "ezx": "Drift tests re-read the generated model ledger at test time and fail if the code's mirrored lists differ from it; a sibling locks a key map to the model's source tree, and another bans raw control bytes in sources. They run inside the normal v3 test suite.",
+      "original": "*Machine-enforced.* `v3/src/drift/rejectionNames.test.ts` and\n`domainRegistry.test.ts` re-parse `v3/model/ledger.md` at test time and\nrequire set equality with the code mirrors, while `unitMap.test.ts` locks\n`unitMap.json`'s key set to the `v3/model/units/` source tree with\nresolvable codeRefs (PI-3, ADR-007); `sourceHygiene.test.ts` bans raw\ncontrol bytes. Runs in `pnpm v3:test` → G1/G2.",
+      "gateClass": "machine",
+      "sources": [
+        "v3/src/drift/rejectionNames.test.ts",
+        "v3/src/drift/domainRegistry.test.ts",
+        "v3/src/drift/unitMap.test.ts (PI-3, ADR-007)",
+        "v3/src/drift/sourceHygiene.test.ts"
+      ]
+    },
+    {
+      "id": "G6",
+      "type": "gate",
+      "title": "ESLint architecture fences + strict tsconfig",
+      "ezx": "Per-directory lint rules turn architecture decisions into hard lint errors — banned imports, no direct wall-clock reads, module boundaries, the CLI write boundary — alongside strict type checking. The v3 config is the sole lint authority for the v3 tree.",
+      "original": "*Machine-enforced.* Per-directory import/syntax bans carrying ADR decisions\ninto lint errors — \"CHK-D-NOCLOCK: no direct wall-clock read — time flows\nthrough the injected TimeSource\", module import boundaries, the CLI write\nboundary — in `v3/eslint.config.mjs` (root config ignores `v3/**`, making it\nthe sole lint authority), plus `pnpm v3:typecheck` under strict options.",
+      "gateClass": "machine",
+      "sources": [
+        "v3/eslint.config.mjs (root config ignores v3/**)",
+        "pnpm v3:typecheck (strict options)"
+      ]
+    },
+    {
+      "id": "G7",
+      "type": "gate",
+      "title": "ADR integrity check",
+      "ezx": "A script checks the decision records' integrity: valid statuses, no dangling references between records, supersede links pointing both ways, no cycles, and an index consistent with the files.",
+      "original": "*Machine-enforced.* `v3/adr/check.sh` (`pnpm v3:adr-check`): status enum\nvalidity, no dangling `ADR-NNN` refs, supersede reciprocity in both\ndirections, no cycles, index-row consistency.",
+      "gateClass": "machine",
+      "sources": [
+        "v3/adr/check.sh (pnpm v3:adr-check)"
+      ]
+    },
+    {
+      "id": "G8",
+      "type": "gate",
+      "title": "Model freshness check",
+      "ezx": "A script verifies that the model sources rebuild the published model document and the generated ledger byte-identically. The method requires it to pass before any model commit, but no hook or CI lane runs it automatically — a person or procedure has to invoke it.",
+      "original": "*Machine script, procedure-triggered.* `tools/v3-model/check.sh` requires\n`v3/model/` sources to rebuild `core-model.html` byte-identically and\n`ledger.md` to be regenerable byte-identically (\"check: FAIL — ledger.md is\nstale\"); mandated by the playbook's \"edit sources → build.py → check.sh must\npass before commit\" — no hook or CI invokes it.",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-model/check.sh",
+        "v3/design/design-method-playbook.md §6 (\"edit sources → build.py → check.sh must pass before commit\")"
+      ]
+    },
+    {
+      "id": "G9",
+      "type": "gate",
+      "title": "The contract-draft ratification act",
+      "ezx": "No work order may anchor to a contract draft the human has not ratified on named bytes, and re-ratifying after a reopen is just as permanently human. The linter checks the paperwork's shape, but performing the act itself deliberately sits outside every machine surface.",
+      "original": "*Procedure-enforced (machine half in G3).* No packet may anchor to a draft\nthe human has not ratified on named bytes; re-ratification after a reopen is\n\"permanently human, exactly like ratification\"; the lint verifies block\nshape and C-row equality; performing the act itself sits outside every\nmachine surface.",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/contract-draft-template.md §4",
+        "v3/implementation/README.md §5.5 (standing checkpoints)",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "id": "G10",
+      "type": "gate",
+      "title": "The STOP registry, verdict-action matrix, and standing human checkpoints",
+      "ezx": "The loop halts and asks the human in four named situations, each with a canonical token — late signals or divergence, plan-boundary conflicts, a round watchdog or plateau, and approvals that carry flags. Flag-bearing approvals always go to the human; flag-free ones became autonomous from chapter 8; chapter ratification, the divergence stop, and draft ratification are never automated.",
+      "original": "*Procedure-enforced.* The loop halts to the human on four STOP classes with\ncanonical minted tokens (`1:late-b-signal`/`1:divergence`/`1:open-choice`,\n`2:*` plan-boundary conflicts, `3:watchdog` at 8 rounds / `3:plateau`,\n`4:flagged-approve`); flag-bearing approves are human at every trust stage,\nflag-free approves autonomous from ch8; chapter ratification, the divergence\nstop, and draft ratification are never automated. Token values are\nlint-validated post hoc in `packet_metrics.stops[].type` (G3). The registry's\npartner surface is the VERDICT-ACTION MATRIX, which decides at every loop\nevent whether the machine proceeds or the human is required — the two\ntogether are the autonomy envelope's control, and the entry-mode trust dial\n(M7) is their session-entry face. One further standing checkpoint sits beside\nthe four classes: the FIRST packet of a new task class is human-approved\n\"regardless of trust stage\", so a new kind of work never enters through the\nautonomous door (2026-08-18 arm finding #2).",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/README.md §5.5"
+      ]
+    },
+    {
+      "id": "G11",
+      "type": "gate",
+      "title": "The two mandatory external-arm gates",
+      "ezx": "On the autonomous path a second, different AI model must sign off twice: once before the build starts, on the exact final content, and once at build close, including a pass that verifies every declared test can actually fail. If that external model is unavailable, work stops — it is never silently skipped, and only the human can waive a gate.",
+      "original": "*Procedure-enforced, with machine-guarded invocation (M5).* On the\nautonomous path: (1) APPROVE gate — build starts only on an arm verdict\nciting the final hash with zero fold-now findings; (2) BUILD-CLOSE gate —\nthe packet is done only on a clean sha-citing verdict including the\nmandatory sensitivity pass verifying every declared inventory member \"DRIVEN\nand ABLE TO FAIL in the built test bodies\". An unavailable arm is a\nverified-preflight-failure BLOCKER → STOP, \"never a silent skip\"; a waive is\nthe human's explicit act per gate.",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/README.md §5.5",
+        ".claude/skills/CreateTaskPacket/Workflows/ReviewPacket.md §6"
+      ]
+    },
+    {
+      "id": "G12",
+      "type": "gate",
+      "title": "The chapter Definition of Done",
+      "ezx": "A chapter only counts as done when the whole checklist holds, regardless of the state of the code: tests green, intake tables flipped, born decision records accepted, the log review held, the full local CI green including the root suite, the hands-on dogfooding checkpoint, and every referenced contract draft closed out.",
+      "original": "*Procedure-enforced, composing machine gates.* \"A chapter without these is\nnot done regardless of code state\": contract + drift tests green, intake\ntables flipped, born ADRs accepted, the process-log review held, full `pnpm\nci:local` green (root suite included), the dogfooding checkpoint\n(user-waivable only, recorded), and the three draft-close conditions — zero\nreopened drafts, every referenced draft `realized` or `superseded`, the\ndraft-metrics close line. Supersession alone does not discharge the\nobligation: \"a superseded draft's realization obligation TRANSFERS to its\nsuccessor surface, which must itself stand `realized` at the close\"\n(`v3/implementation/README.md` §6) — without that clause the DoD would be\nmaterially weaker, since a chapter could close by superseding its way out\n(2026-08-18 arm finding #7).",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/README.md §6"
+      ]
+    },
+    {
+      "id": "G13",
+      "type": "gate",
+      "title": "The chapter-close scanners",
+      "ezx": "Two scanner scripts run at chapter close: one goes red while any deferred-work marker addressed to the closing chapter remains — a malformed marker also fails — and the other errors when a contract-row lane is missing from the realized map. They are machine scripts, but a procedure has to run them; the normal CI does not.",
+      "original": "*Machine scripts, procedure-triggered (absent from G1/G2).*\n`tools/v3-plan/check_deferred.py` (`pnpm v3:deferred --closed chN`): a close\ngoes red while any canonical `DEFERRED(chN[-pM]):` marker addressed to the\nchapter remains, and a malformed marker is fail-closed red.\n`tools/v3-plan/check_realized_map.py` (`pnpm v3:realized-map`): a\nmanifest-reffed C-row lane missing from the realized map is a hard error\n(\"omissions are the defect class\"); the map additionally gets a detached,\nnon-blocking external-arm audit settled before the next chapter's close.",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-plan/check_deferred.py (pnpm v3:deferred --closed chN)",
+        "tools/v3-plan/check_realized_map.py (pnpm v3:realized-map)"
+      ]
+    },
+    {
+      "id": "G14",
+      "type": "gate",
+      "title": "The mechanical pre-commit gate (`commit_helper.py`)",
+      "ezx": "An opt-in commit wrapper refuses staged files outside the declared scope and any staged file that still has unstaged edits, and always runs the composite document gate. The judgment half of the checklist stays explicitly with the caller.",
+      "original": "*Machine-enforced when used (opt-in wrapper, no hook).* `pnpm v3:commit`\nrefuses staged files outside the declared scope and any staged file carrying\nunstaged edits (COMMIT-03), and always runs the doc-gate composite; the\njudgment half of the checklist stays explicitly CALLER-ANSWERED.",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-plan/commit_helper.py (pnpm v3:commit)"
+      ]
+    },
+    {
+      "id": "G15",
+      "type": "gate",
+      "title": "The write-time sizing/risk hard stops",
+      "ezx": "At work-order writing time, six inherited risk axes plus sizing triggers define combinations where splitting the work is required, not advised. The outcome is recorded in the work order itself, and this is the only hard sizing rail — the review-round size thresholds are merely advisory.",
+      "original": "*Procedure-enforced.* Template §2 step 0: the six v1-inherited risk axes\nplus v3 sizing triggers with hard-stop combinations that are\n\"split-REQUIRED — split is not advisory\", materialized as the packet's\n`## Sizing/risk` record; the only hard sizing rail (the round-report size\nthresholds are advisory).",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/task-packet-template.md §2 step 0",
+        "v3/implementation/README.md §5.5"
+      ]
+    },
+    {
+      "id": "G16",
+      "type": "gate",
+      "title": "The verification-surface tooling review",
+      "ezx": "Any tool that becomes part of the checking machinery — a gate, a wrapper over gates, a choreography runner, reviewer infrastructure — gets a review by the external AI model before its first load-bearing use. If it is disputed whether a tool falls in this class, the default is that it does.",
+      "original": "*Procedure-enforced.* Any tool participating in the verification surface — a\ntier-0 gate, a wrapper over ratified gates, a choreography executor, arm\ninfrastructure — receives an external-arm review before its first\nload-bearing use; a disputed classification \"defaults to the arm\n(fail-closed)\".",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/README.md §5.5 (adopted 2026-07-23)"
+      ]
+    },
+    {
+      "id": "G17",
+      "type": "gate",
+      "title": "The commit-message policy hook",
+      "ezx": "A commit-message hook rejects any commit whose subject does not match the conventional type(scope): grammar. It is v1 machinery that the v3 commit stream also runs through, and the machine-enforced half of the commit-triad practice.",
+      "original": "*Machine-enforced.* `.githooks/commit-msg` runs the commit-policy validator\non every commit under the same `core.hooksPath` that carries G1; a subject\nnot matching the conventional `type(scope):` grammar is rejected\n(`src/v11/shared/commitPolicy/commitMessagePolicy.ts`) — v1 machinery the v3\ncommit stream runs through, and the machine-enforced half of M14's grammar.",
+      "gateClass": "machine",
+      "sources": [
+        ".githooks/commit-msg",
+        "src/v11/shared/commitPolicy/commitMessagePolicy.ts"
+      ]
+    },
+    {
+      "id": "G18",
+      "type": "gate",
+      "title": "The tier-0 selftest armor",
+      "ezx": "The four Python checker gates first prove themselves against throwaway fixtures before running: each failure dimension must actually go red, plus one green control showing the reds are not ambient. The ADR gate's bridge carries no such self-test. A decayed selftest turns the main CI gates red.",
+      "original": "*Machine-enforced.* The four Python checker bridges chain `--selftest &&\n<run>` (`package.json`: `v3:coverage`, `v3:packet-lint`, `v3:deferred`,\n`v3:realized-map`) — the ADR bridge (`v3:adr-check`, plain bash) carries no\nselftest (2026-07-28 arm finding #6): throwaway fixtures prove \"each cross-check dimension\nactually fails red, plus one green control proving the failures are not\nambient\" — the standing mechanized floor the arm review (G16) sits on top of\n(\"selftest armor scales with the declared surface\"); a decayed selftest reds\nG1/G2.",
+      "gateClass": "machine",
+      "sources": [
+        "package.json (v3:coverage, v3:packet-lint, v3:deferred, v3:realized-map)",
+        "tools/v3-plan/check_coverage.py (docstring)",
+        "v3/implementation/README.md §5.5 (\"selftest armor scales with the declared surface\")"
+      ]
+    },
+    {
+      "id": "G19",
+      "type": "gate",
+      "title": "The model↔code divergence stop",
+      "ezx": "If implementation work uncovers a bug or a gap in the design model, the loop must stop. The fix is never made quietly in the code: it goes back through the design side and returns as a regenerated machine ledger. This is a gate a human must honour — no script can detect that a discovery is model-shaped.",
+      "original": "*Procedure-enforced.* A model bug or gap surfacing during implementation is a\nmandatory stop: \"NEVER silently patched in code\" — it routes through the\nmodel plane (M8) and returns via the regenerated ledger, user-gated on the\nway. Listed as its own gate rather than only as P1's content because it is\nthe one control that can halt a running build for a reason no machine surface\ncan see: the machine gates below it police form, while this one polices where\na discovery is allowed to be fixed. Its downstream half IS machine-enforced —\nonce the model moves, G5's drift trio and G8's freshness check make the code\nside follow or go red.",
+      "gateClass": "procedure",
+      "sources": [
+        "v3/implementation/README.md §6 (\"Model↔code divergence (mandatory stop)\")"
+      ]
+    },
+    {
+      "id": "G20",
+      "type": "gate",
+      "title": "The probe-runner green-baseline gate",
+      "ezx": "Before a deliberate sabotage test runs, the tool first proves the test suite was green to begin with. If the baseline is already red, the run is aborted and recorded as such, because a \"the suite went red\" receipt from an already-red suite proves nothing.",
+      "original": "*Machine-enforced.* `tools/v3-plan/probe_runner.py` opens every probe with a\nbaseline run: a non-green baseline ABORTS the probe, is recorded as its own\nreceipt class (\"baseline\": \"RED — instrument broken, receipt would be\nvacuous\"), and exits nonzero; a green baseline is recorded in the receipt.\nBorn from a measured hole rather than a worry — at ch13-P0 all 11 probes ran\nagainst an already-red baseline, so every `suite_red` receipt was vacuous.\nThe runner additionally byte-verifies restoration and treats a suite that\nstays green under mutation as a blind probe with its own exit code. It is the\ninstrument that makes M11's receipts admissible, and the clearest instance of\nP7 turned on the verification tooling itself.",
+      "gateClass": "machine",
+      "sources": [
+        "tools/v3-plan/probe_runner.py (the GREEN-BASELINE GATE docstring; the ch13-P0 measured hole)"
+      ]
+    },
+    {
+      "id": "U2",
+      "type": "unclassified",
+      "title": "The Stryker mutation-testing pilot",
+      "ezx": "A mutation-testing pilot that is wired up but deliberately blocks nothing: it mutates exactly one file and appears in no hook, CI lane, or done-checklist. It runs beside the external review for two chapters until a chapter-boundary evaluation decides whether to adopt it.",
+      "original": "Wired but deliberately non-gating: it mutates exactly one file\n(`src/emit/opId.ts`) and appears in no hook, CI lane, or DoD. It ran as a\ndual-run beside arm gate-2 for two chapters, and the ch13 boundary review\n(2026-08-14) CLOSED it on its own data: **STOP** — in this setup, over nine runs, it surfaced no defect the arm had\nnot already found, against a cost of ~12m48s per run plus a maintenance\nsurface and structural subprocess blindness. The\nwiring stays; the usage lessons are recorded (whole-file scope rather than\ndelta; detector role rather than trend role; the sandbox-path abort is a\nconfiguration issue in this setup), and a revival would be \"incremental + delta +\nboundary-trend, never a per-packet gate\" (`v3/implementation/process-log.md`\nline 5790). It stays Unclassified for the same reason as before and one new\none: it can stop nothing (not a Check/Gate), no work flows through it (not a\nMechanism), and it is now a CLOSED experiment whose apparatus is deliberately\nleft in place — the taxonomy has no slot for a retired-but-wired instrument.\n\nThe stop is also the cleanest worked example of the process judging its own\nadditions: the pilot was pre-registered with a dual-run window, ran to the\nwindow's end, and was disposed against its recorded yield rather than against\nanyone's prior on mutation testing.",
+      "sources": [
+        "v3/stryker.config.json",
+        "v3/vitest.stryker.config.ts (pnpm v3:mutation)"
+      ]
+    },
+    {
+      "id": "U4",
+      "type": "unclassified",
+      "title": "The autonomy trajectory (calibration → measurement → chaining)",
+      "ezx": "A declared, dated position on how far the loop is currently trusted to run alone: the calibration stage closed with a pilot chapter, the current measurement stage runs unattended work with after-the-fact audits, and a future chaining stage would deliver whole chapters through the older product-side machinery.",
+      "original": "A staged ramp with named stages: CALIBRATION closed with the ch7 pilot;\nMEASUREMENT (ch8 onward) runs autonomous flag-free packets with post-hoc\nboundary audits of the `detector_misses` stream; CHAINING is the declared\nfuture — chapter-level delivery through the v1 `ExecutePairflowPlan` and\npairflow doc-bubbles, with \"when the accounting closes\" as its stated\nconcreteness criterion. It resists the taxonomy because it is none of the\nfour types: not a timeless rule, not a procedure work flows through, not a\ndocument shape, not a control that can stop anything. It is a dated STATE —\nthe process's self-description of where on the autonomy dial it currently\nstands, and the thing every autonomy element (P3, G10, M7) is calibrated\nagainst. Listing it keeps that calibration point visible\ninstead of implicit.",
+      "sources": [
+        "v3/implementation/README.md §5.5 (\"The trajectory\")",
+        "v3/implementation/autonomy-realignment.md"
+      ]
+    },
+    {
+      "id": "U3",
+      "type": "unclassified",
+      "title": "The ch11 model-sync carve-out",
+      "ezx": "A ratified one-off exception that allowed named gates to stay red at exactly one approval, with anything beyond the named list blocking. Its window has since expired, and it stays listed as the standing precedent for how a mandatory gate may lawfully be red.",
+      "original": "A ratified, one-packet-scoped amendment to gate preconditions — three named\ndrift lanes and nine enumerated coverage items were allowed red at exactly\none approve, \"any deviation beyond BLOCKS\" — whose window is now SPENT: it\nexpired at ch11-P0 build-close (ch11's contract is `realized`, and two later\nchapters have closed since), leaving the drift trio and the fold-time gate\nunconditionally binding again. It stays listed as the standing precedent for\nhow a mandatory gate may lawfully be red — an instance, not a form; a dated,\nself-expiring exception the taxonomy has no slot for.",
+      "sources": [
+        "v3/implementation/ch11-model-sync-delta.md"
+      ]
+    }
+  ],
+  "coreThree": [
+    {
+      "rank": 1,
+      "title": "The two planes must not shear",
+      "ezx": "Every other surface takes its meaning from the design model being the single semantic truth: the ledger is its machine face, packets project it, drift tests lock it. Without this principle the remaining machinery verifies nothing in particular.",
+      "itemIds": [
+        "P1"
+      ]
+    },
+    {
+      "rank": 2,
+      "title": "Autonomy is proportional to contract density; the loop stops exactly where a new semantic decision is needed",
+      "ezx": "This is the constitution of who decides: the stop registry, the ratification acts, the trust dial, and the flagged-versus-flag-free split are all its projections. Losing it collapses the process into all-human ceremony or unaccountable autonomy. The 2026-08-18 run defended the STOP registry itself in this slot rather than the principle; both are kept, because the registry plus the verdict-action matrix is the one surface that carries the rule — delete it and the principle degrades to prose.",
+      "itemIds": [
+        "P3",
+        "G10"
+      ]
+    },
+    {
+      "rank": 3,
+      "title": "The task packet",
+      "ezx": "The packet is where the whole process physically converges: the model's data, the plan's scope, the ratified contract anchors, the provenance manifest, and the acceptance inventories all meet in one self-contained, machine-checkable unit of work.",
+      "itemIds": [
+        "A1"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "G5",
+      "to": "P1",
+      "type": "enforces",
+      "note": "the drift trio is the machine lock against shearing"
+    },
+    {
+      "from": "M8",
+      "to": "P1",
+      "type": "realizes",
+      "note": "the only lawful path back to the model"
+    },
+    {
+      "from": "P1",
+      "to": "P4",
+      "type": "derives-from",
+      "note": "the model as single truth is one-authority-per-fact at plane scale"
+    },
+    {
+      "from": "M2",
+      "to": "P2",
+      "type": "realizes",
+      "note": "authoring as projection of the ledger slice"
+    },
+    {
+      "from": "A1",
+      "to": "P2",
+      "type": "realizes",
+      "note": "the packet_rows manifest classes every row's provenance"
+    },
+    {
+      "from": "G10",
+      "to": "P2",
+      "type": "enforces",
+      "note": "new-decision rows above threshold force a STOP"
+    },
+    {
+      "from": "G10",
+      "to": "P3",
+      "type": "realizes",
+      "note": "the STOP registry is the practice"
+    },
+    {
+      "from": "G9",
+      "to": "P3",
+      "type": "realizes",
+      "note": "the ratification act as the intent-injection point"
+    },
+    {
+      "from": "M7",
+      "to": "P3",
+      "type": "realizes",
+      "note": "the entry-mode trust dial"
+    },
+    {
+      "from": "M8",
+      "to": "P4",
+      "type": "realizes",
+      "note": "K0 routing to the model home"
+    },
+    {
+      "from": "M9",
+      "to": "P4",
+      "type": "realizes",
+      "note": "the ADR home"
+    },
+    {
+      "from": "A4",
+      "to": "P4",
+      "type": "realizes",
+      "note": "\"one authority per fact\" in the record layout"
+    },
+    {
+      "from": "A6",
+      "to": "P5",
+      "type": "realizes",
+      "note": "the mandatory Verification section"
+    },
+    {
+      "from": "M1",
+      "to": "P5",
+      "type": "realizes",
+      "note": "chapter 1's intake tables close the IC/PI mapping"
+    },
+    {
+      "from": "A11",
+      "to": "P5",
+      "type": "realizes",
+      "note": "every invariant mapped to an enforcement class"
+    },
+    {
+      "from": "G6",
+      "to": "P6",
+      "type": "realizes",
+      "note": "rules moved into lint ARE the practice"
+    },
+    {
+      "from": "A1",
+      "to": "P6",
+      "type": "realizes",
+      "note": "data-carrying packets instead of prose rules"
+    },
+    {
+      "from": "M6",
+      "to": "P6",
+      "type": "realizes",
+      "note": "the admission bias's mechanize-first order"
+    },
+    {
+      "from": "M11",
+      "to": "P7",
+      "type": "realizes",
+      "note": "receipts instead of prose"
+    },
+    {
+      "from": "G11",
+      "to": "P7",
+      "type": "enforces",
+      "note": "the sensitivity pass polices able-to-fail"
+    },
+    {
+      "from": "A9",
+      "to": "P7",
+      "type": "realizes",
+      "note": "measurement-carrying round reports"
+    },
+    {
+      "from": "A1",
+      "to": "P8",
+      "type": "realizes",
+      "note": "the self-contained operative set"
+    },
+    {
+      "from": "M7",
+      "to": "P8",
+      "type": "realizes",
+      "note": "a clean fresh-context build is a live test of self-containment"
+    },
+    {
+      "from": "M3",
+      "to": "P8",
+      "type": "realizes",
+      "note": "the fresh-implementer lens tests it directly"
+    },
+    {
+      "from": "M6",
+      "to": "P9",
+      "type": "realizes"
+    },
+    {
+      "from": "A7",
+      "to": "P9",
+      "type": "realizes",
+      "note": "the append-only capture form"
+    },
+    {
+      "from": "A8",
+      "to": "P9",
+      "type": "realizes",
+      "note": "rules born and retired only at boundaries"
+    },
+    {
+      "from": "M3",
+      "to": "P10",
+      "type": "realizes",
+      "note": "fresh-context lenses"
+    },
+    {
+      "from": "M5",
+      "to": "P10",
+      "type": "realizes",
+      "note": "a different model as reviewer"
+    },
+    {
+      "from": "G16",
+      "to": "P10",
+      "type": "enforces",
+      "note": "outside review of verification tooling, over tools like M16 and M5's infrastructure"
+    },
+    {
+      "from": "A4",
+      "to": "P11",
+      "type": "realizes",
+      "note": "levels as deltas on a baseline chain"
+    },
+    {
+      "from": "M1",
+      "to": "P11",
+      "type": "realizes",
+      "note": "chaptered, ratified increments"
+    },
+    {
+      "from": "G4",
+      "to": "P12",
+      "type": "enforces",
+      "note": "the accounting must close mechanically"
+    },
+    {
+      "from": "A5",
+      "to": "P12",
+      "type": "realizes",
+      "note": "the declared inventory lives in plan §1.4"
+    },
+    {
+      "from": "P12",
+      "to": "P5",
+      "type": "derives-from",
+      "note": "declared scope is what makes constraint mapping closable"
+    },
+    {
+      "from": "G3",
+      "to": "P13",
+      "type": "realizes"
+    },
+    {
+      "from": "G4",
+      "to": "P13",
+      "type": "realizes"
+    },
+    {
+      "from": "G13",
+      "to": "P13",
+      "type": "realizes",
+      "note": "tier-0 members checking declared data"
+    },
+    {
+      "from": "A2",
+      "to": "P14",
+      "type": "realizes",
+      "note": "the status enum as written form"
+    },
+    {
+      "from": "A6",
+      "to": "P14",
+      "type": "realizes",
+      "note": "the ADR Status line"
+    },
+    {
+      "from": "G3",
+      "to": "P14",
+      "type": "enforces",
+      "note": "draft status shape checked"
+    },
+    {
+      "from": "G3",
+      "to": "P15",
+      "type": "realizes",
+      "note": "the git-show C-row equality checks target the silent-edit class"
+    },
+    {
+      "from": "M5",
+      "to": "P15",
+      "type": "realizes",
+      "note": "the byte guard"
+    },
+    {
+      "from": "G14",
+      "to": "P15",
+      "type": "realizes",
+      "note": "staged-scope purity"
+    },
+    {
+      "from": "G13",
+      "to": "P16",
+      "type": "realizes",
+      "note": "references promoted to the machine-checked DEFERRED class"
+    },
+    {
+      "from": "M6",
+      "to": "P16",
+      "type": "realizes",
+      "note": "retirement deletes the row"
+    },
+    {
+      "from": "A1",
+      "to": "P16",
+      "type": "realizes",
+      "note": "scar-free operative text"
+    },
+    {
+      "from": "M1",
+      "to": "A5",
+      "type": "produces"
+    },
+    {
+      "from": "G10",
+      "to": "M1",
+      "type": "enforces",
+      "note": "chapter ratification is a standing human checkpoint"
+    },
+    {
+      "from": "M2",
+      "to": "A1",
+      "type": "consumes"
+    },
+    {
+      "from": "M2",
+      "to": "A3",
+      "type": "consumes"
+    },
+    {
+      "from": "M2",
+      "to": "A7",
+      "type": "produces",
+      "note": "process-log lines"
+    },
+    {
+      "from": "M2",
+      "to": "A10",
+      "type": "produces",
+      "note": "the TDD step's tests"
+    },
+    {
+      "from": "M2",
+      "to": "A1",
+      "type": "produces",
+      "note": "the authoring step of the loop"
+    },
+    {
+      "from": "G3",
+      "to": "M2",
+      "type": "enforces",
+      "note": "the --post-build build-close audit"
+    },
+    {
+      "from": "G4",
+      "to": "M2",
+      "type": "enforces",
+      "note": "owned == realized at build close"
+    },
+    {
+      "from": "M3",
+      "to": "A1",
+      "type": "consumes"
+    },
+    {
+      "from": "M3",
+      "to": "A2",
+      "type": "consumes"
+    },
+    {
+      "from": "M3",
+      "to": "A8",
+      "type": "consumes",
+      "note": "lens duties bind the rules"
+    },
+    {
+      "from": "M3",
+      "to": "A9",
+      "type": "produces"
+    },
+    {
+      "from": "M3",
+      "to": "M2",
+      "type": "part-of",
+      "note": "the review steps of the loop"
+    },
+    {
+      "from": "M4",
+      "to": "A2",
+      "type": "produces"
+    },
+    {
+      "from": "M4",
+      "to": "A14",
+      "type": "consumes",
+      "note": "memo-born surfaces"
+    },
+    {
+      "from": "G9",
+      "to": "M4",
+      "type": "enforces",
+      "note": "the ratification boundary"
+    },
+    {
+      "from": "M5",
+      "to": "A12",
+      "type": "consumes"
+    },
+    {
+      "from": "M5",
+      "to": "G11",
+      "type": "part-of",
+      "note": "the gates run through the invocation"
+    },
+    {
+      "from": "M6",
+      "to": "A7",
+      "type": "consumes"
+    },
+    {
+      "from": "M6",
+      "to": "A1",
+      "type": "consumes",
+      "note": "the packet_metrics block"
+    },
+    {
+      "from": "M6",
+      "to": "A9",
+      "type": "consumes",
+      "note": "metrics residue"
+    },
+    {
+      "from": "M6",
+      "to": "A8",
+      "type": "produces"
+    },
+    {
+      "from": "M6",
+      "to": "A12",
+      "type": "produces",
+      "note": "revised at chapter boundaries only"
+    },
+    {
+      "from": "M7",
+      "to": "A1",
+      "type": "consumes",
+      "note": "the packet as the delegation payload"
+    },
+    {
+      "from": "M7",
+      "to": "M2",
+      "type": "part-of",
+      "note": "the build execution context"
+    },
+    {
+      "from": "M8",
+      "to": "A3",
+      "type": "produces"
+    },
+    {
+      "from": "M8",
+      "to": "A4",
+      "type": "produces"
+    },
+    {
+      "from": "G8",
+      "to": "M8",
+      "type": "enforces",
+      "note": "the edit-sources-only rule"
+    },
+    {
+      "from": "M9",
+      "to": "A6",
+      "type": "produces"
+    },
+    {
+      "from": "M9",
+      "to": "P5",
+      "type": "realizes"
+    },
+    {
+      "from": "G7",
+      "to": "M9",
+      "type": "enforces",
+      "note": "lifecycle integrity"
+    },
+    {
+      "from": "M10",
+      "to": "G12",
+      "type": "part-of",
+      "note": "a DoD member"
+    },
+    {
+      "from": "M10",
+      "to": "A7",
+      "type": "produces"
+    },
+    {
+      "from": "M10",
+      "to": "P7",
+      "type": "realizes",
+      "note": "reality evidence the test lanes miss"
+    },
+    {
+      "from": "M12",
+      "to": "A13",
+      "type": "produces"
+    },
+    {
+      "from": "M12",
+      "to": "A1",
+      "type": "consumes",
+      "note": "machine blocks feed the difficulty index"
+    },
+    {
+      "from": "M12",
+      "to": "P9",
+      "type": "realizes",
+      "note": "empirical process change"
+    },
+    {
+      "from": "M12",
+      "to": "P7",
+      "type": "realizes",
+      "note": "pre-registration as measurement"
+    },
+    {
+      "from": "M13",
+      "to": "P7",
+      "type": "realizes",
+      "note": "claims enumerated and audited"
+    },
+    {
+      "from": "M13",
+      "to": "P4",
+      "type": "realizes",
+      "note": "authority moves leave one owner"
+    },
+    {
+      "from": "M14",
+      "to": "M2",
+      "type": "part-of",
+      "note": "the commit choreography's surface form"
+    },
+    {
+      "from": "G17",
+      "to": "M14",
+      "type": "enforces",
+      "note": "the written type(scope) half"
+    },
+    {
+      "from": "M15",
+      "to": "P3",
+      "type": "realizes",
+      "note": "the human seat is a designed surface"
+    },
+    {
+      "from": "M15",
+      "to": "P8",
+      "type": "realizes",
+      "note": "self-containment applied to the human channel"
+    },
+    {
+      "from": "M15",
+      "to": "G9",
+      "type": "part-of"
+    },
+    {
+      "from": "M15",
+      "to": "G10",
+      "type": "part-of"
+    },
+    {
+      "from": "G3",
+      "to": "A1",
+      "type": "consumes"
+    },
+    {
+      "from": "G4",
+      "to": "A1",
+      "type": "consumes"
+    },
+    {
+      "from": "A1",
+      "to": "A2",
+      "type": "consumes",
+      "note": "contract anchors"
+    },
+    {
+      "from": "G3",
+      "to": "A2",
+      "type": "consumes"
+    },
+    {
+      "from": "G13",
+      "to": "A2",
+      "type": "consumes"
+    },
+    {
+      "from": "A2",
+      "to": "P4",
+      "type": "realizes"
+    },
+    {
+      "from": "A1",
+      "to": "A3",
+      "type": "consumes",
+      "note": "the ledger slice"
+    },
+    {
+      "from": "G4",
+      "to": "A3",
+      "type": "consumes"
+    },
+    {
+      "from": "G5",
+      "to": "A3",
+      "type": "consumes"
+    },
+    {
+      "from": "A3",
+      "to": "P1",
+      "type": "realizes",
+      "note": "the contract surface between the planes"
+    },
+    {
+      "from": "M2",
+      "to": "A5",
+      "type": "consumes",
+      "note": "step scope"
+    },
+    {
+      "from": "G7",
+      "to": "A6",
+      "type": "enforces",
+      "note": "lifecycle rules"
+    },
+    {
+      "from": "G6",
+      "to": "A6",
+      "type": "enforces",
+      "note": "architecture decisions carried into lint"
+    },
+    {
+      "from": "A8",
+      "to": "P6",
+      "type": "realizes"
+    },
+    {
+      "from": "G10",
+      "to": "A9",
+      "type": "consumes",
+      "note": "verdicts arrive in report blocks"
+    },
+    {
+      "from": "M2",
+      "to": "A4",
+      "type": "consumes",
+      "note": "the packet build loop reads the spec and its ledger slice; the trace files themselves import runtime code only (retyped per arm finding #8)"
+    },
+    {
+      "from": "A10",
+      "to": "P7",
+      "type": "realizes",
+      "note": "the golden expectation, never weakened"
+    },
+    {
+      "from": "G4",
+      "to": "A11",
+      "type": "consumes",
+      "note": "the packet↔map lock"
+    },
+    {
+      "from": "M2",
+      "to": "A11",
+      "type": "produces",
+      "note": "deliverable of the ch5-p2 packet; the map is not itself an instance of the packet form (retyped per arm finding #7)"
+    },
+    {
+      "from": "G11",
+      "to": "A12",
+      "type": "consumes"
+    },
+    {
+      "from": "A12",
+      "to": "P10",
+      "type": "realizes"
+    },
+    {
+      "from": "A13",
+      "to": "P7",
+      "type": "realizes"
+    },
+    {
+      "from": "A14",
+      "to": "P4",
+      "type": "realizes",
+      "note": "the model-side decision home's why-memos"
+    },
+    {
+      "from": "M1",
+      "to": "A15",
+      "type": "consumes",
+      "note": "the chapter-1 intake tables map it"
+    },
+    {
+      "from": "G12",
+      "to": "A15",
+      "type": "consumes",
+      "note": "tables flipped at DoD"
+    },
+    {
+      "from": "A15",
+      "to": "P5",
+      "type": "realizes",
+      "note": "its process rule IS the planning-gap law"
+    },
+    {
+      "from": "G10",
+      "to": "A16",
+      "type": "produces",
+      "note": "accept-now dispositions of flagged approves"
+    },
+    {
+      "from": "M6",
+      "to": "A16",
+      "type": "consumes",
+      "note": "revisit at boundaries"
+    },
+    {
+      "from": "A16",
+      "to": "P16",
+      "type": "realizes",
+      "note": "a deferral gets a durable home"
+    },
+    {
+      "from": "G1",
+      "to": "G12",
+      "type": "enforces",
+      "note": "the ci-green rule at every push"
+    },
+    {
+      "from": "G1",
+      "to": "P6",
+      "type": "realizes",
+      "note": "a rule moved to environment"
+    },
+    {
+      "from": "G5",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G3",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G4",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G6",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G7",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G2",
+      "to": "G1",
+      "type": "instance-of",
+      "note": "the same six-bridge battery on the remote surface"
+    },
+    {
+      "from": "G2",
+      "to": "P1",
+      "type": "enforces",
+      "note": "the drift suite runs on main"
+    },
+    {
+      "from": "G3",
+      "to": "A1",
+      "type": "enforces",
+      "note": "declared form"
+    },
+    {
+      "from": "G3",
+      "to": "A2",
+      "type": "enforces",
+      "note": "declared form"
+    },
+    {
+      "from": "G3",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G4",
+      "to": "A11",
+      "type": "enforces",
+      "note": "the packet↔map lock"
+    },
+    {
+      "from": "G4",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G5",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G6",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G7",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G8",
+      "to": "P4",
+      "type": "enforces",
+      "note": "sources are the only authoring surface"
+    },
+    {
+      "from": "G8",
+      "to": "A3",
+      "type": "enforces",
+      "note": "freshness"
+    },
+    {
+      "from": "G8",
+      "to": "M8",
+      "type": "part-of"
+    },
+    {
+      "from": "G9",
+      "to": "A2",
+      "type": "enforces",
+      "note": "no anchor before ratification"
+    },
+    {
+      "from": "G9",
+      "to": "M4",
+      "type": "part-of"
+    },
+    {
+      "from": "G11",
+      "to": "A1",
+      "type": "enforces",
+      "note": "the acceptance inventories"
+    },
+    {
+      "from": "G11",
+      "to": "P10",
+      "type": "realizes"
+    },
+    {
+      "from": "G12",
+      "to": "P5",
+      "type": "enforces",
+      "note": "intake closure"
+    },
+    {
+      "from": "G12",
+      "to": "A2",
+      "type": "enforces",
+      "note": "the realize-at-close rule"
+    },
+    {
+      "from": "G13",
+      "to": "G12",
+      "type": "part-of"
+    },
+    {
+      "from": "G13",
+      "to": "A2",
+      "type": "enforces",
+      "note": "realized-map completeness"
+    },
+    {
+      "from": "G13",
+      "to": "M2",
+      "type": "enforces",
+      "note": "the pointer-retirement rule"
+    },
+    {
+      "from": "G14",
+      "to": "M2",
+      "type": "enforces",
+      "note": "the one-packet-one-commit boundary"
+    },
+    {
+      "from": "G14",
+      "to": "P13",
+      "type": "realizes"
+    },
+    {
+      "from": "G15",
+      "to": "A1",
+      "type": "enforces",
+      "note": "the template §2 step 0 sizing rules"
+    },
+    {
+      "from": "G15",
+      "to": "P3",
+      "type": "realizes",
+      "note": "sizing guards kept distinct from autonomy gating"
+    },
+    {
+      "from": "G16",
+      "to": "P10",
+      "type": "realizes"
+    },
+    {
+      "from": "G18",
+      "to": "P7",
+      "type": "realizes",
+      "note": "able-to-fail applied to the gates themselves"
+    },
+    {
+      "from": "G18",
+      "to": "G1",
+      "type": "part-of"
+    },
+    {
+      "from": "G18",
+      "to": "G2",
+      "type": "part-of"
+    },
+    {
+      "from": "G18",
+      "to": "P13",
+      "type": "enforces",
+      "note": "the armor corollary"
+    },
+    {
+      "from": "M16",
+      "to": "G3",
+      "type": "consumes",
+      "note": "it runs the canonical gates in per-mode bundles"
+    },
+    {
+      "from": "M16",
+      "to": "G4",
+      "type": "consumes"
+    },
+    {
+      "from": "M16",
+      "to": "G7",
+      "type": "consumes"
+    },
+    {
+      "from": "M16",
+      "to": "G13",
+      "type": "consumes"
+    },
+    {
+      "from": "P17",
+      "to": "P9",
+      "type": "derives-from",
+      "note": "boundary-only change is the written half; review-and-ratify the unwritten one"
+    },
+    {
+      "from": "M13",
+      "to": "P17",
+      "type": "realizes",
+      "note": "authority rewrites are claim-enumerated and arm-audited"
+    },
+    {
+      "from": "M12",
+      "to": "P17",
+      "type": "realizes",
+      "note": "a process change tested as a pre-registered experiment"
+    },
+    {
+      "from": "M17",
+      "to": "M3",
+      "type": "part-of",
+      "note": "triage is the review loop's disposal half"
+    },
+    {
+      "from": "M17",
+      "to": "P10",
+      "type": "realizes",
+      "note": "fix-by-default routes effort, never truth"
+    },
+    {
+      "from": "M17",
+      "to": "P15",
+      "type": "realizes",
+      "note": "the declined-out-of-threat-model route"
+    },
+    {
+      "from": "M17",
+      "to": "A7",
+      "type": "produces",
+      "note": "boundary-review routes land as log lines"
+    },
+    {
+      "from": "M17",
+      "to": "A9",
+      "type": "consumes",
+      "note": "findings arrive in the round report block"
+    },
+    {
+      "from": "M18",
+      "to": "M2",
+      "type": "part-of",
+      "note": "the loop's post-close continuation"
+    },
+    {
+      "from": "M18",
+      "to": "A1",
+      "type": "produces",
+      "note": "the claim surface and Build record are re-folded"
+    },
+    {
+      "from": "M18",
+      "to": "P10",
+      "type": "realizes",
+      "note": "fix-by-default extended past the commit"
+    },
+    {
+      "from": "G3",
+      "to": "M18",
+      "type": "enforces",
+      "note": "the aftermath commit is audited at its own sha"
+    },
+    {
+      "from": "M19",
+      "to": "P10",
+      "type": "realizes",
+      "note": "a fresh-context arm verdict per phase"
+    },
+    {
+      "from": "M19",
+      "to": "A12",
+      "type": "produces",
+      "note": "the filed per-phase verdict bundles"
+    },
+    {
+      "from": "M19",
+      "to": "A2",
+      "type": "consumes",
+      "note": "the re-derived line's ratified contract rows"
+    },
+    {
+      "from": "M20",
+      "to": "P9",
+      "type": "realizes",
+      "note": "skill-ification waits for live evidence and lands at a boundary"
+    },
+    {
+      "from": "M20",
+      "to": "A1",
+      "type": "consumes",
+      "note": "14 packet instances were the validating sample"
+    },
+    {
+      "from": "A17",
+      "to": "P1",
+      "type": "realizes",
+      "note": "the unit-by-unit lock between the planes"
+    },
+    {
+      "from": "G5",
+      "to": "A17",
+      "type": "consumes",
+      "note": "keyset and codeRef resolution"
+    },
+    {
+      "from": "G4",
+      "to": "A17",
+      "type": "consumes",
+      "note": "the third leg of the three-way lock"
+    },
+    {
+      "from": "G19",
+      "to": "P1",
+      "type": "enforces",
+      "note": "the stop polices the no-silent-patch rule"
+    },
+    {
+      "from": "G19",
+      "to": "P3",
+      "type": "realizes",
+      "note": "a discovery that needs a decision returns to the human"
+    },
+    {
+      "from": "G20",
+      "to": "M11",
+      "type": "enforces",
+      "note": "a receipt from a red baseline is refused"
+    },
+    {
+      "from": "G20",
+      "to": "P7",
+      "type": "realizes",
+      "note": "able-to-fail applied to the measuring instrument"
+    }
+  ],
+  "retired": [],
+  "verification": {
+    "arm": "a pinned external reviewer model — the 2026-08-18 round over `pairflow-present-2026-08-18.md`; the history arm's round is recorded in the change log",
+    "findingsFile": "pairflow-present-2026-08-18-arm-findings.md",
+    "findings": [
+      {
+        "disposition": "folded",
+        "summary": "The new-semantic-decision rule stated absolutely; the loop-economics STOPs are a second stop family needing no decision.",
+        "itemIds": [
+          "P3"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "Machine-checkable acceptance is necessary, not sufficient: a first-of-a-kind packet is human-approved at any trust stage.",
+        "itemIds": [
+          "P3",
+          "G10"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The plan section names ONE commit exception at this head; the instrument-landing second is defined in the packet template and its plan-side text is uncommitted.",
+        "itemIds": [
+          "M2",
+          "A1"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The per-chapter packet table is the later form: it starts at plan §6.7, and chapter 3 runs with no task packets.",
+        "itemIds": [
+          "A5"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "Source-first is the flow, not an absolute: a direct HTML edit is the named exception, provided re-extraction follows.",
+        "itemIds": [
+          "M8"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The four-role relay is the ch13 hand-over's own choreography, not the general staffing model for heavy work.",
+        "itemIds": [
+          "M19"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "A superseded draft transfers its realization obligation to its successor, which must itself stand realized at the close.",
+        "itemIds": [
+          "G12"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The arm-hiding PATH rebuild has a declared opt-out via one documented environment flag.",
+        "itemIds": [
+          "G1"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The coverage checker's inputs do not include the plan; the false `G4 consumes A5` edge dropped.",
+        "itemIds": [
+          "G4"
+        ]
+      },
+      {
+        "disposition": "folded",
+        "summary": "The IC/PI mapping is procedure-enforced at intake: neither the coverage checker nor the ADR check parses `IC-*`/`PI-*`.",
+        "itemIds": [
+          "P5",
+          "G4"
+        ]
+      },
+      {
+        "disposition": "noted",
+        "summary": "The edge vocabulary reserves `derives-from` for principles and offers no artifact→artifact generation edge; the ledger expresses the relation as `M8 produces A3` and records the gap here."
+      },
+      {
+        "disposition": "noted",
+        "summary": "The scoped, expiring carve-out is not a supersession; the edges were already dropped at the 2026-07-28 fold.",
+        "itemIds": [
+          "U3"
+        ]
+      },
+      {
+        "disposition": "declined",
+        "summary": "`G6 enforces A6` is defensible under the prompt's own definition: the lint enforces the rules ADRs declare, while G7 validates the ADR document form; both edges are true of different aspects of the same form.",
+        "itemIds": [
+          "G6",
+          "A6"
+        ]
+      }
+    ]
+  },
+  "changelog": [
+    "2026-08-18 content update from the P1 re-run (source repo `6448e617` → `21aedbe3`, 185 commits): NINE new elements — P17 (the process governs its own changes, practiced-not-recorded), M17 (finding triage and disposition routing), M18 (the aftermath fold loop), M19 (the re-derivation arm procedure), M20 (skill-ification), A17 (the drift unit map), G19 (the model↔code divergence stop), G20 (the probe-runner green-baseline gate), U4 (the autonomy trajectory). Content deltas: M5's transport split (the external reviewer agent primary, `arm_run.sh` fallback, 45-min cap, the tier-record rule), M2's named commit exception classes, M7's subagent-authorization rule, M6's `detector_misses` audit and boundary-only pin revision, G4's required invariant-disposition map and third mode, G10's verdict-action matrix and first-of-a-kind checkpoint, U2 CLOSED (the mutation pilot's ch13-boundary STOP on its own data). Counts refreshed against the head: packets 41 → 45, contract drafts 5 → 7, ADRs 19 → 20, process-log 4.8k → 6,157 lines, LearnedRules 23 → 16 rows (absorption, folded into P9/A8 as evidence of the retirement half working).",
+    "2026-08-18 arm rounds folded: the present arm (`pairflow-present-2026-08-18-arm-findings.md`, 12 confirmed / 1 declined) is in the verification log above; the history arm (`pairflow-history-2026-08-18-arm-findings.md`, 3 confirmed / 0 declined) contributed the P9 mid-chapter-edit correction and confirmed that the entry-mode trust dial and subagent-authorization rule — missing from the history report — are live process surfaces, now carried by M7. One edge DROPPED as false: `G4 consumes A5` (the coverage checker never reads the plan). No IDs retired at this fold.",
+    "2026-07-28 ledger v1 created by form migration from `pairflow-present-2026-07-28.md` (prompt 1 v3.2 run, v3-plane scope); arm round pending.",
+    "2026-07-28 content update: folded the 8 confirmed arm findings — M8's model-wave ordering corrected, packet count 41+README on M2/A1, P16's zero-claim given its recorded counterexample, G18 scoped to the four Python checker bridges, A11/A10 edges retyped onto M2, U3's spent carve-out edges dropped, and U1 reclassified to M16 (composite doc-gate runner is a Mechanism). ID U1 retired, never reused; two arm findings declined on the owner-ratified v3-plane scope."
+  ]
+}
