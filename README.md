@@ -1,8 +1,9 @@
-# patterns (working name — final name TBD)
+# Patterns
 
-Companion site for a talk: one person built three unrelated things with
-AI agents, distilled every process rule, ritual and check each project
-used, and cross-mapped 212 elements into 126 building blocks.
+Patterns distilled from Felhő's real projects: one person building
+three unrelated things with AI agents, with every process rule, ritual
+and check each project used written up and cross-mapped — 212 elements,
+126 building blocks.
 
 - `index.html` — the hub: the cross-project map, findings, and an
   explorable table
@@ -13,5 +14,4 @@ used, and cross-mapped 212 elements into 126 building blocks.
 
 Everything here is GENERATED in a separate factory repo and synced; do
 not edit files in this repo by hand. One project appears under the
-pseudonym "Project S" (unlaunched product). License: not chosen yet —
-the repo stays private until it is.
+pseudonym "Project S" (unlaunched product). License: TBD.
