@@ -14,4 +14,4 @@ and check each project used written up and cross-mapped — 212 elements,
 
 Everything here is GENERATED in a separate factory repo and synced; do
 not edit files in this repo by hand. One project appears under the
-pseudonym "Project S" (unlaunched product). License: TBD.
+pseudonym "Project S" (unlaunched product). License: CC BY 4.0 — quote and reuse freely, credit Felhő.
