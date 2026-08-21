@@ -352,6 +352,11 @@
   }
 </style>
 
+<noscript><div class="empty-note" style="margin:60px auto;max-width:60ch;padding:24px;">
+This page renders its cards with JavaScript. With scripts disabled you can
+still read the underlying data: it is embedded verbatim in this file's
+source between the __DATA_START__ and __DATA_END__ markers.
+</div></noscript>
 <div id="app"></div>
 
 <script>
@@ -896,6 +901,24 @@ $("#q").addEventListener("input", e => {
     c.style.display = !q || c.dataset.search.includes(q) ? "" : "none";
   });
 });
+
+/* ---------- hash-open: deep links land on an OPEN card ----------
+   Cards render client-side and collapsed, so a bare #card-<id> URL would
+   scroll to a closed one-line stub. On load and on every hashchange,
+   open the target via the existing openCard() (expand + center + flash).
+   Inert without a matching hash — the plain artifact flow is untouched. */
+function openFromHash() {
+  const m = location.hash.match(/^#card-(.+)$/);
+  if (!m) return;
+  const id = decodeURIComponent(m[1]);
+  if (!document.getElementById("card-" + id)) return;
+  // If a text filter hides the card, clear the filter first so the scroll lands.
+  const q = $("#q");
+  if (q && q.value) { q.value = ""; q.dispatchEvent(new Event("input")); }
+  openCard(id);
+}
+window.addEventListener("hashchange", openFromHash);
+openFromHash();
 </script>
 
 </body>
